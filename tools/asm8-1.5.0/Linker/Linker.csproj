@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Inu.Linker</RootNamespace>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Language\Language.csproj" />
+    <ProjectReference Include="..\Library\Library.csproj" />
+    <ProjectReference Include="..\Object\Object.csproj" />
+  </ItemGroup>
+
+</Project>
