@@ -416,6 +416,7 @@ namespace Inu.Linker
                 ".C10" => new C10File(fileName),
                 ".S" => new SRecordFile(fileName),
                 ".FD" => new ThomsonFD(fileName),
+                ".K7" => new ThomsonK7(fileName),
                 ".M7" => new ThomsonMEMO7(fileName),
                 _ => new BinFile(fileName)
             };
