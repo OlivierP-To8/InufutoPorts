@@ -2,11 +2,7 @@
 // https://github.com/OlivierP-To8
 
 using Inu.Language;
-using System;
 using System.IO;
-using System.Text;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Inu.Linker
 {

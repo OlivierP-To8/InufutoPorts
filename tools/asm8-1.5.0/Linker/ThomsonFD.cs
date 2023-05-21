@@ -4,13 +4,12 @@
 using Inu.Language;
 using System;
 using System.IO;
-using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 
 namespace Inu.Linker
 {
-    enum FileType
+    enum ThomsonFileType
     {
         BASIC_PRG = 0,
         BASIC_DAT = 1,
@@ -125,7 +124,7 @@ namespace Inu.Linker
             return -1;
         }
 
-        private void addFileEntry(string filename, FileType fileType, byte block, int sizeLeft)
+        private void addFileEntry(string filename, ThomsonFileType fileType, byte block, int sizeLeft)
         {
             /* Le répertoire est situé sur la piste 20 de la disquette.
             Le répertoire commence au secteur 3 et occupe une place de 14 secteurs.
@@ -217,7 +216,7 @@ namespace Inu.Linker
             }
         }
 
-        private void addFile(string filename, byte[] bytes, FileType fileType)
+        private void addFile(string filename, byte[] bytes, ThomsonFileType fileType)
         {
             List<byte> blocks = new List<byte>();
             int offset = 0;
@@ -283,7 +282,7 @@ namespace Inu.Linker
             bytes.Add(0x00);
             bytes.Add(0x00);
 
-            addFile("AUTO.BAT", bytes.ToArray(), FileType.BASIC_PRG);
+            addFile("AUTO.BAT", bytes.ToArray(), ThomsonFileType.BASIC_PRG);
         }
 
         private void addBinaryFile(int address, byte[] bytes)
@@ -325,7 +324,7 @@ namespace Inu.Linker
             fileData[bytes.Length+8] = (byte)(address >> 8);
             fileData[bytes.Length+9] = (byte)(address & 0xff);
 
-            addFile(binName, fileData, FileType.ASM_PRG);
+            addFile(binName, fileData, ThomsonFileType.ASM_PRG);
         }
 
         public override void Write(int address, byte[] bytes)
