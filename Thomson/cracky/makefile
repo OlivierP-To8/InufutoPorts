@@ -6,11 +6,12 @@ cseg=2000
 zseg=4500
 dseg=4520
 
-.c.asm:
-	Cate09.exe $*.c
+%.obj: %.c
+	../../tools/Cate09 $*.c
+	../../tools/Asm09 $*.asm
 
-.asm.obj:
-	Asm09.exe $*.asm
+%.obj: %.asm
+	../../tools/Asm09 $*.asm
 
 Destruction.asm: Destruction.c Destruction.h Stage.h Movable.h VVram.h Chars.h 
 Main.asm: Main.c Main.h ScanKeys.h Vram.h VVram.h Sound.h \
@@ -49,8 +50,8 @@ objects = Startup.obj \
 	Stage.obj Stages.obj Status.obj Vram.obj VVram.obj Chars.obj \
 	CopyMemory.obj Math.obj Print.obj ScanKeys.obj Sound.obj StageA.obj \
 	 VramA.obj VVramA.obj \
-	..\..\cate\cate09.lib
+	../../tools/cate09.lib
 
 $(name).cas: $(objects) makefile
-	LinkBE.exe $(name).c10 $(cseg) $(dseg) $(zseg) $(objects)
-	copy $(name).c10 $(name).cas /y
+	../../tools/LinkBE $(name).c10 $(cseg) $(dseg) $(zseg) $(objects)
+	cp -f $(name).c10 $(name).cas
