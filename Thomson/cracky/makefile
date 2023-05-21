@@ -1,10 +1,11 @@
 name=cracky
 
-all: $(name).cas
+all: $(name).m7 $(name).k7 $(name).fd
 
-cseg=2000
-zseg=4500
-dseg=4520
+zseg=6600
+dseg=6620
+cseg=7B00
+crom=0022
 
 %.obj: %.c
 	../../tools/Cate09 $*.c
@@ -52,6 +53,15 @@ objects = Startup.obj \
 	 VramA.obj VVramA.obj \
 	../../tools/cate09.lib
 
-$(name).cas: $(objects) makefile
-	../../tools/LinkBE $(name).c10 $(cseg) $(dseg) $(zseg) $(objects)
-	cp -f $(name).c10 $(name).cas
+$(name).fd: $(objects) makefile
+	../../tools/LinkBE $(name).fd $(cseg) $(dseg) $(zseg) $(objects)
+
+$(name).k7: $(objects) makefile
+	../../tools/LinkBE $(name).k7 $(cseg) $(dseg) $(zseg) $(objects)
+
+$(name).m7: $(objects) makefile
+	../../tools/LinkBE $(name).m7 $(crom) $(dseg) $(zseg) $(objects)
+
+clean:
+	-rm *.lst *.obj $(name).fd $(name).k7 $(name).m7 $(name).symbols.txt
+	@for c in $(shell ls *.c); do rm $${c%.*}.asm; done

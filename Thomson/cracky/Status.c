@@ -152,7 +152,38 @@ void Title()
             vram += 4 * VramStep - VramRowSize * 4;
         }
     }
-    PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
-    PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
+    //PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
+    //PrintS(Vram + VramRowSize * 20 + 7 * VramStep, "OR TRIGGER BUTTON");
+    PrintS(Vram + VramRowSize * 19 + 6 * VramStep, "PUSH TRIGGER BUTTON");
     PrintS(Vram + VramRowSize * 23 + 20 * VramStep, "INUFUTO 2023");
+    /* to test sprite colors
+    {
+        word vram;
+        vram = Vram + VramRowSize * 3 + 3 * VramStep;
+        Put2C(vram, Char_Man_Left_Stop);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Left0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Left1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Left2);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Right_Stop);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Right0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Right1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Right2);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_UpDown0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_UpDown1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Loose0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Loose1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Loose2);
+    }*/
 }

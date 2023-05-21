@@ -83,7 +83,7 @@ MonoPatternSource_: public MonoPatternSource_
 	defb	$ff, $ff, $ff, $ff, $0f, $0f, $0f, $0f
 	defb	$0f, $0f, $0f, $0f, $ff, $ff, $ff, $ff
 	defb	$ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-;	crack
+;	cracked floor
 	defb	$bf, $be, $dd, $d2, $ef, $6f, $b3, $bd
 	defb	$7d, $fd, $fb, $fb, $77, $cf, $b6, $b9
 	defb	$a8, $f0, $dc, $d2, $ea, $68, $b0, $b8
@@ -92,18 +92,20 @@ MonoPatternSource_: public MonoPatternSource_
 	defb	$00, $05, $0b, $43, $07, $09, $26, $01
 	defb	$80, $c0, $c0, $c0, $80, $00, $00, $00
 	defb	$00, $01, $03, $01, $01, $01, $00, $00
-;	mono8
+;	hard floor
 	defb	$ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+;	ladder left
 	defb	$60, $7f, $7f, $60, $60, $7f, $7f, $60
+;	ladder right
 	defb	$06, $fe, $fe, $06, $06, $fe, $fe, $06
-;	mono16
+;	item
 	defb	$00, $00, $00, $01, $01, $01, $7f, $3f
 	defb	$00, $80, $80, $c0, $c0, $c0, $ff, $fe
 	defb	$0f, $07, $07, $07, $0f, $0c, $08, $00
 	defb	$f8, $f0, $f0, $f0, $78, $18, $08, $00
 
 ColorPatternSource_: public ColorPatternSource_
-;	color16
+;	man left stop
 	defb	$00, $00, $00, $00, $00, $00, $0f, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $f0, $f0
 	defb	$00, $00, $f0, $f0, $00, $00, $ff, $ff
@@ -120,6 +122,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$90, $ee, $00, $00, $90, $00, $00, $00
 	defb	$99, $00, $00, $00, $99, $00, $00, $00
 	defb	$99, $00, $00, $00, $ee, $00, $00, $00
+;	man left0
 	defb	$00, $00, $00, $00, $00, $00, $0f, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $f0, $f0
 	defb	$00, $00, $f0, $f0, $00, $00, $ff, $ff
@@ -136,6 +139,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$90, $ee, $00, $00, $00, $00, $00, $00
 	defb	$99, $e0, $00, $00, $99, $e0, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
+;	man left1
 	defb	$00, $00, $00, $00, $00, $00, $0f, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $f0, $f0
 	defb	$00, $00, $f0, $f0, $00, $00, $ff, $ff
@@ -152,6 +156,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
 	defb	$90, $00, $00, $00, $90, $00, $00, $00
 	defb	$e0, $00, $00, $00, $00, $00, $00, $00
+;	man left2
 	defb	$00, $00, $00, $00, $00, $00, $0f, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $f0, $f0
 	defb	$00, $00, $f0, $f0, $00, $00, $ff, $ff
@@ -168,6 +173,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$90, $ee, $00, $00, $90, $00, $00, $00
 	defb	$99, $e0, $00, $00, $99, $e0, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
+;	man right stop
 	defb	$00, $00, $00, $00, $00, $00, $00, $0f
 	defb	$00, $00, $00, $ff, $00, $00, $00, $ff
 	defb	$00, $00, $00, $ff, $00, $00, $00, $ff
@@ -184,6 +190,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$99, $90, $ee, $00, $00, $90, $00, $00
 	defb	$00, $99, $00, $00, $00, $99, $00, $00
 	defb	$00, $99, $00, $00, $00, $ee, $00, $00
+;	man right0
 	defb	$00, $00, $00, $00, $00, $00, $00, $0f
 	defb	$00, $00, $00, $ff, $00, $00, $00, $ff
 	defb	$00, $00, $00, $ff, $00, $00, $00, $ff
@@ -200,6 +207,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$99, $90, $00, $00, $99, $90, $00, $00
 	defb	$09, $99, $00, $00, $00, $99, $90, $00
 	defb	$00, $09, $9e, $00, $00, $00, $e0, $00
+;	man right1
 	defb	$00, $00, $00, $00, $00, $00, $00, $0f
 	defb	$00, $00, $00, $ff, $00, $00, $00, $ff
 	defb	$00, $00, $00, $ff, $00, $00, $00, $ff
@@ -216,6 +224,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$aa, $a0, $00, $00, $0e, $e0, $00, $00
 	defb	$00, $00, $00, $00, $09, $90, $00, $00
 	defb	$09, $90, $00, $00, $0e, $e0, $00, $00
+;	man right2
 	defb	$00, $00, $00, $00, $00, $00, $00, $0f
 	defb	$00, $00, $00, $ff, $00, $00, $00, $ff
 	defb	$00, $00, $00, $ff, $00, $00, $00, $ff
@@ -232,6 +241,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$90, $aa, $e0, $00, $99, $00, $00, $00
 	defb	$90, $90, $00, $00, $09, $99, $00, $00
 	defb	$00, $99, $e0, $00, $00, $0e, $00, $00
+;	man updown0
 	defb	$00, $00, $00, $00, $00, $00, $0f, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
@@ -248,6 +258,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$aa, $00, $00, $00, $99, $00, $00, $00
 	defb	$99, $00, $00, $00, $99, $00, $00, $00
 	defb	$99, $00, $00, $00, $ee, $00, $00, $00
+;	man updown1
 	defb	$00, $00, $00, $00, $00, $00, $00, $ff
 	defb	$00, $00, $0f, $ff, $00, $00, $0f, $ff
 	defb	$00, $ee, $0f, $ff, $00, $aa, $0f, $ff
@@ -264,6 +275,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$aa, $0a, $00, $00, $99, $00, $00, $00
 	defb	$99, $00, $00, $00, $ee, $00, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
+;	man loose0
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
@@ -280,6 +292,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$aa, $99, $99, $9e, $00, $00, $99, $9e
 	defb	$aa, $e0, $00, $00, $0a, $e0, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
+;	man loose1
 	defb	$00, $00, $00, $ee, $00, $00, $00, $99
 	defb	$00, $00, $00, $99, $00, $00, $00, $99
 	defb	$00, $00, $00, $09, $00, $00, $ee, $09
@@ -296,6 +309,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$ff, $ff, $00, $00, $0f, $0f, $00, $00
 	defb	$0f, $0f, $00, $00, $ff, $ff, $00, $00
 	defb	$ff, $f0, $00, $00, $00, $00, $00, $00
+;	man loose2
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
 	defb	$00, $00, $0e, $a0, $00, $00, $0e, $aa
 	defb	$e9, $99, $00, $00, $e9, $99, $99, $aa
@@ -312,6 +326,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
+;	monster left0
 	defb	$00, $00, $0b, $00, $00, $00, $0b, $b0
 	defb	$00, $00, $bb, $bb, $00, $0b, $b0, $b0
 	defb	$00, $0b, $b0, $b0, $00, $0b, $bb, $bb
@@ -328,6 +343,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
 	defb	$bb, $b0, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $bb, $00, $00, $0b, $bb, $b0, $00
+;	monster left1
 	defb	$00, $00, $00, $00, $00, $00, $0b, $00
 	defb	$00, $00, $0b, $b0, $00, $00, $bb, $bb
 	defb	$00, $0b, $b0, $b0, $00, $0b, $b0, $b0
@@ -344,6 +360,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$bb, $bb, $bb, $00, $bb, $bb, $0b, $b0
 	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $bb, $0b, $b0, $bb, $bb, $bb, $00
+;	monster right0
 	defb	$00, $00, $00, $0b, $00, $00, $00, $bb
 	defb	$00, $00, $0b, $bb, $00, $00, $bb, $bb
 	defb	$00, $00, $bb, $bb, $00, $00, $bb, $bb
@@ -360,6 +377,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
 	defb	$bb, $b0, $00, $00, $bb, $00, $00, $00
 	defb	$b0, $00, $00, $00, $00, $00, $00, $00
+;	monster right1
 	defb	$00, $00, $00, $00, $00, $00, $00, $0b
 	defb	$00, $00, $00, $bb, $00, $00, $0b, $bb
 	defb	$00, $00, $bb, $bb, $00, $00, $bb, $bb
@@ -376,6 +394,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$bb, $bb, $bb, $b0, $bb, $bb, $b0, $bb
 	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $00, $00, $00, $b0, $00, $00, $00
+;	monster up0
 	defb	$00, $00, $00, $b0, $00, $00, $0b, $b0
 	defb	$00, $00, $bb, $bb, $00, $0b, $bb, $bb
 	defb	$00, $0b, $bb, $bb, $00, $0b, $bb, $bb
@@ -392,6 +411,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
 	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $00, $00, $00, $b0, $00, $00, $00
+;	monster up1
 	defb	$00, $00, $00, $00, $00, $00, $00, $b0
 	defb	$00, $00, $0b, $b0, $00, $00, $bb, $bb
 	defb	$00, $0b, $bb, $bb, $00, $0b, $bb, $bb
@@ -408,6 +428,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$bb, $bb, $bb, $00, $bb, $bb, $0b, $b0
 	defb	$bb, $bb, $00, $00, $bb, $bb, $00, $00
 	defb	$bb, $b0, $00, $00, $bb, $00, $00, $00
+;	monster down0
 	defb	$00, $00, $00, $b0, $00, $00, $0b, $b0
 	defb	$00, $00, $bb, $bb, $00, $0b, $bb, $0b
 	defb	$00, $0b, $bb, $0b, $00, $0b, $bb, $bb
@@ -424,6 +445,7 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
 	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $00, $00, $00, $b0, $00, $00, $00
+;	monster down1
 	defb	$00, $00, $00, $00, $00, $00, $00, $b0
 	defb	$00, $00, $0b, $b0, $00, $00, $bb, $bb
 	defb	$00, $0b, $bb, $0b, $00, $0b, $bb, $0b
@@ -440,3 +462,29 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$bb, $bb, $bb, $00, $bb, $bb, $0b, $b0
 	defb	$bb, $bb, $00, $00, $bb, $bb, $00, $00
 	defb	$bb, $b0, $00, $00, $bb, $00, $00, $00
+
+PaletteValues_: public PaletteValues_
+	defb	$c0, $e8, $e8, $e8, $e8, $f0, $e8, $80
+	defb	$e8, $e0, $c8, $e8, $e8, $e8, $d8, $f8
+
+PaletteValues8c_: public PaletteValues8c_
+	defb	$c0, $e8, $e8, $e8, $e8, $f0, $e8, $d0
+	defb	$e8, $e0, $c8, $e8, $e8, $e8, $d8, $f8
+
+; tableau des couleurs
+
+; B7 : 1/2 teinte fond (1 = saturée, 0 = pastel)
+; B6 : 1/2 teinte forme (1 = saturée, 0 = pastel)
+; B543 : couleur forme
+; B321 : couleur fond
+
+; B V R teinte (saturée / pastel)
+; 0 0 0 NOIR    / GRIS
+; 0 0 1 ROUGE   / ROSE
+; 0 1 0 VERT    / VERT CLAIR
+; 0 1 1 JAUNE   / SABLE
+; 1 0 0 BLEU    / BLEU CLAIR
+; 1 0 1 MAGENTA / PARME
+; 1 1 0 CYAN    / BLEU CIEL
+; 1 1 1 BLANC   / ORANGE
+

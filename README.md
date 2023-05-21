@@ -8,3 +8,5 @@ I added 3 linker targets to Inufuto's tools (in tools/asm8-1.5.0/Linker/Thomson*
 * Audio tape (.k7)
 * ROM cartridge (.m7)
 
+I adapted the game cracky without changing the graphics, so there's some color clash because the graphic mode compatible with the whole Thomson range only supports 2 colors for 8 pixels.
+
