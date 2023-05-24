@@ -248,13 +248,20 @@ namespace Inu.Linker
 
         private void addAutoBat()
         {
+            int loadlen = 2 + 2 + 2 + binName.Length + 2 + 1; // len + 10 + LOADM + binName + "" + 0x00
+            int execlen = 2 + 2 + 1 + 1; // len + 20 + exec + 0x00
+            int fulllen = 1 + loadlen + execlen + 2;
+
             List<byte> bytes = new List<byte>();
             // entête
             bytes.Add(0xff);
-            bytes.Add(0x00);
-            bytes.Add(0x1c);
-            bytes.Add(0x00);
-            bytes.Add(0x13);
+            // taille du fichier
+            bytes.Add((byte)(fulllen >> 8));
+            bytes.Add((byte)(fulllen & 0xff));
+            // *** première ligne ***
+            // longueur de la ligne
+            bytes.Add((byte)(loadlen >> 8));
+            bytes.Add((byte)(loadlen & 0xff));
             // numéro de ligne
             bytes.Add(0x00);
             bytes.Add(0x0a); // 10
@@ -268,17 +275,20 @@ namespace Inu.Linker
                 bytes.Add((byte)binName[i]);
             }
             bytes.Add(0x22); // "
-            // ?
+            // fin de ligne
             bytes.Add(0x00);
-            bytes.Add(0x00);
-            bytes.Add(0x06);
+            // *** deuxième ligne ***
+            // longueur de la ligne
+            bytes.Add((byte)(execlen >> 8));
+            bytes.Add((byte)(execlen & 0xff));
             // numéro de ligne
             bytes.Add(0x00);
             bytes.Add(0x14); // 20
             // EXEC
             bytes.Add(0xa2); // EXEC
-            // ?
+            // fin de ligne
             bytes.Add(0x00);
+            // fin de fichier
             bytes.Add(0x00);
             bytes.Add(0x00);
 
