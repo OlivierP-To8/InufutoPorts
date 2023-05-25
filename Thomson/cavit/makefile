@@ -12,11 +12,11 @@ cseg=A000
 crom=0022
 
 %.obj: %.c
-	../../build/Cate09 $*.c
-	../../build/Asm09 $*.asm
+	../../tools/Cate09 $*.c
+	../../tools/Asm09 $*.asm
 
 %.obj: %.asm
-	../../build/Asm09 $*.asm
+	../../tools/Asm09 $*.asm
 
 Main.asm: Main.c Main.h ScanKeys.h Sound.h Status.h Stage.h Sprite.h \
 	Man.h Chaser.h Ghost.h Rock.h Point.h Box.h VVram.h
@@ -57,16 +57,16 @@ objects = Startup.obj \
 	Direction.obj Movable.obj Man.obj Monster.obj Chaser.obj Ghost.obj Point.obj \
 	Chars.obj Print.obj VVram.obj VVramA.obj CopyMemory.obj \
 	Init.obj ScanKeys.obj Vram.obj VramA.obj Sprite.obj Sound.obj \
-	../../build/cate09.lib
+	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile
-	../../build/LinkBE $(name).fd $(cseg) $(dseg) $(zseg) $(objects)
+	../../tools/LinkBE $(name).fd $(cseg) $(dseg) $(zseg) $(objects)
 
 $(name).k7: $(objects) makefile
-	../../build/LinkBE $(name).k7 $(cseg) $(dseg) $(zseg) $(objects)
+	../../tools/LinkBE $(name).k7 $(cseg) $(dseg) $(zseg) $(objects)
 
 $(name).m7: $(objects) makefile
-	../../build/LinkBE $(name).m7 $(crom) $(dseg) $(zseg) $(objects)
+	../../tools/LinkBE $(name).m7 $(crom) $(dseg) $(zseg) $(objects)
 
 clean:
 	-rm *.lst *.obj $(name).fd $(name).k7 $(name).m7 $(name).symbols.txt
