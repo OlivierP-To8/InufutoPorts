@@ -1,16 +1,22 @@
 name=cavit
 
-all: $(name).cas
+all: $(name).m7 $(name).k7 $(name).fd
 
-cseg=1c00
-zseg=5400
-dseg=5420
+#Check the end of $(name).symbols.txt:
+#	CSEG, DSEG and ZSEG must not overlap
+#	DSEG must end before 7FFF for TO7 without RAM expansion (using .M7 ROM cartridge)
+#	CSEG must end before 9FFF or start at A000
+zseg=6500
+dseg=6520
+cseg=A000
+crom=0022
 
-.c.asm:
-	Cate09.exe $*.c
+%.obj: %.c
+	../../build/Cate09 $*.c
+	../../build/Asm09 $*.asm
 
-.asm.obj:
-	Asm09.exe $*.asm
+%.obj: %.asm
+	../../build/Asm09 $*.asm
 
 Main.asm: Main.c Main.h ScanKeys.h Sound.h Status.h Stage.h Sprite.h \
 	Man.h Chaser.h Ghost.h Rock.h Point.h Box.h VVram.h
@@ -51,10 +57,17 @@ objects = Startup.obj \
 	Direction.obj Movable.obj Man.obj Monster.obj Chaser.obj Ghost.obj Point.obj \
 	Chars.obj Print.obj VVram.obj VVramA.obj CopyMemory.obj \
 	Init.obj ScanKeys.obj Vram.obj VramA.obj Sprite.obj Sound.obj \
-	..\..\cate\cate09.lib
+	../../build/cate09.lib
 
-$(name).c10: $(objects)
-	LinkBE.exe $(name).c10 $(cseg) $(dseg) $(zseg) $(objects)
+$(name).fd: $(objects) makefile
+	../../build/LinkBE $(name).fd $(cseg) $(dseg) $(zseg) $(objects)
 
-$(name).cas: $(name).c10
-	copy $(name).c10 $(name).cas /y
+$(name).k7: $(objects) makefile
+	../../build/LinkBE $(name).k7 $(cseg) $(dseg) $(zseg) $(objects)
+
+$(name).m7: $(objects) makefile
+	../../build/LinkBE $(name).m7 $(crom) $(dseg) $(zseg) $(objects)
+
+clean:
+	-rm *.lst *.obj $(name).fd $(name).k7 $(name).m7 $(name).symbols.txt
+	@for c in $(shell ls *.c); do rm $${c%.*}.asm; done

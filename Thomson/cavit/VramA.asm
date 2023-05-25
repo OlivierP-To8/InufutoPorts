@@ -1,11 +1,14 @@
 include 'Vram.inc'
 include 'VVram.inc'
+include '../ThomsonTO.inc'
 
-INIT1 equ $FF91
 VramTop equ Vram+VramRowSize*2
 
 ext VVramFront_, RowFlags_
 ext PatternRam_
+ext ColorRam_
+ext PaletteValues_
+ext PaletteValues8c_
 
 dseg
 Backup:
@@ -36,49 +39,64 @@ MakePatternMono_@Param2: public MakePatternMono_@Param2
     defb 0 ; count
 MakePatternMono_@Param3: public MakePatternMono_@Param3
     defb 0 ; color
-
 cseg
 MakePatternMono_: public MakePatternMono_
     pshs a,b,x,y
         ldb #PatternSize
         mul
+
+        pshs a,b
+
         addd #PatternRam_
         tfr d,x
 
+        ; ajout de la forme
+        lda MakePatternMono_@Param2 | sta <xCount
         do
             lda #CharHeight | sta <yCount
             do
                 ldb ,y+
-                lda #VramStep | sta <xCount
-                do
-                    clr <pattern
-                    lda #2 | sta <bitCount
-                    do
-                        lda <pattern
-                        lsla | lsla | lsla | lsla
-                        sta <pattern
+                stb ,x+
 
-                        lda MakePatternMono_@Param3 ; color
-                        bitb #$80
-                        if ne
-                            lda MakePatternMono_@Param3 ; color
-                            anda #$0f
-                        else
-                            lsra | lsra | lsra | lsra
-                        endif
-                        ora <pattern
-                        sta <pattern
-
-                        lslb
-                        dec <bitCount
-                    while ne | wend
-                    lda <pattern | sta ,x+
-                    dec <xCount
-                while ne | wend
                 dec <yCount
             while ne | wend
-            dec MakePatternMono_@Param2 ; count
+
+            dec <xCount
         while ne | wend
+
+        ; on prend la couleur correspondante dans la palette
+        ; et on la stocke dans pattern
+        ; utilisation de la palette réduite à 8 couleurs pour TO7
+        ldb $FFF0
+        if eq ; si TO7 (valeur 0)
+            ldx #PaletteValues8c_
+        else
+            ldx #PaletteValues_
+        endif
+        lda MakePatternMono_@Param3
+        leax a,x
+        lda ,x
+        sta <pattern
+
+        puls a,b
+
+        addd #ColorRam_
+        tfr d,x
+
+        ; ajout de la couleur
+        lda MakePatternMono_@Param2 | sta <xCount
+        do
+            lda #CharHeight | sta <yCount
+            do
+                ldb <pattern
+                stb ,x+
+
+                dec <yCount
+            while ne | wend
+
+            dec <xCount
+        while ne | wend
+
     puls a,b,x,y
 rts
 
@@ -92,18 +110,176 @@ MakePatternColor_: public MakePatternColor_
     pshs a,b,x,y
         ldb #PatternSize
         mul
+
+        pshs a,b,y
+
         addd #PatternRam_
         tfr d,x
+        ; x pointe où écrire
+        ; y pointe où lire
 
-        lda MakePatternColor_@Param2 ; count
-        ldb #PatternSize
-        mul
-
+        ; ajout de la forme
+        lda MakePatternColor_@Param2 | sta <xCount
         do
-            pshs a,b
-                lda ,y+ | sta ,x+
-            puls a,b
-            subd #1
+            lda #CharHeight | sta <yCount
+            do
+                clr <pattern
+
+                lda ,y+
+                ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
+                tfr a,b
+                andb #$0f
+                anda #$f0
+                lsra | lsra | lsra | lsra
+                ; A contient la 1ere partie de l'octet, B la 2nd partie
+
+                tsta
+                if ne
+                    lda #$80
+                    ora <pattern
+                    sta <pattern
+                endif
+
+                tstb
+                if ne
+                    lda #$40
+                    ora <pattern
+                    sta <pattern
+                endif
+
+                lda ,y+
+                ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
+                tfr a,b
+                andb #$0f
+                anda #$f0
+                lsra | lsra | lsra | lsra
+                ; A contient la 1ere partie de l'octet, B la 2nd partie
+
+                tsta
+                if ne
+                    lda #$20
+                    ora <pattern
+                    sta <pattern
+                endif
+
+                tstb
+                if ne
+                    lda #$10
+                    ora <pattern
+                    sta <pattern
+                endif
+
+                lda ,y+
+                ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
+                tfr a,b
+                andb #$0f
+                anda #$f0
+                lsra | lsra | lsra | lsra
+                ; A contient la 1ere partie de l'octet, B la 2nd partie
+
+                tsta
+                if ne
+                    lda #$08
+                    ora <pattern
+                    sta <pattern
+                endif
+
+                tstb
+                if ne
+                    lda #$04
+                    ora <pattern
+                    sta <pattern
+                endif
+
+                lda ,y+
+                ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
+                tfr a,b
+                andb #$0f
+                anda #$f0
+                lsra | lsra | lsra | lsra
+                ; A contient la 1ere partie de l'octet, B la 2nd partie
+
+                tsta
+                if ne
+                    lda #$02
+                    ora <pattern
+                    sta <pattern
+                endif
+
+                tstb
+                if ne
+                    lda #$01
+                    ora <pattern
+                    sta <pattern
+                endif
+
+                lda <pattern | sta ,x+
+
+                dec <yCount
+            while ne | wend
+
+            dec <xCount
+        while ne | wend
+
+        puls a,b,y
+
+        addd #ColorRam_
+        tfr d,x
+        ; x pointe où écrire
+        ; y pointe où lire
+
+        ; ajout de la couleur
+        lda MakePatternColor_@Param2 | sta <xCount
+        do
+            lda #CharHeight | sta <yCount
+            do
+                clr <pattern
+
+                ; on récupère la couleur ayant la valeur la plus élevée (entre 0 et 15)
+                ; pour 8 pixels, donc 4 octets, dans pattern
+                lda #4 | sta <bitCount ; il faut 4 octets pour 8 pixels
+                do
+                    lda ,y+
+                    ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
+                    tfr a,b
+                    andb #$0f
+                    anda #$f0
+                    lsra | lsra | lsra | lsra
+                    ; A contient la 1ere partie de l'octet, B la 2nd partie
+
+                    cmpa <pattern
+                    if ge
+                        sta <pattern
+                    endif
+
+                    cmpb <pattern
+                    if ge
+                        stb <pattern
+                    endif
+
+                    dec <bitCount
+                while ne | wend
+
+                ; on prend la couleur correspondante dans la palette
+                ; et on la stocke dans ColorRam_ (X)
+                pshs y
+                    ; utilisation de la palette réduite à 8 couleurs pour TO7
+                    ldb $FFF0
+                    if eq ; si TO7 (valeur 0)
+                        ldy #PaletteValues8c_
+                    else
+                        ldy #PaletteValues_
+                    endif
+                    lda <pattern
+                    leay a,y
+                    ldb ,y
+                    stb ,x+
+                puls y
+
+                dec <yCount
+            while ne | wend
+
+            dec <xCount
         while ne | wend
     puls a,b,x,y
 rts
@@ -113,21 +289,29 @@ rts
 cseg
 ClearScreen_:   public ClearScreen_
     pshs a,b,x,y
-        pshs cc | orcc #$50
-            lda INIT1
-            ora #$01
-            sta INIT1
 
-            ldx #Vram
-            do
-                clr ,x+
-                cmpx #Vram+VramRowSize*VramHeight
-            while ne | wend
+        ; commutation du bit de couleur (C0 a 0)
+        lda PRC
+        anda #$fe
+        sta PRC
 
-            lda INIT1
-            anda #not $01
-            sta INIT1
-        puls cc
+        ldx #Vram
+        ldy #$C0C0 ; noir sur noir
+        do
+            sty ,x+
+            cmpx #Vram+VramRowSize*VramHeight
+        while ne | wend
+
+        ; commutation du bit de forme (C0 a 1)
+        lda PRC
+        ora #$01
+        sta PRC
+
+        ldx #Vram
+        do
+            clr ,x+
+            cmpx #Vram+VramRowSize*VramHeight
+        while ne | wend
 
         ldx #Backup
         do
@@ -146,33 +330,44 @@ Put_: public Put_
     pshs a,b,x,y
         lda #PatternSize
         mul
+
+        pshs a,b,x
+
+        ldy #ColorRam_
+        leay d,y
+
+        ; commutation du bit de couleur (C0 a 0)
+        lda PRC
+        anda #$fe
+        sta PRC
+
+        ldb #CharHeight
+        do
+            lda ,y+
+            sta ,x
+            leax VramWidth,x
+            decb
+        while ne | wend
+
+        puls a,b,x
+
         ldy #PatternRam_
         leay d,y
-        
-        pshs cc | orcc #$50
-            lda INIT1
-            ora #$01
-            sta INIT1
 
-            ldb #CharHeight
-            do
-                pshs b
-                    ldb #VramStep
-                    do
-                        lda ,y+
-                        sta ,x+
-                        decb
-                    while ne | wend
-                    leax VramWidth-VramStep,x
-                puls b
-                decb
-            while ne | wend
+        ; commutation du bit de forme (C0 a 1)
+        lda PRC
+        ora #$01
+        sta PRC
 
-            lda INIT1
-            anda #not $01
-            sta INIT1
-        puls cc
-    puls a,b,x,y    
+        ldb #CharHeight
+        do
+            lda ,y+
+            sta ,x
+            leax VramWidth,x
+            decb
+        while ne | wend
+
+    puls a,b,x,y
     tfr	x,d
     addd #VramStep
 rts
