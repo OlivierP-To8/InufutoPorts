@@ -2,6 +2,10 @@ name=cracky
 
 all: $(name).m7 $(name).k7 $(name).fd
 
+#Check the end of $(name).symbols.txt:
+#	CSEG, DSEG and ZSEG must not overlap
+#	DSEG must end before 7FFF for TO7 without RAM expansion (using .M7 ROM cartridge)
+#	CSEG must end before 9FFF or start at A000
 zseg=6600
 dseg=6620
 cseg=7B00
