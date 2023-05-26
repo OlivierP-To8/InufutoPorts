@@ -137,8 +137,9 @@ void Title()
             vram += 4 * VramStep - VramRowSize * 4;
         }
     }
-    PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
-    PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
+    //PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
+    //PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
+    PrintS(Vram + VramRowSize * 19 + 6 * VramStep, "PUSH TRIGGER BUTTON");
     PrintS(Vram + VramRowSize * 23 + 20 * VramStep, "INUFUTO 2022");
 
     // {
