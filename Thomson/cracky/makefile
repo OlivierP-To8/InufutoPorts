@@ -59,13 +59,19 @@ objects = Startup.obj \
 
 $(name).fd: $(objects) makefile
 	../../tools/LinkBE $(name).fd $(cseg) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).fd.symbols.txt
 
 $(name).k7: $(objects) makefile
 	../../tools/LinkBE $(name).k7 $(cseg) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).k7.symbols.txt
 
 $(name).m7: $(objects) makefile
 	../../tools/LinkBE $(name).m7 $(crom) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).m7.symbols.txt
 
 clean:
-	-rm *.lst *.obj $(name).fd $(name).k7 $(name).m7 $(name).symbols.txt
+	-rm *.lst *.obj $(name).fd $(name).k7 $(name).m7 $(name).*.symbols.txt
 	@for c in $(shell ls *.c); do rm $${c%.*}.asm; done
