@@ -166,8 +166,9 @@ MonoPatternSource_: public MonoPatternSource_
 	defb	00h, 00h, 38h, 3ch, 1fh, 0fh, 00h, 00h
 	defb	0fh, 07h, 07h, 0fh, 0feh, 0fch, 00h, 00h
 
-ColorPattern_: public ColorPattern_
+ColorPatternSource_: public ColorPatternSource_
 ;	color16
+;	Char_Solver_Left
 	defb	$00, $00, $ff, $ff, $00, $0f, $ff, $ff
 	defb	$00, $ff, $ff, $ff, $00, $ff, $ff, $ff
 	defb	$00, $f0, $f0, $ff, $00, $f0, $f0, $ff
@@ -184,6 +185,7 @@ ColorPattern_: public ColorPattern_
 	defb	$55, $ff, $00, $00, $55, $ff, $00, $00
 	defb	$55, $00, $00, $00, $ff, $f0, $00, $00
 	defb	$0f, $ff, $00, $00, $00, $ff, $f0, $00
+
 	defb	$00, $00, $ff, $ff, $00, $0f, $ff, $ff
 	defb	$00, $ff, $ff, $ff, $00, $ff, $ff, $ff
 	defb	$00, $f0, $f0, $ff, $00, $f0, $f0, $ff
@@ -200,6 +202,7 @@ ColorPattern_: public ColorPattern_
 	defb	$55, $50, $ff, $00, $55, $50, $ff, $00
 	defb	$55, $50, $00, $00, $ff, $f0, $00, $00
 	defb	$ff, $00, $00, $00, $f0, $00, $00, $00
+;	Char_Solver_Right
 	defb	$00, $00, $00, $ff, $00, $00, $0f, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
@@ -216,6 +219,7 @@ ColorPattern_: public ColorPattern_
 	defb	$55, $99, $95, $00, $55, $55, $55, $00
 	defb	$55, $55, $55, $00, $00, $ff, $f0, $00
 	defb	$00, $0f, $ff, $00, $00, $00, $ff, $f0
+
 	defb	$00, $00, $00, $ff, $00, $00, $0f, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
 	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
@@ -232,6 +236,7 @@ ColorPattern_: public ColorPattern_
 	defb	$55, $99, $95, $ff, $55, $55, $55, $ff
 	defb	$55, $55, $55, $00, $00, $0f, $f0, $00
 	defb	$f0, $ff, $00, $00, $ff, $00, $00, $00
+;	Char_Solver_Up
 	defb	$00, $00, $0f, $ff, $00, $00, $ff, $ff
 	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
 	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
@@ -248,6 +253,7 @@ ColorPattern_: public ColorPattern_
 	defb	$55, $55, $50, $f0, $55, $55, $50, $00
 	defb	$55, $55, $50, $00, $0f, $ff, $f0, $00
 	defb	$0f, $ff, $f0, $00, $0f, $ff, $f0, $00
+
 	defb	$00, $00, $0f, $ff, $00, $00, $ff, $ff
 	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
 	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
@@ -264,6 +270,7 @@ ColorPattern_: public ColorPattern_
 	defb	$55, $55, $5f, $f0, $55, $55, $5f, $f0
 	defb	$55, $55, $50, $00, $0f, $ff, $f0, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
+;	Char_Solver_Down
 	defb	$00, $00, $0f, $ff, $00, $00, $ff, $ff
 	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
 	defb	$00, $0f, $ff, $0f, $00, $0f, $ff, $0f
@@ -280,6 +287,7 @@ ColorPattern_: public ColorPattern_
 	defb	$99, $55, $5f, $f0, $55, $55, $5f, $f0
 	defb	$55, $55, $50, $00, $0f, $ff, $f0, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
+
 	defb	$00, $00, $0f, $ff, $00, $00, $ff, $ff
 	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
 	defb	$00, $0f, $ff, $0f, $00, $0f, $ff, $0f
@@ -296,6 +304,7 @@ ColorPattern_: public ColorPattern_
 	defb	$99, $55, $50, $f0, $55, $55, $50, $00
 	defb	$55, $55, $50, $00, $0f, $ff, $f0, $00
 	defb	$0f, $ff, $f0, $00, $0f, $ff, $f0, $00
+;	Char_Monster_Left
 	defb	$00, $00, $0b, $00, $00, $00, $0b, $b0
 	defb	$00, $00, $bb, $bb, $00, $0b, $b0, $b0
 	defb	$00, $0b, $b0, $b0, $00, $0b, $bb, $bb
@@ -312,6 +321,7 @@ ColorPattern_: public ColorPattern_
 	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
 	defb	$bb, $b0, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $bb, $00, $00, $0b, $bb, $b0, $00
+
 	defb	$00, $00, $00, $00, $00, $00, $0b, $00
 	defb	$00, $00, $0b, $b0, $00, $00, $bb, $bb
 	defb	$00, $0b, $b0, $b0, $00, $0b, $b0, $b0
@@ -328,6 +338,7 @@ ColorPattern_: public ColorPattern_
 	defb	$bb, $bb, $bb, $00, $bb, $bb, $0b, $b0
 	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $bb, $0b, $b0, $bb, $bb, $bb, $00
+;	Char_Monster_Right
 	defb	$00, $00, $00, $0b, $00, $00, $00, $bb
 	defb	$00, $00, $0b, $bb, $00, $00, $bb, $bb
 	defb	$00, $00, $bb, $bb, $00, $00, $bb, $bb
@@ -344,6 +355,7 @@ ColorPattern_: public ColorPattern_
 	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
 	defb	$bb, $b0, $00, $00, $bb, $00, $00, $00
 	defb	$b0, $00, $00, $00, $00, $00, $00, $00
+
 	defb	$00, $00, $00, $00, $00, $00, $00, $0b
 	defb	$00, $00, $00, $bb, $00, $00, $0b, $bb
 	defb	$00, $00, $bb, $bb, $00, $00, $bb, $bb
@@ -360,6 +372,7 @@ ColorPattern_: public ColorPattern_
 	defb	$bb, $bb, $bb, $b0, $bb, $bb, $b0, $bb
 	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $00, $00, $00, $b0, $00, $00, $00
+;	Char_Monster_Up
 	defb	$00, $00, $00, $b0, $00, $00, $0b, $b0
 	defb	$00, $00, $bb, $bb, $00, $0b, $bb, $bb
 	defb	$00, $0b, $bb, $bb, $00, $0b, $bb, $bb
@@ -376,6 +389,7 @@ ColorPattern_: public ColorPattern_
 	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
 	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $00, $00, $00, $b0, $00, $00, $00
+
 	defb	$00, $00, $00, $00, $00, $00, $00, $b0
 	defb	$00, $00, $0b, $b0, $00, $00, $bb, $bb
 	defb	$00, $0b, $bb, $bb, $00, $0b, $bb, $bb
@@ -392,6 +406,7 @@ ColorPattern_: public ColorPattern_
 	defb	$bb, $bb, $bb, $00, $bb, $bb, $0b, $b0
 	defb	$bb, $bb, $00, $00, $bb, $bb, $00, $00
 	defb	$bb, $b0, $00, $00, $bb, $00, $00, $00
+;	Char_Monster_Down
 	defb	$00, $00, $00, $b0, $00, $00, $0b, $b0
 	defb	$00, $00, $bb, $bb, $00, $0b, $bb, $0b
 	defb	$00, $0b, $bb, $0b, $00, $0b, $bb, $bb
@@ -408,6 +423,7 @@ ColorPattern_: public ColorPattern_
 	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
 	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
 	defb	$bb, $00, $00, $00, $b0, $00, $00, $00
+
 	defb	$00, $00, $00, $00, $00, $00, $00, $b0
 	defb	$00, $00, $0b, $b0, $00, $00, $bb, $bb
 	defb	$00, $0b, $bb, $0b, $00, $0b, $bb, $0b
@@ -424,3 +440,24 @@ ColorPattern_: public ColorPattern_
 	defb	$bb, $bb, $bb, $00, $bb, $bb, $0b, $b0
 	defb	$bb, $bb, $00, $00, $bb, $bb, $00, $00
 	defb	$bb, $b0, $00, $00, $bb, $00, $00, $00
+
+PaletteValues_: public PaletteValues_
+	defb	$c0, $c0, $c0, $c0, $c0, $f0, $d8, $c0
+	defb	$c0, $e0, $c0, $e8, $c0, $f0, $d8, $f8
+
+; tableau des couleurs
+
+; B7 : 1/2 teinte fond (1 = saturée, 0 = pastel)
+; B6 : 1/2 teinte forme (1 = saturée, 0 = pastel)
+; B543 : couleur forme
+; B321 : couleur fond
+
+; B V R teinte (saturée / pastel)
+; 0 0 0 NOIR    $C0 / $80 GRIS
+; 0 0 1 ROUGE   $C8 / $88 ROSE
+; 0 1 0 VERT    $D0 / $90 VERT CLAIR
+; 0 1 1 JAUNE   $D8 / $98 SABLE
+; 1 0 0 BLEU    $E0 / $A0 BLEU CLAIR
+; 1 0 1 MAGENTA $E8 / $A8 PARME
+; 1 1 0 CYAN    $F0 / $B0 BLEU CIEL
+; 1 1 1 BLANC   $F8 / $B8 ORANGE

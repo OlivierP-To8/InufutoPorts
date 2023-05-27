@@ -5,9 +5,8 @@
 
 extern byte[] MonoPatternSource, ColorPatternSource;
 
-constexpr byte Char_Color = 0xa0;
-
-byte[PatternSize * Char_Color] PatternRam;
+byte[PatternSize * Char_End] PatternRam;
+byte[PatternSize * Char_End] ColorRam;
 
 void InitVram()
 {
@@ -38,7 +37,7 @@ void InitVram()
         c += count;
         pPattern += ((word)count << 3);
     }
-    // MakePatternColor(Char_Solver, ColorPatternSource, Char_End - Char_Solver);
+    MakePatternColor(Char_Solver, ColorPatternSource, Char_End - Char_Solver);
     ClearScreen();
 }
 

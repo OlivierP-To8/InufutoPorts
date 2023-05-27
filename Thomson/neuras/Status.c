@@ -122,8 +122,9 @@ void Title()
     PrintS(Vram + VramRowSize * 10 + 12 * VramStep, "SOLVER");
     PrintS(Vram + VramRowSize * 13 + 12 * VramStep, "MONSTER");
     PrintS(Vram + VramRowSize * 16 + 12 * VramStep, "CARD");
-    PrintS(Vram + VramRowSize * 21 + 9 * VramStep, "PUSH SPACE KEY");
-    PrintS(Vram + VramRowSize * 22 + 9 * VramStep, "OR SHIFT KEY");
+    //PrintS(Vram + VramRowSize * 21 + 9 * VramStep, "PUSH SPACE KEY");
+    //PrintS(Vram + VramRowSize * 22 + 9 * VramStep, "OR SHIFT KEY");
+    PrintS(Vram + VramRowSize * 21 + 6 * VramStep, "PUSH TRIGGER BUTTON");
     // {
     //     word vram;
     //     byte c;

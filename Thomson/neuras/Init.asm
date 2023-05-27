@@ -1,13 +1,9 @@
-INIT0 equ $FF90
-INIT1 equ $FF91
-VMODE equ $FF98
-VRES equ $FF99
+include 'Vram.inc'
+include '../ThomsonTO.inc'
 
 ext InitVram_, InitSound_
 
 dseg
-IrqJmp:
-    defs 3
 TimerCount: 
     defb 0 public TimerCount
 
@@ -15,71 +11,84 @@ zseg
 Direct: public Direct
 
 cseg
-PaletteValues:
-	defb	$00, $0d, $07, $1b, $0f, $1d, $25, $20
-	defb	$10, $0b, $17, $29, $31, $3d, $24, $3f
-
-cseg
 Init_: public  Init_
-    lda INIT0
-    anda #not $80
-    ora #$40
-    sta INIT0
+    ; identification du modèle
+    ;    00 = T9000,TO7  => bord écran par PRC + modifier la palette en 8c
+    ;    01 = TO7-70     => bord écran par PRC
+    ;    02 = TO9        => bord écran par LGATOU avec saturation $08
+    ;    03 = TO8,TO8D   => bord écran par LGATOU
+    ;    06 = TO9+
+    ldb $FFF0
+    cmpb #$03
+    if ge
+        ; bord noir sur TO8/TO8D/TO9+
+        lda #$00   ; XXXXPBVR (pastel bleu vert rouge)
+        sta LGATOU ; registre uniquement en écriture
+    else
+        cmpb #$02
+        if eq
+            ; bord noir sur TO9
+            lda #$08   ; XXXXSBVR (saturation bleu vert rouge)
+            sta LGATOU ; registre uniquement en écriture
+        else
+            ; bord noir sur TO7 et TO7-70
+            lda PRC
+            anda #$8f ; border color b654=000
+            sta PRC
 
-    lda INIT1
+            ; buzzer clavier TO7
+            lda #1     ; 0=ON 1=OFF
+            sta BUZZ
+        endif
+    endif
+
+    ; passage au mode TO7 320x200x16c avec conflit de proximite (2 couleurs pour 8 pixels)
+    ; la mémoire écran se trouve entre $4000 et $5F3F
+    lda #$0
+    sta LGAMOD
+
+    ; commutation du bit de couleur (C0 a 0)
+    lda PRC
     anda #$fe
-    sta INIT1
+    sta PRC
 
-    ; lda VMODE
-    ; anda #$0f
-    ; ora #$80
-    lda #$80
-    sta VMODE
-
-    lda #$1a
-    sta VRES
-
-    ldd #$c000
-    sta $FF9D
-    stb $FF9D+1
-
-    ldx #$FFA8
-    lda #$38
+    ; on efface le haut de l'ecran (de $4000 à Vram)
+    ; car on affiche 256x192 centré dans 320x200
+    ldx #$4000
+    ldy #$C0C0 ; noir sur noir
     do
-        sta ,x+
-        inca
-        cmpa #$3c
-    while ne | wend
-    lda #$30
-    do
-        sta ,x+
-        inca
-        cmpa #$33
+        sty ,x+
+        cmpx #Vram
     while ne | wend
 
-    pshs cc | orcc #$50
-        lda #$7e
-        sta IrqJmp
-        ldx $10d
-        stx IrqJmp+1
-        ldx #Handler
-        stx $10d
+    ; on efface le bas de l'ecran (jusque $5F3F)
+    ; car on affiche 256x192 centré dans 320x200
+    ldx #Vram+VramRowSize*VramHeight
+    ldy #$C0C0 ; noir sur noir
+    do
+        sty ,x+
+        cmpx #$5F3F
+    while ne | wend
+
+    ; mise en place de l'interruption pour le timer d'une seconde
+    orcc #$50 ; disables IRQ & FIRQ
         clr TimerCount
-    puls cc
 
-    ldx #PaletteValues
-    ldy #$FFB0
-    ldb #16
-    do
-        lda ,x+
-        sta ,y+
-        decb
-    while ne | wend
+        ; intervalle du timer pour une seconde
+        ldd #1264
+        std TMSB
+        lda #$46
+        sta TCR
 
-    ; Sound
-    lda $FF23
-    ora #$08
-    sta $FF23
+        ; mise en place de la routine
+        ldd #Handler
+        std TIMEPT
+
+        ; IRQ timer validée par bit 5 du registre STATUS à 1
+        lda STATUS
+        ora #$20
+        sta STATUS
+    andcc #not $50 ; enables IRQ & FIRQ
 
     jsr InitVram_
     jsr InitSound_
@@ -88,7 +97,7 @@ rts
 
 Handler:
     inc TimerCount
-jmp IrqJmp
+jmp KBIN ; validation de l'interruption
 
 
 dseg

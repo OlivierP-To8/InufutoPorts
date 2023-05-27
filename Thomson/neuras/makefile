@@ -1,16 +1,23 @@
 name=neuras
 
-all: $(name).cas
+all: $(name).m7 $(name).k7 $(name).fd
 
-cseg=2000
-zseg=4900
-dseg=4920
+#Check the end of $(name).symbols.txt:
+#	CSEG, DSEG and ZSEG must not overlap
+#	DSEG must end before 7FFF for TO7 without RAM expansion (using .M7 ROM cartridge)
+#	CSEG must end before 9FFF or start at A000
+zseg=6800
+dseg=6820
+cseg=A000
+crom=0022
+csk7=8000 # for TO7 with 16K expansion (8000-BFFF)
 
-.c.asm:
-	Cate09.exe $*.c
+%.obj: %.c
+	../../tools/Cate09 $*.c
+	../../tools/Asm09 $*.asm
 
-.asm.obj:
-	Asm09.exe $*.asm
+%.obj: %.asm
+	../../tools/Asm09 $*.asm
 
 Card.asm: Card.c Card.h Stage.h Solver.h Monster.h Stage.h \
 	Main.h Chars.h Vram.h Sprite.h Status.h Sound.h \
@@ -46,10 +53,23 @@ objects = Startup.obj \
 	Main.obj Stage.obj Stages.obj Chars.obj Solver.obj Card.obj Monster.obj \
 	Init.obj Vram.obj VramA.obj VVram.obj VVramA.obj MapToVVram.obj Sprite.obj \
 	ScanKeys.obj Status.obj Sound.obj CopyMemory.obj Print.obj \
-	..\..\cate\cate09.lib
+	../../tools/cate09.lib
 
-$(name).c10: $(objects)
-	LinkBE.exe $(name).c10 $(cseg) $(dseg) $(zseg) $(objects)
+$(name).fd: $(objects) makefile
+	../../tools/LinkBE $(name).fd $(cseg) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).fd.symbols.txt
 
-$(name).cas: $(name).c10
-	copy $(name).c10 $(name).cas /y
+$(name).k7: $(objects) makefile
+	../../tools/LinkBE $(name).k7 $(csk7) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).k7.symbols.txt
+
+$(name).m7: $(objects) makefile
+	../../tools/LinkBE $(name).m7 $(crom) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).m7.symbols.txt
+
+clean:
+	-rm *.lst *.obj $(name).fd $(name).k7 $(name).m7 $(name).*.symbols.txt
+	@for c in $(shell ls *.c); do rm $${c%.*}.asm; done
