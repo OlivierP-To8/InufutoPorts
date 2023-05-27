@@ -428,17 +428,38 @@ ColorPatternSource_: public ColorPatternSource_
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
 	defb	$00, $00, $00, $00, $00, $cc, $cc, $cc
-	defb	$0c, $cc, $cc, $cc, $cc, $1c, $c1, $cc
-	defb	$c1, $1c, $c1, $cc, $cc, $1c, $c1, $cc
+	defb	$0c, $cc, $cc, $cc, $cc, $0c, $c0, $cc
+	defb	$c0, $0c, $c0, $cc, $cc, $0c, $c0, $cc
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
 	defb	$00, $00, $00, $00, $cc, $cc, $c0, $00
-	defb	$cc, $cc, $cc, $00, $1c, $11, $1c, $c0
-	defb	$1c, $1c, $c1, $c0, $1c, $1c, $c1, $c0
-	defb	$cc, $1c, $c1, $cc, $cc, $1c, $c1, $cc
-	defb	$c1, $11, $cc, $11, $0c, $cc, $cc, $cc
+	defb	$cc, $cc, $cc, $00, $0c, $00, $0c, $c0
+	defb	$0c, $0c, $c0, $c0, $0c, $0c, $c0, $c0
+	defb	$cc, $0c, $c0, $cc, $cc, $0c, $c0, $cc
+	defb	$c0, $00, $cc, $00, $0c, $cc, $cc, $cc
 	defb	$00, $cc, $cc, $cc, $00, $00, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
-	defb	$1c, $11, $1c, $c0, $1c, $1c, $cc, $c0
-	defb	$cc, $1c, $cc, $c0, $cc, $cc, $cc, $00
+	defb	$0c, $00, $0c, $c0, $0c, $0c, $cc, $c0
+	defb	$cc, $0c, $cc, $c0, $cc, $cc, $cc, $00
 	defb	$cc, $cc, $c0, $00, $00, $00, $00, $00
 	defb	$00, $00, $00, $00, $00, $00, $00, $00
+
+PaletteValues_: public PaletteValues_
+	defb	$c0, $c0, $c0, $c0, $c0, $f0, $c0, $c0
+	defb	$c0, $e0, $c8, $e8, $d0, $f0, $d8, $f8
+
+; tableau des couleurs
+
+; B7 : 1/2 teinte fond (1 = saturée, 0 = pastel)
+; B6 : 1/2 teinte forme (1 = saturée, 0 = pastel)
+; B543 : couleur forme
+; B321 : couleur fond
+
+; B V R teinte (saturée / pastel)
+; 0 0 0 NOIR    $C0 / $80 GRIS
+; 0 0 1 ROUGE   $C8 / $88 ROSE
+; 0 1 0 VERT    $D0 / $90 VERT CLAIR
+; 0 1 1 JAUNE   $D8 / $98 SABLE
+; 1 0 0 BLEU    $E0 / $A0 BLEU CLAIR
+; 1 0 1 MAGENTA $E8 / $A8 PARME
+; 1 1 0 CYAN    $F0 / $B0 BLEU CIEL
+; 1 1 1 BLANC   $F8 / $B8 ORANGE

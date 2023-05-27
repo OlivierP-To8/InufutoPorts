@@ -143,8 +143,9 @@ void Title()
             vram += 4 * VramStep - VramRowSize * 4;
         }
     }
-    PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
-    PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
+    //PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
+    //PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
+    PrintS(Vram + VramRowSize * 19 + 6 * VramStep, "PUSH TRIGGER BUTTON");
     PrintS(Vram + VramRowSize * 23 + 20 * VramStep, "INUFUTO 2022");
     // {
     //     word vram;
@@ -158,4 +159,51 @@ void Title()
     //         }
     //     }
     // }
+    /* to test sprite colors
+    {
+        word vram;
+        vram = Vram + VramRowSize * 3 + VramStep;
+        Put2C(vram, Char_Man_Left0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Left1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Right0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Right1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Up0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Up1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Down0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Man_Down1);
+
+        Put2C(vram, Char_Monster_Left0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Monster_Left1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Monster_Right0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Monster_Right1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Monster_Up0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Monster_Up1);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Monster_Down0);
+        vram = vram + 2 * VramStep;
+        Put2C(vram, Char_Monster_Down1);
+
+        vram = Vram + VramRowSize * 12 + 9 * VramStep;
+        Put2C(vram, Char_Point);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_Point+4);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_Point+8);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_Point+12);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_Increaser);
+    }*/
 }

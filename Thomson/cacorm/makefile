@@ -1,16 +1,22 @@
 name=cacorm
 
-all: $(name).cas
+all: $(name).m7 $(name).k7 $(name).fd
 
-cseg=2000
-zseg=4800
-dseg=4820
+#Check the end of $(name).symbols.txt:
+#	CSEG, DSEG and ZSEG must not overlap
+#	DSEG must end before 7FFF for TO7 without RAM expansion (using .M7 ROM cartridge)
+#	CSEG must end before 9FFF or start at A000
+zseg=6500
+dseg=6520
+cseg=7820
+crom=0022
 
-.c.asm:
-	Cate09.exe $*.c
+%.obj: %.c
+	../../tools/Cate09 $*.c
+	../../tools/Asm09 $*.asm
 
-.asm.obj:
-	Asm09.exe $*.asm
+%.obj: %.asm
+	../../tools/Asm09 $*.asm
 
 Main.asm: Main.c Main.h ScanKeys.h Vram.h Sound.h Status.h Stage.h \
 	Movable.h Sprite.h Man.h Monster.h Item.h Point.h Actor.h \
@@ -51,10 +57,23 @@ objects = Startup.obj \
 	Monster.obj Point.obj Increaser.obj \
 	Sprite.obj Sound.obj Math.obj VVram.obj VVramA.obj \
 	CopyMemory.obj \
-	..\..\cate\cate09.lib
+	../../tools/cate09.lib
 
-$(name).c10: $(objects)
-	LinkBE.exe $(name).c10 $(cseg) $(dseg) $(zseg) $(objects)
+$(name).fd: $(objects) makefile
+	../../tools/LinkBE $(name).fd $(cseg) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).fd.symbols.txt
 
-$(name).cas: $(name).c10
-	copy $(name).c10 $(name).cas /y
+$(name).k7: $(objects) makefile
+	../../tools/LinkBE $(name).k7 $(cseg) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).k7.symbols.txt
+
+$(name).m7: $(objects) makefile
+	../../tools/LinkBE $(name).m7 $(crom) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).m7.symbols.txt
+
+clean:
+	-rm *.lst *.obj $(name).fd $(name).k7 $(name).m7 $(name).*.symbols.txt
+	@for c in $(shell ls *.c); do rm $${c%.*}.asm; done

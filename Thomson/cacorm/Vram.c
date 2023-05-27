@@ -6,6 +6,7 @@
 extern byte[] MonoPatternSource, ColorPatternSource, LinePatternSource;
 
 byte[PatternSize * Char_End] PatternRam;
+byte[PatternSize * Char_End] ColorRam;
 
 void InitVram()
 {
