@@ -141,8 +141,9 @@ void Title()
             vram += 4 * VramStep - VramRowSize * 4;
         }
     }
-    PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
-    PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
+    //PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
+    //PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
+    PrintS(Vram + VramRowSize * 19 + 6 * VramStep, "PUSH TRIGGER BUTTON");
     // {
     //     word vram;
     //     byte c;
@@ -155,4 +156,81 @@ void Title()
     //         }
     //     }
     // }
+    /* to test sprite colors
+    {
+        word vram;
+        vram = Vram + VramRowSize * 3 + 6 * VramStep;
+        Print2C(vram, Char_Man);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Man+4);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Man+8);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Man+12);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Man+16);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Man+20);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Man+24);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Man+28);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Man+32);
+
+        vram = Vram + VramRowSize * 5 + 4 * VramStep;
+        Print2C(vram, Char_Monster);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+4);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+8);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+12);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+16);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+20);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+24);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+28);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+32);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+36);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+40);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Monster+44);
+
+        vram = Vram + VramRowSize * 11 + 5 * VramStep;
+        Print2C(vram, Char_Wall);
+        vram = vram + 3 * VramStep;
+        Print2C(vram, Char_Block);
+        vram = vram + 3 * VramStep;
+        Print2C(vram, Char_Block+4);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Block+8);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Block+12);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Block+16);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Block+20);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Block+24);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Block+28);
+        vram = vram + 2 * VramStep;
+        Print2C(vram, Char_Block+32);
+
+        vram = Vram + VramRowSize * 13 + 11 * VramStep;
+        Print2C(vram, Char_Point);
+        vram = vram + 3 * VramStep;
+        Print2C(vram, Char_Point+4);
+        vram = vram + 3 * VramStep;
+        Print2C(vram, Char_Point+8);
+        vram = vram + 3 * VramStep;
+        Print2C(vram, Char_Point+12);
+    }*/
 }

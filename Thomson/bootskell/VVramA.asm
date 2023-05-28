@@ -1,5 +1,4 @@
-VVramWidth equ 32;
-VVramHeight equ 22;
+include 'VVram.inc'
 
 zseg 
 Dp.Word0:
@@ -52,29 +51,34 @@ rts
 
 
 ; void SetRowFlags(byte y, byte b);
+dseg
+SetRowFlags_low:
+    defb 0
+SetRowFlags_high:
+    defb 0
 cseg
 SetRowFlags_: public SetRowFlags_
-    pshs a,b,x
-        stb <Dp.Word0+1
-        clr <Dp.Word0
-        pshs a
-            anda #7
-            if ne
-                do
-                    asl <Dp.Word0+1
-                    rol <Dp.Word0
-                    deca
-                while ne | wend
-            endif
-        puls a
-        lsra | lsra | lsra | anda #3
+    pshs a,b,x,y
+        stb SetRowFlags_low
+        clr SetRowFlags_high
+        tfr a,b
+        andb #7
+        if ne
+            do
+                asl SetRowFlags_low | rol SetRowFlags_high
+                decb
+            while ne | wend
+        endif
+        
+        lsra | lsra | lsra
         ldx #RowFlags_
         leax a,x
-        lda 0,x
-        ora Dp.Word0+1
-        sta 0,x
-        lda 1,x
-        ora Dp.Word0
-        sta 1,x
-    puls a,b,x
+
+        lda ,x
+        ora SetRowFlags_low
+        sta ,x+
+        lda ,x
+        ora SetRowFlags_high
+        sta ,x
+    puls a,b,x,y
 rts

@@ -5,6 +5,7 @@
 
 byte[VVramWidth * VVramHeight] VVramBack;
 byte[VVramWidth * VVramHeight] VVramFront;
+bool VVramChanged;
 byte[3 + 1] RowFlags;
 
 
@@ -53,7 +54,15 @@ void Put2C(byte x, byte y, byte c)
 
 void DrawAll()
 {
-    EraseSprites();
-    DrawSprites();
-    VVramToVramChanged();
+    if (VVramChanged) {
+        VVramBackToFront();
+        DrawSprites();
+        VVramToVramAll();
+        VVramChanged = false;
+    }
+    else {
+        EraseSprites();
+        DrawSprites();
+        VVramToVramChanged();
+    }
 }
