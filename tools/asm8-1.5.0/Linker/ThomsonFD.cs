@@ -41,6 +41,10 @@ namespace Inu.Linker
         {
             name = Path.GetFileNameWithoutExtension(fileName).ToUpper();
             binName = name + ".BIN";
+            if (name.Length >= 8)
+            {
+                binName = name.Substring(0, 8) + ".BIN";
+            }
             formatDisk();
         }
 
