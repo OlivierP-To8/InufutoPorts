@@ -183,8 +183,9 @@ void Title()
             vram += 4 * VramStep - VramRowSize * 4;
         }
     }
-    PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
-    PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
+    //PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
+    //PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
+    PrintS(Vram + VramRowSize * 19 + 6 * VramStep, "PUSH TRIGGER BUTTON");
     PrintS(Vram + VramRowSize * 23 + VramWidth - 12 * VramStep, "INUFUTO 2022");
     // {
     //     byte c;
@@ -196,4 +197,44 @@ void Title()
     //         ++c;
     //     }
     // }
+    /* to test sprite colors
+    {
+        byte c;
+        word vram;
+        vram = Vram + VramRowSize * 3 + 3 * VramStep;
+        Put2C(vram, Char_MyFighter_Right);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_MyFighter_RightDown);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_MyFighter_RightUp);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_EnemyFighter_Left);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_EnemyFighter_Right);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_Track);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_Rocket);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_SmallBang);
+        vram = vram + 3 * VramStep;
+        Put2C(vram, Char_Item);
+
+        vram = Vram + VramRowSize * 12 + 9 * VramStep;
+        Put2C(vram, Char_LargeBang);
+        Put2C(vram + 2*VramStep, Char_LargeBang+4);
+        vram = Vram + VramRowSize * 14 + 9 * VramStep;
+        Put2C(vram, Char_LargeBang+8);
+        Put2C(vram + 2*VramStep, Char_LargeBang+12);
+
+        c = Char_Fort;
+        vram = Vram + VramRowSize * 12 + 16 * VramStep;
+        repeat (4) {
+            repeat (7) {
+                vram = Put(vram, c);
+                ++c;
+            }
+            vram += VramRowSize - 7 * VramStep;
+        }
+    }*/
 }

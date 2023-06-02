@@ -6,6 +6,7 @@
 extern byte[] MonoPatternSource, ColorPatternSource, BulletPatternSource;
 
 byte[PatternSize * Char_End] PatternRam;
+byte[PatternSize * Char_End] ColorRam;
 
 void InitVram()
 {
@@ -21,4 +22,16 @@ void InitVram()
 word PrintC(word vram, byte c)
 {
     return Put(vram, c - ' ');
+}
+
+
+void Put2C(word vram, byte c)
+{
+    repeat (2) {
+        repeat (2) {
+            vram = Put(vram, c);
+            ++c;
+        }
+        vram += VramRowSize - 2 * VramStep;
+    }
 }
