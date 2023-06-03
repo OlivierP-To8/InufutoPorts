@@ -1,4 +1,3 @@
-include '../ThomsonTO.inc'
 
 ext Direct
 cseg
