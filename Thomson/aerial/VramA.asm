@@ -323,6 +323,7 @@ ClearScreen_:   public ClearScreen_
         while ne | wend
 
         bsr ClearFlags
+
     puls a,b,x,y
 rts
 

@@ -302,6 +302,7 @@ ClearScreen_:   public ClearScreen_
             clr ,x+
             cmpx #Backup+VVramWidth*VVramHeight
         while ne | wend
+
     puls a,b,x,y
 rts
 

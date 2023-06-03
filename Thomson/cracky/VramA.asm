@@ -43,6 +43,7 @@ MakePatternMono_@Param3: public MakePatternMono_@Param3
 cseg
 MakePatternMono_: public MakePatternMono_
     pshs a,b,x,y
+
         ldb #PatternSize
         mul
 
@@ -109,6 +110,7 @@ MakePatternColor_@Param2: public MakePatternColor_@Param2
 cseg
 MakePatternColor_: public MakePatternColor_
     pshs a,b,x,y
+
         ldb #PatternSize
         mul
 
@@ -322,6 +324,7 @@ ClearScreen_:   public ClearScreen_
         while ne | wend
 
         jsr ClearRowFlags_
+
     puls a,b,x,y
 rts
 
@@ -330,6 +333,7 @@ rts
 cseg
 Put_: public Put_
     pshs a,b,x,y
+
         lda #PatternSize
         mul
 
