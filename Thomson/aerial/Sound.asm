@@ -30,46 +30,34 @@ rts
 fire_notes:
     defb 1,1,F0, 1,1,D0S, 1,1,C0S, 1,2,B0, 1,2,A0, 1,1,G0, 0
 Sound_Fire_: public Sound_Fire_
-    pshs a,b,x,y
+    pshs x
         ldx #fire_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 hit_notes:
     defb 1,2,F0, 1,2,G0, 1,2,A0, 1,2,B0, 1,1,C0, 1,1,D0, 1,1,E0, 1,1,F0
     defb 0
-Sound_Hit:
-    pshs a,b,x,y
-        ldx #hit_notes
-        bsr Melody
-    puls a,b,x,y
-rts
 Sound_Hit_:  public Sound_Hit_
     pshs x
-        ldx #Sound_Hit
-        stx SoundProc_
+        ldx #hit_notes
+        bsr Melody
     puls x
 rts
 
 loose_notes:
     defb 1,1,F0, 1,1,E0, 1,1,D0, 1,1,C0, 1,2,B0, 1,2,A0, 1,2,G0, 1,2,F0, 0
-Sound_Loose:
-    pshs a,b,x,y
-        ldx #loose_notes
-        bsr Melody
-    puls a,b,x,y
-rts
 Sound_Loose_:  public Sound_Loose_
     pshs x
-        ldx #Sound_Loose
-        stx SoundProc_
+        ldx #loose_notes
+        bsr Melody
     puls x
 rts
 
 
 Melody:
-    pshs cc
+    pshs b
         ldb #0
         stb TIMBRE
         ldb #16
@@ -85,7 +73,7 @@ Melody:
             stb DUREE
             tstb
         while ne | wend
-    puls cc
+    puls b
 rts
 
 P0  equ $30 ; pause
@@ -120,16 +108,10 @@ N16 equ N8/2
 
 up_notes:
     defb 1,2,C0, 1,2,C0S, 1,2,D0, 1,2,F0, 1,2,A0, 1,1,C0, 0
-Sound_Up:
-    pshs a,b,x,y
-        ldx #up_notes
-        bsr Melody
-    puls a,b,x,y
-rts
 Sound_Up_: public Sound_Up_
     pshs x
-        ldx #Sound_Up
-        stx SoundProc_
+        ldx #up_notes
+        bsr Melody
     puls x
 rts
 
@@ -139,10 +121,10 @@ start_notes:
     defb N8P,1,D0, N16,1,D0, N8,1,D0, N8,1,E0, N4,1,D0
     defb 0
 Sound_Start_: public Sound_Start_
-    pshs a,b,x,y
+    pshs x
         ldx #start_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 
@@ -152,8 +134,8 @@ over_notes:
     defb N8,2,B0, N8,2,G0, N8,2,A0, N8,2,B0, N2,1,C0
     defb 0
 Sound_GameOver_: public Sound_GameOver_
-    pshs a,b,x,y
+    pshs x
         ldx #over_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts

@@ -29,7 +29,7 @@ rts
 
 
 Melody:
-    pshs cc
+    pshs b
         ldb #0
         stb TIMBRE
         ldb #16
@@ -45,51 +45,47 @@ Melody:
             stb DUREE
             tstb
         while ne | wend
-    puls cc
+    puls b
 rts
 
 
 beep_notes:
     defb 1,2,A0, 0
-Sound_Get_:
-    public Sound_Get_
-    pshs a,b,x,y
+Sound_Get_: public Sound_Get_
+    pshs x
         ldx #beep_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 
 hit_notes:
     defb 1,2,F0, 1,2,G0, 1,2,A0, 1,2,B0, 1,1,C0, 1,1,D0, 1,1,E0, 1,1,F0, 0
-Sound_Hit_:
-    public Sound_Hit_
-    pshs a,b,x,y
+Sound_Hit_: public Sound_Hit_
+    pshs x
         ldx #hit_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 
 miss_notes:
     defb 1,1,F0, 1,1,E0, 1,1,D0, 1,1,C0, 1,2,B0, 1,2,A0, 1,2,G0, 1,2,F0, 0
-Sound_Miss_:
-    public Sound_Miss_
-    pshs a,b,x,y
+Sound_Miss_: public Sound_Miss_
+    pshs x
         ldx #miss_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 
 loose_notes:
     defb 1,4,A0, 0
-Sound_Loose_:
-    public Sound_Loose_
-    pshs a,b,x,y
+Sound_Loose_: public Sound_Loose_
+    pshs x
         ldx #loose_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 
@@ -124,30 +120,27 @@ N16 equ N8/2
 
 
 start_notes: defb 3,2,C0, 3,2,G0, 3,2,E0, 3,2,G0, 12,1,C0, 0
-Sound_Start_: 
-    public Sound_Start_
-    pshs a,b,x,y
+Sound_Start_: public Sound_Start_
+    pshs x
         ldx #start_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 
 clear_notes: defb 3,2,C0, 3,2,E0, 3,2,G0, 3,2,D0, 3,2,F0, 3,2,A0, 3,2,E0, 3,2,G0, 3,2,B0, 9,1,C0, 0
-Sound_Clear_:
-    public Sound_Clear_
-    pshs a,b,x,y
+Sound_Clear_: public Sound_Clear_
+    pshs x
         ldx #clear_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 
 over_notes: defb 3,1,C0, 3,2,G0, 3,2,E0, 3,1,C0, 3,2,B0, 3,2,G0, 3,2,E0, 3,2,B0, 6,2,A0, 6,2,B0, 12,1,C0, 0
 Sound_GameOver_: public Sound_GameOver_
-    pshs a,b,x,y
+    pshs x
         ldx #over_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
-
