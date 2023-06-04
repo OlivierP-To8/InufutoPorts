@@ -311,6 +311,38 @@ void extFile(char *filename, FILE *f)
 	}
 }
 
+void list(FILE *f)
+{
+	// Le répertoire est situé sur la piste 20 de la disquette.
+	// Le répertoire commence au secteur 3 et occupe une place de 14 secteurs.
+	for (int entry=0; entry<14*sectorSize; entry+=32)
+	{
+		if ((floppyDisk[REP+entry] > 0x20) && (floppyDisk[REP+entry] < reservedBlock))
+		{
+			char basename[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			int c=0;
+			for (int i=0; i<8; i++)
+			{
+				byte b = floppyDisk[REP+entry+i];
+				if (b != 0x20)
+				{
+					basename[c++] = b;
+				}
+			}
+			basename[c++] = '.';
+			for (int j=8; j<11; j++)
+			{
+				byte b = floppyDisk[REP+entry+j];
+				if (b != 0x20)
+				{
+					basename[c++] = b;
+				}
+			}
+			printf("%s ", basename);
+		}
+	}
+}
+
 int main(int argc, char **argv)
 {
 	floppyDisk = malloc(diskSize);
@@ -398,11 +430,26 @@ int main(int argc, char **argv)
 			}
 		}
 	}
+	else if ((argc==3) && (strcmp(argv[1], "-list") == 0))
+	{
+		FILE *fd=fopen(argv[2], "rb");
+		if (fd==NULL)
+		{
+			printf("impossible d'ouvrir %s\n", argv[2]);
+		}
+		else
+		{
+			int nbr = fread(floppyDisk, 1, diskSize, fd);
+			list(fd);
+			fclose(fd);
+		}
+	}
 	else
 	{
 		printf("usage : %s -format filename.fd\n", argv[0]);
 		printf("usage : %s -add filename.fd filename1 filename2 ...\n", argv[0]);
 		printf("usage : %s -ext filename.fd filename1 filename2 ...\n", argv[0]);
+		printf("usage : %s -list filename.fd\n", argv[0]);
 	}
 
 	return 0;
