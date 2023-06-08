@@ -4,11 +4,13 @@ all: $(name).m7 $(name).k7 $(name).fd
 
 #Check the end of $(name).symbols.txt:
 #	CSEG, DSEG and ZSEG must not overlap
-#	DSEG must end before 7FFF for TO7 without RAM expansion (using .M7 ROM cartridge)
 #	CSEG must end before 9FFF or start at A000
-zseg=6500
-dseg=6520
-cseg=7820
+zseg=AC00
+dseg=AC20
+cseg=7800
+#	DROM must end before 7FFF for TO7 without RAM expansion
+zrom=6C00
+drom=6C20
 crom=0022
 
 %.obj: %.c
@@ -70,7 +72,7 @@ $(name).k7: $(objects) makefile
 	-@mv -f $(name).symbols.txt $(name).k7.symbols.txt
 
 $(name).m7: $(objects) makefile
-	../../tools/LinkBE $(name).m7 $(crom) $(dseg) $(zseg) $(objects)
+	../../tools/LinkBE $(name).m7 $(crom) $(drom) $(zrom) $(objects)
 	-@tail -n3 $(name).symbols.txt
 	-@mv -f $(name).symbols.txt $(name).m7.symbols.txt
 

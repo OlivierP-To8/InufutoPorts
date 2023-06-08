@@ -258,6 +258,77 @@ void addFile(char *filename, byte *bytes, int size)
 	}
 }
 
+void addBootLoader(char *bootsector, char *bootloader)
+{
+	FILE *fi=fopen(bootsector, "rb");
+	if (fi==NULL)
+	{
+		printf("impossible d'ouvrir %s\n", bootsector);
+	}
+	else
+	{
+		fseek(fi, 0, SEEK_END);
+		int size = ftell(fi);
+		byte *fileData = malloc(size);
+		memset(fileData, 0, size);
+		fseek(fi, 0, SEEK_SET);
+
+		int nbr = fread(fileData, 1, size, fi);
+		fclose(fi);
+		printf("lecture de %s (%d octets) %s\n", bootsector, size, size==nbr?"OK":"KO");
+
+		// test du binaire
+		if (size > 130)
+		{
+			printf("erreur, le boot secteur doit faire un maximum de 120 octets\n");
+		}
+		else if ((fileData[0] != 0x00) || (fileData[3] != 0x62) || (fileData[4] != 0x00))
+		{
+			printf("erreur, le boot secteur doit commencer à l'adresse $6200\n");
+		}
+		else
+		{
+			memset(floppyDisk, 0, sectorSize);
+			byte checksum = 0x55;
+			for (int i=0; i<size-10; i++)
+			{
+				floppyDisk[i] = 256 - fileData[i+5];
+				checksum += fileData[i+5];
+			}
+			memcpy(&floppyDisk[120], "BASIC2", 6);
+			checksum += 0x6c;
+			floppyDisk[127] = checksum;
+		}
+
+		FILE *fb=fopen(bootloader, "rb");
+		if (fb==NULL)
+		{
+			printf("impossible d'ouvrir %s\n", bootloader);
+		}
+		else
+		{
+			fseek(fb, 0, SEEK_END);
+			int size = ftell(fb);
+			byte *fileData = malloc(size);
+			memset(fileData, 0, size);
+			fseek(fb, 0, SEEK_SET);
+
+			int nbr = fread(fileData, 1, size, fb);
+			fclose(fb);
+			printf("lecture de %s (%d octets) %s\n", bootloader, size, size==nbr?"OK":"KO");
+
+			// l'entête du BIN (5 octets) est sur le secteur de boot 0
+			// le binaire hors entête commence sur le secteur 1
+			memcpy(&floppyDisk[251], fileData, size-5);
+			floppyDisk[FAT] = reservedBlock;
+			if (size-10 > 8*sectorSize)
+			{
+				floppyDisk[FAT+1] = reservedBlock;
+			}
+		}
+	}
+}
+
 void extFile(char *filename, FILE *f)
 {
 	char basename[13];
@@ -396,6 +467,42 @@ int main(int argc, char **argv)
 			fclose(fd);
 		}
 	}
+	else if ((argc>=6) && (strcmp(argv[1], "-addBL") == 0))
+	{
+		FILE *fd=fopen(argv[2], "wb");
+		if (fd==NULL)
+		{
+			printf("impossible d'ouvrir %s\n", argv[2]);
+		}
+		else
+		{
+			addBootLoader(argv[3], argv[4]);
+			for (int i=5; i<argc; i++)
+			{
+				FILE *fi=fopen(argv[i], "rb");
+				if (fi==NULL)
+				{
+					printf("impossible d'ouvrir %s\n", argv[i]);
+				}
+				else
+				{
+					fseek(fi, 0, SEEK_END);
+					int size = ftell(fi);
+					byte *fileData = malloc(size);
+					memset(fileData, 0, size);
+					fseek(fi, 0, SEEK_SET);
+
+					int nbr = fread(fileData, 1, size, fi);
+					fclose(fi);
+					printf("lecture de %s (%d octets) %s\n", argv[i], size, size==nbr?"OK":"KO");
+
+					addFile(argv[i], fileData, size);
+				}
+			}
+			fwrite(floppyDisk, 1, diskSize, fd);
+			fclose(fd);
+		}
+	}
 	else if ((argc>=4) && (strcmp(argv[1], "-ext") == 0))
 	{
 		FILE *fd=fopen(argv[2], "rb");
@@ -448,6 +555,7 @@ int main(int argc, char **argv)
 	{
 		printf("usage : %s -format filename.fd\n", argv[0]);
 		printf("usage : %s -add filename.fd filename1 filename2 ...\n", argv[0]);
+		printf("usage : %s -addBL filename.fd BOOT.BIN LOAD.BIN filename1 filename2 ...\n", argv[0]);
 		printf("usage : %s -ext filename.fd filename1 filename2 ...\n", argv[0]);
 		printf("usage : %s -list filename.fd\n", argv[0]);
 	}

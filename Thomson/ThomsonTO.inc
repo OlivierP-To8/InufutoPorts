@@ -49,6 +49,10 @@ PUTC    equ $E803   ;Affichage d'un caractère
 ; sont détournées par le moniteur vers GEPE ($EC06) et PEIN ($EC09)
 ; pour lire la souris de façon transparente.
 
+DKCONT  equ $E004   ;Fonctions standard de la ROM contrôleur de disquettes
+DKBOOT  equ $E007   ;Lancement du boot disquette
+DKFMT   equ $E00A   ;Formatage disquette
+
 MODELE  equ $fff0   ;Modèle de la gamme
                     ;0: TO7
                     ;1: TO7-70
@@ -79,6 +83,37 @@ TEMPO   equ $6032   ;Tempo général pour la génération de musique.
 DUREE   equ $6034   ;Durée de la note (de 1 à 96).
 TIMBRE  equ $6035   ;Attaque de la note.
 OCTAVE  equ $6037   ;Octave (1, 2, 4, 8 ou 16).
+
+DKOPC   equ $6048   ;Commande du contrôleur de disque
+                    ;00:formatage sans vérification (TO9 seulement)
+                    ;01:initialisation du contrôleur
+                    ;02:lecture d'un secteur
+                    ;04:passage en simple densité (sur un lecteur double densité seulement)
+                    ;08:écriture d'un secteur
+                    ;10:passage en double densité (sur un lecteur double densité seulement)
+                    ;20:recherche de piste 0
+                    ;40:recherche de la piste dont le numéro est passé par le registre DKTRK
+                    ;80:option de vérification en écriture
+DKDRV   equ $6049   ;Numéro du disque (0 à 3)
+DKTRK   equ $604B   ;Numéro de piste (0 à 39 ou 79)
+DKSEC   equ $604C   ;Numéro de secteur (1 à 16)
+DKNUM   equ $604D   ;Entrelacement des secteurs au formatage (7 par défaut)
+DKSTA   equ $604E   ;Etat du contrôleur de disquettes
+                    ;01:disquette protégée en écriture
+                    ;02:erreur de piste ou de timing
+                    ;04:erreur de secteur
+                    ;08:erreur sur les données
+                    ;10:lecteur non prêt
+                    ;20:erreur sur vérification
+                    ;40:contrôleur non prêt
+                    ;80:disquette non formatée
+DKBUF   equ $604F   ;Pointeur de la zone tampon d'I/O disque (256 octets max)
+TRACK0  equ $6051   ;Position de la tête du lecteur 0
+TRACK1  equ $6053   ;Position de la tête du lecteur 1
+TEMP1   equ $6055   ;Registre temporaire
+TEMP2   equ $6057   ;Registre temporaire
+ROTAT   equ $6058   ;Flag de rotation du moteur
+DKFLG   equ $6080   ;Sémaphore de présence du contrôleur disque (0=abscent, $FF=présent)
 
 BUZZ    equ $6073   ;Sémaphore d'extinction du buzzer.
 
