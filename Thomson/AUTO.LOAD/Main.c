@@ -1,7 +1,6 @@
 // Thomson Floppy Disk BIN Loader by OlivierP-To8
 // https://github.com/OlivierP-To8
 
-#include "Main.h"
 #include "ScanKeys.h"
 #include "Vram.h"
 #include "File.h"

@@ -1,14 +1,7 @@
 include 'Vram.inc'
 include '../ThomsonTO.inc'
 
-VramTop equ Vram+VramRowSize*2
-VVramWidth equ 32
-VVramHeight equ 24
-
 ext PatternRam_
-ext ColorRam_
-ext PaletteValues_
-ext PaletteValues8c_
 
 zseg
 yCount:
