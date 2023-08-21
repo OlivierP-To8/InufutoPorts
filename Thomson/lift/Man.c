@@ -4,7 +4,7 @@
 #include "Stage.h"
 #include "Sprite.h"
 #include "Chars.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Item.h"
 #include "Sound.h"
 #include "VVram.h"

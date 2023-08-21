@@ -1,4 +1,4 @@
-include '../ThomsonTO.inc'
+include 'ThomsonTO.inc'
 
 Keys_Left equ $04
 Keys_Right equ $08

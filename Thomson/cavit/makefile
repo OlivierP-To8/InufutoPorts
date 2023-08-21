@@ -20,7 +20,7 @@ crom=0022
 %.obj: %.asm
 	../../tools/Asm09 $*.asm
 
-Main.asm: Main.c Main.h ScanKeys.h Sound.h Status.h Stage.h Sprite.h \
+Main.asm: Main.c Main.h ../ScanKeys.h Sound.h Status.h Stage.h Sprite.h \
 	Man.h Chaser.h Ghost.h Rock.h Point.h Box.h VVram.h
 Status.asm: Status.c Status.h Main.h Print.h Chars.h Sprite.h
 Stages.asm: Stages.c Stages.h
@@ -35,7 +35,7 @@ Rock.asm: Rock.c Rock.h Stage.h Stages.h VVram.h Chars.h Sprite.h Direction.h \
 Direction.asm: Direction.c Direction.h
 Movable.asm: Movable.c Movable.h Sprite.h Stage.h Direction.h 
 Man.h: Movable.h 
-Man.asm: Man.c Man.h Movable.h Sprite.h Stage.h ScanKeys.h Direction.h Chars.h VVram.h \
+Man.asm: Man.c Man.h Movable.h Sprite.h Stage.h ../ScanKeys.h Direction.h Chars.h VVram.h \
 	Rock.h Sound.h
 Monster.h: Movable.h
 Monster.asm: Monster.c Monster.h Stage.h Rock.h Sprite.h Chaser.h Ghost.h Man.h
@@ -58,7 +58,7 @@ objects = Startup.obj \
 	Main.obj Status.obj Stages.obj Stage.obj Fixed.obj Box.obj Rock.obj \
 	Direction.obj Movable.obj Man.obj Monster.obj Chaser.obj Ghost.obj Point.obj \
 	Chars.obj Print.obj VVram.obj VVramA.obj CopyMemory.obj \
-	Init.obj ScanKeys.obj Vram.obj VramA.obj Sprite.obj Sound.obj \
+	../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Sprite.obj Sound.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

@@ -1,6 +1,6 @@
 #include "Main.h"
 #include "Stage.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Status.h"
 #include "Sprite.h"
 #include "Vram.h"

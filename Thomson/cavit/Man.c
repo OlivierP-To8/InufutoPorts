@@ -2,7 +2,7 @@
 #include "Movable.h"
 #include "Sprite.h"
 #include "Stage.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Direction.h"
 #include "Chars.h"
 #include "VVram.h"

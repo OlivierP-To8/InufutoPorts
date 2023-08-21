@@ -20,7 +20,7 @@ crom=0022
 %.obj: %.asm
 	../../tools/Asm09 $*.asm
 
-Main.asm: Main.c Main.h Init.h Vram.h Stage.h ScanKeys.h Sprite.h Sound.h \
+Main.asm: Main.c Main.h ../Init.h Vram.h Stage.h ../ScanKeys.h Sprite.h Sound.h \
 	MyFighter.h MyBullet.h EnemyFighter.h EnemyBullet.h GroundEnemy.h Fort.h \
 	Bang.h Item.h
 Stages.asm: Stages.c Stage.h Stages.h Chars.h
@@ -35,7 +35,7 @@ Movable.asm: Movable.c Movable.h
 Fighter.h: Movable.h
 Fighter.asm: Fighter.c Fighter.h
 MyFighter.h: Fighter.h
-MyFighter.asm: MyFighter.c MyFighter.h Stage.h Chars.h Sprite.h ScanKeys.h Sprite.h \
+MyFighter.asm: MyFighter.c MyFighter.h Stage.h Chars.h Sprite.h ../ScanKeys.h Sprite.h \
 	MyBullet.h Sound.h Bang.h Status.h Main.h Fort.h
 Bullet.h: Movable.h
 Bullet.asm: Bullet.c Bullet.h Sprite.h Stage.h
@@ -71,7 +71,7 @@ objects = Startup.obj \
 	Main.obj Chars.obj Stages.obj Stage.obj Status.obj  \
 	Fighter.obj MyFighter.obj Bullet.obj MyBullet.obj EnemyFighter.obj Bang.obj \
 	EnemyBullet.obj GroundEnemy.obj Fort.obj Item.obj \
-	Init.obj ScanKeys.obj Sound.obj Vram.obj VramA.obj Print.obj   \
+	../Init.obj ../ScanKeys.obj Sound.obj Vram.obj VramA.obj Print.obj   \
 	Movable.obj Sprite.obj VVram.obj VVramA.obj \
 	Math.obj CopyMemory.obj \
 	../../tools/cate09.lib

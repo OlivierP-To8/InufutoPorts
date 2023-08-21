@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include "Direction.h"
 #include "Stage.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Fort.h"
 #include "Bang.h"
 #include "Main.h"

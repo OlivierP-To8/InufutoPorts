@@ -20,7 +20,7 @@ crom=0022
 %.obj: %.asm
 	../../tools/Asm09 $*.asm
 
-Main.asm: Main.c Main.h ScanKeys.h Vram.h Sound.h Status.h Stage.h \
+Main.asm: Main.c Main.h ../ScanKeys.h Vram.h Sound.h Status.h Stage.h \
 	Movable.h Sprite.h Man.h Monster.h Item.h Point.h Actor.h \
 	VVram.h
 Status.asm: Status.c Status.h Main.h Print.h Chars.h Vram.h \
@@ -31,7 +31,7 @@ Stage.asm: Stage.c Stage.h Stages.h Main.h Chars.h Vram.h Status.h \
 Stages.asm: Stages.c Stage.h Stages.h
 Movable.asm: Movable.c Movable.h
 Actor.asm: Actor.c Movable.h Actor.h
-Man.asm: Man.c Movable.h Man.h Sprite.h Stage.h Movable.h ScanKeys.h \
+Man.asm: Man.c Movable.h Man.h Sprite.h Stage.h Movable.h ../ScanKeys.h \
 	Sound.h Main.h Chars.h Line.h Item.h Vram.h Status.h Actor.h Increaser.h \
 	VVram.h
 Item.asm: Item.c Item.h Stage.h Stages.h Vram.h Chars.h Line.h Main.h \
@@ -54,7 +54,7 @@ Print.asm: Print.c Print.h Vram.h
 
 objects = Startup.obj \
 	Main.obj Status.obj Chars.obj Stage.obj Stages.obj \
-	Init.obj ScanKeys.obj Vram.obj VramA.obj Print.obj \
+	../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Print.obj \
 	Movable.obj Actor.obj Man.obj Item.obj Line.obj \
 	Monster.obj Point.obj Increaser.obj \
 	Sprite.obj Sound.obj Math.obj VVram.obj VVramA.obj \

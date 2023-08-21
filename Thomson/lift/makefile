@@ -20,7 +20,7 @@ crom=0022
 %.obj: %.asm
 	../../tools/Asm09 $*.asm
 
-Main.asm: Main.c Main.h ScanKeys.h Sprite.h Vram.h Sound.h Status.h Stage.h \
+Main.asm: Main.c Main.h ../ScanKeys.h Sprite.h Vram.h Sound.h Status.h Stage.h \
 	Actor.h Monster.h Lift.h Man.h Item.h Point.h Movable.h VVram.h
 
 Status.asm: Status.c Status.h Main.h Print.h Chars.h Sprite.h Vram.h Movable.h \
@@ -30,7 +30,7 @@ Stage.asm: Stage.c Stage.h Stages.h Main.h Sprite.h Chars.h Vram.h Status.h Man.
 Stages.asm: Stages.c Stage.h Stages.h
 Movable.asm: Movable.c Movable.h Stage.h Actor.h Lift.h
 Actor.asm: Actor.c Movable.h Actor.h Stage.h Lift.h
-Man.asm: Man.c Movable.h Actor.h Man.h Stage.h Sprite.h Chars.h ScanKeys.h Item.h \
+Man.asm: Man.c Movable.h Actor.h Man.h Stage.h Sprite.h Chars.h ../ScanKeys.h Item.h \
 	Sound.h VVram.h
 Item.asm: Item.c Item.h Stage.h Stages.h Vram.h Chars.h Main.h Movable.h Actor.h \
 	Point.h Sound.h Sprite.h VVram.h
@@ -49,7 +49,7 @@ Print.asm: Print.c Print.h Vram.h
 objects = Startup.obj \
 	Main.obj Status.obj Stage.obj Movable.obj Actor.obj \
 	Stages.obj Chars.obj Man.obj Item.obj Lift.obj Monster.obj Point.obj \
-	Init.obj ScanKeys.obj Vram.obj VramA.obj Print.obj VVram.obj VVramA.obj \
+	../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Print.obj VVram.obj VVramA.obj \
 	Sprite.obj Sound.obj CopyMemory.obj \
 	../../tools/cate09.lib
 

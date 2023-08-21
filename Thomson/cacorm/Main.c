@@ -1,6 +1,6 @@
 #include "Main.h"
-#include "Init.h"
-#include "ScanKeys.h"
+#include "../Init.h"
+#include "../ScanKeys.h"
 #include "Vram.h"
 #include "Sound.h"
 #include "Status.h"

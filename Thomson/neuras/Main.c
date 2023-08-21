@@ -1,5 +1,5 @@
 #include "Stage.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Solver.h"
 #include "Card.h"
 #include "Monster.h"
@@ -7,7 +7,7 @@
 #include "Sprite.h"
 #include "Vram.h"
 #include "Sound.h"
-#include "Init.h"
+#include "../Init.h"
 
 word Score;
 word HiScore;

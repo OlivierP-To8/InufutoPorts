@@ -1,5 +1,5 @@
 #include "Main.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Vram.h"
 #include "VVram.h"
 #include "Sound.h"
@@ -9,6 +9,8 @@
 #include "Man.h"
 #include "Destruction.h"
 #include "Monster.h"
+
+extern void Init();
 
 constexpr byte MaxTimeDenom = 50 / (8 / CoordRate);
 constexpr byte BonusRate = 8;
@@ -26,6 +28,8 @@ extern void _deb();
 void Main()
 {
     byte key, timeDenom;
+
+    Init();
 
     HiScore = 0;
     Score = 0;

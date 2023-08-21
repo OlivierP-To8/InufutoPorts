@@ -3,7 +3,7 @@
 #include "Man.h"
 #include "Sprite.h"
 #include "Stage.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Main.h"
 #include "Sound.h"
 #include "Chars.h"

@@ -2,7 +2,7 @@
 #include "Man.h"
 #include "Sprite.h"
 #include "Stage.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Block.h"
 #include "Sound.h"
 #include "Main.h"

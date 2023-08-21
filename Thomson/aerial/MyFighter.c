@@ -1,7 +1,7 @@
 #include "MyFighter.h"
 #include "Stage.h"
 #include "Chars.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Sprite.h"
 #include "MyBullet.h"
 #include "Sound.h"

@@ -1,5 +1,5 @@
 #include "Main.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Sprite.h"
 #include "Vram.h"
 #include "Sound.h"

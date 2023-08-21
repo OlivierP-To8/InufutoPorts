@@ -1,5 +1,5 @@
 #include "Man.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Chars.h"
 #include "Sprite.h"
 #include "Stage.h"

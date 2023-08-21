@@ -1,18 +1,7 @@
-; Thomson Floppy Disk BIN Loader by OlivierP-To8
-; https://github.com/OlivierP-To8
-
-include 'Vram.inc'
-include '../ThomsonTO.inc'
-
-ext InitVram_, Main_
-
-zseg
-Direct: public Direct
+include 'ThomsonTO.inc'
 
 cseg
-    ; system stack = $608b-$60cc
-    lds #DIRECT  ; Stack à zseg du makefile
-
+Init_: public  Init_
     ; identification du modèle
     ;    00 = T9000,TO7  => bord écran par PRC + modifier la palette en 8c
     ;    01 = TO7-70     => bord écran par PRC
@@ -48,10 +37,10 @@ cseg
     lda #$0
     sta LGAMOD
 
-    ; curseur invisible
-    lda STATUS
-    anda #$fb
-    sta STATUS
+    ; commutation du bit de couleur (C0 a 0)
+    lda PRC
+    anda #$fe
+    sta PRC
 
     ; on efface l'ecran (de $4000 à $5F3F)
     ldx #$4000
@@ -61,6 +50,4 @@ cseg
         cmpx #$5F3F
     while ne | wend
 
-    jsr InitVram_
-jmp Main_
-
+rts

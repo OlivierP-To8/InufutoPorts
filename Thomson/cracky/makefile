@@ -21,10 +21,10 @@ crom=0022
 	../../tools/Asm09 $*.asm
 
 Destruction.asm: Destruction.c Destruction.h Stage.h Movable.h VVram.h Chars.h 
-Main.asm: Main.c Main.h ScanKeys.h Vram.h VVram.h Sound.h \
+Main.asm: Main.c Main.h ../ScanKeys.h Vram.h VVram.h Sound.h \
 	Sprite.h Movable.h Status.h Stage.h Movable.h Man.h \
 	Movable.h Destruction.h Monster.h Movable.h 
-Man.asm: Man.c Man.h Movable.h ScanKeys.h Chars.h Sprite.h \
+Man.asm: Man.c Man.h Movable.h ../ScanKeys.h Chars.h Sprite.h \
 	Movable.h Stage.h Movable.h VVram.h Destruction.h Main.h \
 	Sound.h 
 Monster.asm: Monster.c Monster.h Movable.h Stages.h Stage.h Movable.h \
@@ -45,7 +45,6 @@ Chars.obj: Chars.asm
 CopyMemory.obj: CopyMemory.asm 
 Math.obj: Math.asm 
 Print.obj: Print.asm 
-ScanKeys.obj: ScanKeys.asm 
 Sound.obj: Sound.asm 
 StageA.obj: StageA.asm 
 Startup.obj: Startup.asm 
@@ -55,7 +54,7 @@ VVramA.obj: VVramA.asm VVram.inc
 objects = Startup.obj \
 	Destruction.obj Main.obj Man.obj Monster.obj Movable.obj Sprite.obj \
 	Stage.obj Stages.obj Status.obj Vram.obj VVram.obj Chars.obj \
-	CopyMemory.obj Math.obj Print.obj ScanKeys.obj Sound.obj StageA.obj \
+	CopyMemory.obj Math.obj Print.obj ../Init.obj ../ScanKeys.obj Sound.obj StageA.obj \
 	 VramA.obj VVramA.obj \
 	../../tools/cate09.lib
 
