@@ -3,36 +3,17 @@
 #include "CopyMemory.h"
 #include "Chars.h"
 
-extern byte[] MonoPatternSource, ColorPatternSource;
-
-byte[PatternSize * Char_End] PatternRam;
+extern byte[PatternSize * Char_End] PatternRam;
 byte[PatternSize * Char_End] ColorRam;
 
 void InitVram()
 {
-    static const byte[] ColorBytes = {
-        64, 0x0f,
-        16, 0x05,
-        2, 0x02, // Char_Wall
-        1, 0x07, // Char_HardWall
-        4, 0x0e, // Char_Meter
-        0
-    };
-    ptr<byte> pColor, pPattern;
-    byte c, count, color;
-
-    pColor = ColorBytes;
-    pPattern = MonoPatternSource;
-    c = Char_Ascii;
-    while ((count = *pColor) != 0) {
-        ++pColor;
-        color = *pColor;
-        ++pColor;
-        MakePatternMono(c, pPattern, count, color);
-        c += count;
-        pPattern += ((word)count << 3);
-    }
-    MakePatternColor(Char_MyFort, ColorPatternSource, Char_End - Char_MyFort);
+    MakeMono(Char_Logo - Char_Ascii,     ColorRam, 0x0f);
+    MakeMono(Char_Wall - Char_Logo,      ColorRam + Char_Logo * CharHeight, 0x05);
+    MakeMono(Char_HardWall - Char_Wall,  ColorRam + Char_Wall * CharHeight, 0x02);
+    MakeMono(Char_Meter - Char_HardWall, ColorRam + Char_HardWall * CharHeight, 0x07);
+    MakeMono(Char_MyFort - Char_Meter,   ColorRam + Char_Meter * CharHeight, 0x0e);
+    MakeColor(Char_End - Char_MyFort,    ColorRam + Char_MyFort * CharHeight);
     ClearScreen();
 }
 
