@@ -4,10 +4,10 @@ all: $(name).fd
 
 #Check the end of $(name).symbols.txt:
 #	CSEG, DSEG and ZSEG must not overlap
-#	CSEG, DSEG and ZSEG must be in the DSEG of the BIN files to load
-zseg=AE00
-dseg=AE20
-cseg=B500
+#	CSEG, DSEG and ZSEG mustn't be in the CSEG of the BIN files to load
+zseg=7900
+dseg=7920
+cseg=9500
 
 %.obj: %.c
 	../../tools/Cate09 $*.c
