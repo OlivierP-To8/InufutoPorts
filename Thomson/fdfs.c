@@ -503,6 +503,52 @@ int main(int argc, char **argv)
 			fclose(fd);
 		}
 	}
+	else if ((argc>=4) && (strcmp(argv[1], "-addDOS") == 0))
+	{
+		FILE *fd=fopen(argv[2], "wb");
+		if (fd==NULL)
+		{
+			printf("impossible d'ouvrir %s\n", argv[2]);
+		}
+		else
+		{
+			for (int i=3; i<argc; i++)
+			{
+				FILE *fi=fopen(argv[i], "rb");
+				if (fi==NULL)
+				{
+					printf("impossible d'ouvrir %s\n", argv[i]);
+				}
+				else
+				{
+					fseek(fi, 0, SEEK_END);
+					int size = ftell(fi);
+					byte *fileData = malloc(size);
+					memset(fileData, 0, size);
+					fseek(fi, 0, SEEK_SET);
+
+					int nbr = fread(fileData, 1, size, fi);
+					fclose(fi);
+					printf("lecture de %s (%d octets) %s\n", argv[i], size, size==nbr?"OK":"KO");
+
+					if (i==3)
+					{
+						memcpy(floppyDisk, fileData, size);
+						for (int i=0, s=0; s<size; s+=blockSize, i++)
+						{
+							floppyDisk[FAT+i] = reservedBlock;
+						}
+					}
+					else
+					{
+						addFile(argv[i], fileData, size);
+					}
+				}
+			}
+			fwrite(floppyDisk, 1, diskSize, fd);
+			fclose(fd);
+		}
+	}
 	else if ((argc>=4) && (strcmp(argv[1], "-ext") == 0))
 	{
 		FILE *fd=fopen(argv[2], "rb");

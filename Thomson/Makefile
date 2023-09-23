@@ -32,7 +32,7 @@ LOAD.BIN: fdfs ScanKeys.obj
 	$(MAKE) -C AUTO.LOAD
 	./fdfs -ext AUTO.LOAD/LOAD.fd LOAD.BIN
 
-dist.zip: fdfs $(SUBDIRS) BOOT.BIN LOAD.BIN
-	./fdfs -addBL InufuTO.fd BOOT.BIN LOAD.BIN AUTO.BAT $(BINNAMES)
+dist.zip: fdfs $(SUBDIRS)
+	./fdfs -addDOS InufuTO.fd BASIC.DOS AUTO.BAT $(BINNAMES)
 	find . -regex ".*\.\(m7\|k7\)" -print | zip $@ InufuTO.fd -@
 
