@@ -30,29 +30,39 @@ ScanKeys_: public ScanKeys_
             coma      ; value of direction
             anda #$0f ; only for joystick 0
             if eq     ; if no direction
-                ldb $FFF0
-                cmpb #$01
-                if le ; if TO7 or TO7-70
+                ldb MODELE ; check the Thomson model
+                cmpb #$02
+                if eq ; if TO9
+                    ldb PRA
+                    lsrb
+                    if cs ; if a key is pressed
+                        ldb SRDR
+                    else
+                        bra FIN
+                    endif
+                else
                     ; keyboard test
                     clrb
                     jsr KTST ; 49 cycles
                     if cs ; if a key is pressed (carry set)
                         jsr GETC ; 218 cycles
                         ; code of pressed key in B
-
-                        ldx #table
-                        do
-                            lda ,x
-                        while ne
-                            cmpb ,x+
-                            if eq
-                                lda ,x
-                                bra FIN
-                            endif
-                            leax 1,x
-                        wend
+                    else
+                        bra FIN
                     endif
                 endif
+
+                ldx #table
+                do
+                    lda ,x
+                while ne
+                    cmpb ,x+
+                    if eq
+                        lda ,x
+                        bra FIN
+                    endif
+                    leax 1,x
+                wend
             endif
         endif
     FIN:
