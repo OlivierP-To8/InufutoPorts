@@ -19,7 +19,7 @@ cseg
     ;    02 = TO9        => bord écran par LGATOU avec saturation $08
     ;    03 = TO8,TO8D   => bord écran par LGATOU
     ;    06 = TO9+
-    ldb $FFF0
+    ldb MODELE
     cmpb #$03
     if ge
         ; bord noir sur TO8/TO8D/TO9+
@@ -52,6 +52,11 @@ cseg
     lda STATUS
     anda #$fb
     sta STATUS
+
+    ; commutation du bit de couleur (C0 a 0)
+    lda PRC
+    anda #$fe
+    sta PRC
 
     ; on efface l'ecran (de $4000 à $5F3F)
     ldx #$4000

@@ -8,7 +8,7 @@ Init_: public  Init_
     ;    02 = TO9        => bord écran par LGATOU avec saturation $08
     ;    03 = TO8,TO8D   => bord écran par LGATOU
     ;    06 = TO9+
-    ldb $FFF0
+    ldb MODELE
     cmpb #$03
     if ge
         ; bord noir sur TO8/TO8D/TO9+
