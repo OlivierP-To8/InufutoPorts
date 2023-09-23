@@ -10,6 +10,7 @@ ext PatternRam_
 ext ColorRam_
 ext PaletteValues_
 ext PaletteValues8c_
+ext ColorSource_
 
 dseg
 Backup:
@@ -19,10 +20,6 @@ zseg
 yCount:
     defb 0
 xCount:
-    defb 0
-bitCount:
-    defb 0
-pattern:
     defb 0
 pVram:
     defw 0
@@ -34,40 +31,20 @@ flagBit:
     defb 0
 
 
-; void MakePatternMono(byte c, ptr<byte> pSource, byte count, byte color);
+; void MakeMono(byte count, ptr<byte> pDest, byte color);
 dseg
-MakePatternMono_@Param2: public MakePatternMono_@Param2
-    defb 0 ; count
-MakePatternMono_@Param3: public MakePatternMono_@Param3
+MakeMono_@Param2: public MakeMono_@Param2
     defb 0 ; color
 cseg
-MakePatternMono_: public MakePatternMono_
+MakeMono_: public MakeMono_
     pshs a,b,x,y
 
-        ldb #PatternSize
-        mul
+        sta <xCount
 
-        pshs a,b
-
-        addd #PatternRam_
-        tfr d,x
-
-        ; ajout de la forme
-        lda MakePatternMono_@Param2 | sta <xCount
-        do
-            lda #CharHeight | sta <yCount
-            do
-                ldb ,y+
-                stb ,x+
-
-                dec <yCount
-            while ne | wend
-
-            dec <xCount
-        while ne | wend
+        ; y pointe où écrire la couleur (pDest)
 
         ; on prend la couleur correspondante dans la palette
-        ; et on la stocke dans pattern
+        ; et on la stocke dans B
         ; utilisation de la palette réduite à 8 couleurs pour TO7
         ldb $FFF0
         if eq ; si TO7 (valeur 0)
@@ -75,23 +52,15 @@ MakePatternMono_: public MakePatternMono_
         else
             ldx #PaletteValues_
         endif
-        lda MakePatternMono_@Param3
+        lda MakeMono_@Param2
         leax a,x
-        lda ,x
-        sta <pattern
-
-        puls a,b
-
-        addd #ColorRam_
-        tfr d,x
+        ldb ,x
 
         ; ajout de la couleur
-        lda MakePatternMono_@Param2 | sta <xCount
         do
             lda #CharHeight | sta <yCount
             do
-                ldb <pattern
-                stb ,x+
+                stb ,y+
 
                 dec <yCount
             while ne | wend
@@ -103,181 +72,40 @@ MakePatternMono_: public MakePatternMono_
 rts
 
 
-; void MakePatternColor(byte c, ptr<byte> pSource, byte count);
-dseg
-MakePatternColor_@Param2: public MakePatternColor_@Param2
-    defb 0 ; count
+; void MakeColor(byte count, ptr<byte> pDest);
 cseg
-MakePatternColor_: public MakePatternColor_
+MakeColor_: public MakeColor_
     pshs a,b,x,y
 
-        ldb #PatternSize
-        mul
+        sta <xCount
 
-        pshs a,b,y
+        ; y pointe où écrire la couleur (pDest)
+        ; x pointe où lire les index de palette
+        ldx #ColorSource_
 
-        addd #PatternRam_
-        tfr d,x
-        ; x pointe où écrire
-        ; y pointe où lire
-
-        ; ajout de la forme
-        lda MakePatternColor_@Param2 | sta <xCount
+        ; ajout de la couleur selon les index de palette dans ColorSource_
         do
             lda #CharHeight | sta <yCount
             do
-                clr <pattern
+                ; y pointe où lire
+                lda ,x+
 
-                lda ,y+
-                ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
-                tfr a,b
-                andb #$0f
-                anda #$f0
-                lsra | lsra | lsra | lsra
-                ; A contient la 1ere partie de l'octet, B la 2nd partie
-
-                tsta
-                if ne
-                    lda #$80
-                    ora <pattern
-                    sta <pattern
-                endif
-
-                tstb
-                if ne
-                    lda #$40
-                    ora <pattern
-                    sta <pattern
-                endif
-
-                lda ,y+
-                ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
-                tfr a,b
-                andb #$0f
-                anda #$f0
-                lsra | lsra | lsra | lsra
-                ; A contient la 1ere partie de l'octet, B la 2nd partie
-
-                tsta
-                if ne
-                    lda #$20
-                    ora <pattern
-                    sta <pattern
-                endif
-
-                tstb
-                if ne
-                    lda #$10
-                    ora <pattern
-                    sta <pattern
-                endif
-
-                lda ,y+
-                ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
-                tfr a,b
-                andb #$0f
-                anda #$f0
-                lsra | lsra | lsra | lsra
-                ; A contient la 1ere partie de l'octet, B la 2nd partie
-
-                tsta
-                if ne
-                    lda #$08
-                    ora <pattern
-                    sta <pattern
-                endif
-
-                tstb
-                if ne
-                    lda #$04
-                    ora <pattern
-                    sta <pattern
-                endif
-
-                lda ,y+
-                ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
-                tfr a,b
-                andb #$0f
-                anda #$f0
-                lsra | lsra | lsra | lsra
-                ; A contient la 1ere partie de l'octet, B la 2nd partie
-
-                tsta
-                if ne
-                    lda #$02
-                    ora <pattern
-                    sta <pattern
-                endif
-
-                tstb
-                if ne
-                    lda #$01
-                    ora <pattern
-                    sta <pattern
-                endif
-
-                lda <pattern | sta ,x+
-
-                dec <yCount
-            while ne | wend
-
-            dec <xCount
-        while ne | wend
-
-        puls a,b,y
-
-        addd #ColorRam_
-        tfr d,x
-        ; x pointe où écrire
-        ; y pointe où lire
-
-        ; ajout de la couleur
-        lda MakePatternColor_@Param2 | sta <xCount
-        do
-            lda #CharHeight | sta <yCount
-            do
-                clr <pattern
-
-                ; on récupère la couleur ayant la valeur la plus élevée (entre 0 et 15)
-                ; pour 8 pixels, donc 4 octets, dans pattern
-                lda #4 | sta <bitCount ; il faut 4 octets pour 8 pixels
-                do
-                    lda ,y+
-                    ; découpe de l'octet en deux (image source en 4 bits/16 couleurs)
-                    tfr a,b
-                    andb #$0f
-                    anda #$f0
-                    lsra | lsra | lsra | lsra
-                    ; A contient la 1ere partie de l'octet, B la 2nd partie
-
-                    cmpa <pattern
-                    if ge
-                        sta <pattern
-                    endif
-
-                    cmpb <pattern
-                    if ge
-                        stb <pattern
-                    endif
-
-                    dec <bitCount
-                while ne | wend
-
-                ; on prend la couleur correspondante dans la palette
-                ; et on la stocke dans ColorRam_ (X)
-                pshs y
+                pshs x
                     ; utilisation de la palette réduite à 8 couleurs pour TO7
-                    ldb $FFF0
+                    ldb MODELE
                     if eq ; si TO7 (valeur 0)
-                        ldy #PaletteValues8c_
+                        ldx #PaletteValues8c_
                     else
-                        ldy #PaletteValues_
+                        ldx #PaletteValues_
                     endif
-                    lda <pattern
-                    leay a,y
-                    ldb ,y
-                    stb ,x+
-                puls y
+
+                    ; on prend la couleur correspondante dans la palette
+                    leax a,x
+                    ldb ,x
+
+                    ; et on la stocke dans ColorRam_ (Y)
+                    stb ,y+
+                puls x
 
                 dec <yCount
             while ne | wend
