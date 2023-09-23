@@ -5,12 +5,12 @@ all: $(name).m7 $(name).k7 $(name).fd
 #Check the end of $(name).symbols.txt:
 #	CSEG, DSEG and ZSEG must not overlap
 #	CSEG must end before 9FFF or start at A000
-zseg=A700
-dseg=A720
-cseg=6D00
+zseg=8000
+dseg=8020
+cseg=A000
 #	DROM must end before 7FFF for TO7 without RAM expansion
-zrom=6700
-drom=6720
+zrom=6E00
+drom=6E20
 crom=0022
 
 %.obj: %.c
