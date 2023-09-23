@@ -295,8 +295,8 @@ void addBootLoader(char *bootsector, char *bootloader)
 				floppyDisk[i] = 256 - fileData[i+5];
 				checksum += fileData[i+5];
 			}
-			memcpy(&floppyDisk[120], "BASIC2", 6);
-			checksum += 0x6c;
+			//memcpy(&floppyDisk[120], "BASIC2", 6);
+			//checksum += 0x6c;
 			floppyDisk[127] = checksum;
 		}
 
