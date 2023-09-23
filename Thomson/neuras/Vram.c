@@ -3,41 +3,21 @@
 #include "CopyMemory.h"
 #include "Chars.h"
 
-extern byte[] MonoPatternSource, ColorPatternSource;
-
-byte[PatternSize * Char_End] PatternRam;
+extern byte[PatternSize * Char_End] PatternRam;
 byte[PatternSize * Char_End] ColorRam;
 
 void InitVram()
 {
-    static const byte[] ColorBytes = {
-        64, 0x0f,
-        16, 0x09,
-        14 * 4,0x0f,
-        4, 0x0f,
-        4, 0x0d,
-        4, 0x0e,
-        4, 0x0b,
-        4, 0x05,
-        4, 0x06,
-        0
-    };
-
-    ptr<byte> pColor, pPattern;
-    byte c, count, color;
-
-    pColor = ColorBytes;
-    pPattern = MonoPatternSource;
-    c = Char_Ascii;
-    while ((count = *pColor) != 0) {
-        ++pColor;
-        color = *pColor;
-        ++pColor;
-        MakePatternMono(c, pPattern, count, color);
-        c += count;
-        pPattern += ((word)count << 3);
-    }
-    MakePatternColor(Char_Solver, ColorPatternSource, Char_End - Char_Solver);
+    MakeMono(Char_Wall - Char_Ascii,  ColorRam, 0x0f);
+    MakeMono(Char_Card - Char_Wall,   ColorRam + Char_Wall * CharHeight, 0x09);
+    MakeMono(Char_N      - Char_Card, ColorRam + Char_Card * CharHeight, 0x0f);
+    MakeMono(Char_E      - Char_N,    ColorRam + Char_N * CharHeight, 0x0f);
+    MakeMono(Char_U      - Char_E,    ColorRam + Char_E * CharHeight, 0x0d);
+    MakeMono(Char_R      - Char_U,    ColorRam + Char_U * CharHeight, 0x0e);
+    MakeMono(Char_A      - Char_R,    ColorRam + Char_R * CharHeight, 0x0b);
+    MakeMono(Char_S      - Char_A,    ColorRam + Char_A * CharHeight, 0x05);
+    MakeMono(Char_Solver - Char_S,    ColorRam + Char_S * CharHeight, 0x06);
+    MakeColor(Char_End - Char_Solver, ColorRam + Char_Solver * CharHeight);
     ClearScreen();
 }
 

@@ -1,7 +1,7 @@
 cseg
 
-MonoPatternSource_: public MonoPatternSource_
-;	ascii
+PatternRam_: public PatternRam_
+; ascii
 	defb $00,$00,$00,$00,$00,$00,$00,$00
 	defb $18,$18,$18,$18,$18,$00,$18,$00
 	defb $36,$36,$36,$00,$00,$00,$00,$00
@@ -66,380 +66,178 @@ MonoPatternSource_: public MonoPatternSource_
 	defb $3c,$04,$04,$04,$04,$04,$3c,$00
 	defb $08,$14,$22,$00,$00,$00,$00,$00
 	defb $00,$00,$00,$00,$00,$00,$7e,$00
-;	mono8
-	defb	$00, $00, $00, $00, $00, $00, $00, $00
-	defb	$c0, $c0, $c0, $c0, $c0, $c0, $c0, $c0
-	defb	$03, $03, $03, $03, $03, $03, $03, $03
-	defb	$c3, $c3, $c3, $c3, $c3, $c3, $c3, $c3
-	defb	$ff, $ff, $00, $00, $00, $00, $00, $00
-	defb	$7f, $ff, $c0, $c0, $c0, $c0, $c0, $c0
-	defb	$fe, $ff, $03, $03, $03, $03, $03, $03
-	defb	$7e, $ff, $c3, $c3, $c3, $c3, $c3, $c3
-	defb	$00, $00, $00, $00, $00, $00, $ff, $ff
-	defb	$c0, $c0, $c0, $c0, $c0, $c0, $ff, $7f
-	defb	$03, $03, $03, $03, $03, $03, $ff, $fe
-	defb	$c3, $c3, $c3, $c3, $c3, $c3, $ff, $7e
-	defb	$ff, $ff, $00, $00, $00, $00, $ff, $ff
-	defb	$7f, $ff, $c0, $c0, $c0, $c0, $ff, $7f
-	defb	$fe, $ff, $03, $03, $03, $03, $ff, $fe
-	defb	$7e, $ff, $c3, $c3, $c3, $c3, $ff, $7e
-;	
-;	mono16
-	defb	00h, 0fh, 1ah, 35h, 2ah, 35h, 2ah, 35h
-	defb	00h, 0e0h, 0b0h, 58h, 0a8h, 58h, 0a8h, 58h
-	defb	2ah, 35h, 2ah, 35h, 2ah, 35h, 1ah, 0fh
-	defb	0a8h, 58h, 0a8h, 58h, 0a8h, 58h, 0b0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 3ch, 39h, 33h
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 78h, 38h, 98h
-	defb	33h, 30h, 33h, 33h, 3fh, 3fh, 1fh, 0fh
-	defb	98h, 18h, 98h, 98h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 38h, 33h, 3fh
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 38h, 98h, 18h
-	defb	3ch, 38h, 31h, 30h, 3fh, 3fh, 1fh, 0fh
-	defb	38h, 78h, 0f8h, 18h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 38h, 33h, 3fh
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 38h, 98h, 98h
-	defb	3ch, 3fh, 33h, 38h, 3fh, 3fh, 1fh, 0fh
-	defb	38h, 98h, 98h, 38h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 3fh, 3eh, 3ch
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 38h, 38h, 38h
-	defb	39h, 33h, 30h, 3fh, 3fh, 3fh, 1fh, 0fh
-	defb	38h, 38h, 18h, 38h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 30h, 33h, 30h
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 18h, 0f8h, 38h
-	defb	3fh, 3fh, 33h, 38h, 3fh, 3fh, 1fh, 0fh
-	defb	98h, 98h, 98h, 38h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 3ch, 39h, 33h
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 38h, 0f8h, 0f8h
-	defb	30h, 33h, 33h, 38h, 3fh, 3fh, 1fh, 0fh
-	defb	38h, 98h, 98h, 38h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 30h, 33h, 3fh
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 18h, 98h, 38h
-	defb	3eh, 3ch, 3ch, 3ch, 3fh, 3fh, 1fh, 0fh
-	defb	78h, 0f8h, 0f8h, 0f8h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 38h, 33h, 33h
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 38h, 98h, 98h
-	defb	38h, 33h, 33h, 38h, 3fh, 3fh, 1fh, 0fh
-	defb	38h, 98h, 98h, 38h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 38h, 33h, 33h
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 38h, 98h, 98h
-	defb	38h, 3fh, 33h, 38h, 3fh, 3fh, 1fh, 0fh
-	defb	18h, 98h, 98h, 38h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 33h, 22h, 32h
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 18h, 48h, 48h
-	defb	32h, 32h, 32h, 33h, 3fh, 3fh, 1fh, 0fh
-	defb	48h, 48h, 48h, 18h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 3fh, 3fh, 3fh
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 98h, 98h, 98h
-	defb	3fh, 3fh, 33h, 38h, 3fh, 3fh, 1fh, 0fh
-	defb	98h, 98h, 98h, 38h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 38h, 33h, 33h
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 38h, 98h, 98h
-	defb	33h, 32h, 33h, 38h, 3fh, 3fh, 1fh, 0fh
-	defb	98h, 98h, 38h, 98h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	00h, 0fh, 1fh, 3fh, 3fh, 33h, 33h, 32h
-	defb	00h, 0e0h, 0f0h, 0f8h, 0f8h, 98h, 38h, 78h
-	defb	30h, 32h, 33h, 33h, 3fh, 3fh, 1fh, 0fh
-	defb	0f8h, 78h, 38h, 98h, 0f8h, 0f8h, 0f0h, 0e0h
-	defb	3ch, 3ch, 3eh, 3fh, 3fh, 3fh, 3fh, 3dh
-	defb	0fh, 0fh, 0fh, 0fh, 8fh, 0cfh, 0efh, 0ffh
-	defb	3ch, 3ch, 3ch, 3ch, 3ch, 3ch, 00h, 00h
-	defb	0ffh, 7fh, 3fh, 1fh, 0fh, 0fh, 00h, 00h
-	defb	3fh, 3fh, 3ch, 3ch, 3ch, 3ch, 3fh, 3fh
-	defb	0ffh, 0ffh, 00h, 00h, 00h, 00h, 0ffh, 0ffh
-	defb	3ch, 3ch, 3ch, 3ch, 3fh, 3fh, 00h, 00h
-	defb	00h, 00h, 00h, 00h, 0ffh, 0ffh, 00h, 00h
-	defb	3ch, 3ch, 3ch, 3ch, 3ch, 3ch, 3ch, 3ch
-	defb	0fh, 0fh, 0fh, 0fh, 0fh, 0fh, 0fh, 0fh
-	defb	3ch, 3ch, 3ch, 3eh, 1fh, 0fh, 00h, 00h
-	defb	0fh, 0fh, 0fh, 1fh, 0feh, 0fch, 00h, 00h
-	defb	3fh, 3fh, 3ch, 3ch, 3ch, 3ch, 3ch, 3ch
-	defb	0f8h, 0fch, 1eh, 0fh, 0fh, 1eh, 3ch, 78h
-	defb	3fh, 3fh, 3ch, 3ch, 3ch, 3ch, 00h, 00h
-	defb	0f0h, 0f8h, 3ch, 1eh, 0fh, 07h, 00h, 00h
-	defb	03h, 07h, 0fh, 1eh, 3ch, 3ch, 3ch, 3ch
-	defb	0f0h, 0f8h, 3ch, 1eh, 0fh, 0fh, 0fh, 0fh
-	defb	3fh, 3fh, 3ch, 3ch, 3ch, 3ch, 00h, 00h
-	defb	0ffh, 0ffh, 0fh, 0fh, 0fh, 0fh, 00h, 00h
-	defb	0fh, 1fh, 3ch, 38h, 38h, 3ch, 1fh, 0fh
-	defb	0fch, 0feh, 0fh, 07h, 00h, 00h, 0fch, 0feh
-	defb	00h, 00h, 38h, 3ch, 1fh, 0fh, 00h, 00h
-	defb	0fh, 07h, 07h, 0fh, 0feh, 0fch, 00h, 00h
+; mono8
+	defb $00,$00,$00,$00,$00,$00,$00,$00
+	defb $c0,$c0,$c0,$c0,$c0,$c0,$c0,$c0
+	defb $03,$03,$03,$03,$03,$03,$03,$03
+	defb $c3,$c3,$c3,$c3,$c3,$c3,$c3,$c3
+	defb $ff,$ff,$00,$00,$00,$00,$00,$00
+	defb $7f,$ff,$c0,$c0,$c0,$c0,$c0,$c0
+	defb $fe,$ff,$03,$03,$03,$03,$03,$03
+	defb $7e,$ff,$c3,$c3,$c3,$c3,$c3,$c3
+	defb $00,$00,$00,$00,$00,$00,$ff,$ff
+	defb $c0,$c0,$c0,$c0,$c0,$c0,$ff,$7f
+	defb $03,$03,$03,$03,$03,$03,$ff,$fe
+	defb $c3,$c3,$c3,$c3,$c3,$c3,$ff,$7e
+	defb $ff,$ff,$00,$00,$00,$00,$ff,$ff
+	defb $7f,$ff,$c0,$c0,$c0,$c0,$ff,$7f
+	defb $fe,$ff,$03,$03,$03,$03,$ff,$fe
+	defb $7e,$ff,$c3,$c3,$c3,$c3,$ff,$7e
+; mono16
+	defb $00,$0f,$1a,$35,$2a,$35,$2a,$35
+	defb $00,$e0,$b0,$58,$a8,$58,$a8,$58
+	defb $2a,$35,$2a,$35,$2a,$35,$1a,$0f
+	defb $a8,$58,$a8,$58,$a8,$58,$b0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$3c,$39,$33
+	defb $00,$e0,$f0,$f8,$f8,$78,$38,$98
+	defb $33,$30,$33,$33,$3f,$3f,$1f,$0f
+	defb $98,$18,$98,$98,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$38,$33,$3f
+	defb $00,$e0,$f0,$f8,$f8,$38,$98,$18
+	defb $3c,$38,$31,$30,$3f,$3f,$1f,$0f
+	defb $38,$78,$f8,$18,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$38,$33,$3f
+	defb $00,$e0,$f0,$f8,$f8,$38,$98,$98
+	defb $3c,$3f,$33,$38,$3f,$3f,$1f,$0f
+	defb $38,$98,$98,$38,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$3f,$3e,$3c
+	defb $00,$e0,$f0,$f8,$f8,$38,$38,$38
+	defb $39,$33,$30,$3f,$3f,$3f,$1f,$0f
+	defb $38,$38,$18,$38,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$30,$33,$30
+	defb $00,$e0,$f0,$f8,$f8,$18,$f8,$38
+	defb $3f,$3f,$33,$38,$3f,$3f,$1f,$0f
+	defb $98,$98,$98,$38,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$3c,$39,$33
+	defb $00,$e0,$f0,$f8,$f8,$38,$f8,$f8
+	defb $30,$33,$33,$38,$3f,$3f,$1f,$0f
+	defb $38,$98,$98,$38,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$30,$33,$3f
+	defb $00,$e0,$f0,$f8,$f8,$18,$98,$38
+	defb $3e,$3c,$3c,$3c,$3f,$3f,$1f,$0f
+	defb $78,$f8,$f8,$f8,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$38,$33,$33
+	defb $00,$e0,$f0,$f8,$f8,$38,$98,$98
+	defb $38,$33,$33,$38,$3f,$3f,$1f,$0f
+	defb $38,$98,$98,$38,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$38,$33,$33
+	defb $00,$e0,$f0,$f8,$f8,$38,$98,$98
+	defb $38,$3f,$33,$38,$3f,$3f,$1f,$0f
+	defb $18,$98,$98,$38,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$33,$22,$32
+	defb $00,$e0,$f0,$f8,$f8,$18,$48,$48
+	defb $32,$32,$32,$33,$3f,$3f,$1f,$0f
+	defb $48,$48,$48,$18,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$3f,$3f,$3f
+	defb $00,$e0,$f0,$f8,$f8,$98,$98,$98
+	defb $3f,$3f,$33,$38,$3f,$3f,$1f,$0f
+	defb $98,$98,$98,$38,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$38,$33,$33
+	defb $00,$e0,$f0,$f8,$f8,$38,$98,$98
+	defb $33,$32,$33,$38,$3f,$3f,$1f,$0f
+	defb $98,$98,$38,$98,$f8,$f8,$f0,$e0
+	defb $00,$0f,$1f,$3f,$3f,$33,$33,$32
+	defb $00,$e0,$f0,$f8,$f8,$98,$38,$78
+	defb $30,$32,$33,$33,$3f,$3f,$1f,$0f
+	defb $f8,$78,$38,$98,$f8,$f8,$f0,$e0
+	defb $3c,$3c,$3e,$3f,$3f,$3f,$3f,$3d
+	defb $0f,$0f,$0f,$0f,$8f,$cf,$ef,$ff
+	defb $3c,$3c,$3c,$3c,$3c,$3c,$00,$00
+	defb $ff,$7f,$3f,$1f,$0f,$0f,$00,$00
+	defb $3f,$3f,$3c,$3c,$3c,$3c,$3f,$3f
+	defb $ff,$ff,$00,$00,$00,$00,$ff,$ff
+	defb $3c,$3c,$3c,$3c,$3f,$3f,$00,$00
+	defb $00,$00,$00,$00,$ff,$ff,$00,$00
+	defb $3c,$3c,$3c,$3c,$3c,$3c,$3c,$3c
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$0f
+	defb $3c,$3c,$3c,$3e,$1f,$0f,$00,$00
+	defb $0f,$0f,$0f,$1f,$fe,$fc,$00,$00
+	defb $3f,$3f,$3c,$3c,$3c,$3c,$3c,$3c
+	defb $f8,$fc,$1e,$0f,$0f,$1e,$3c,$78
+	defb $3f,$3f,$3c,$3c,$3c,$3c,$00,$00
+	defb $f0,$f8,$3c,$1e,$0f,$07,$00,$00
+	defb $03,$07,$0f,$1e,$3c,$3c,$3c,$3c
+	defb $f0,$f8,$3c,$1e,$0f,$0f,$0f,$0f
+	defb $3f,$3f,$3c,$3c,$3c,$3c,$00,$00
+	defb $ff,$ff,$0f,$0f,$0f,$0f,$00,$00
+	defb $0f,$1f,$3c,$38,$38,$3c,$1f,$0f
+	defb $fc,$fe,$0f,$07,$00,$00,$fc,$fe
+	defb $00,$00,$38,$3c,$1f,$0f,$00,$00
+	defb $0f,$07,$07,$0f,$fe,$fc,$00,$00
+; Char_Solver_Left
+	defb $0f,$1f,$3f,$3f,$2b,$2b,$3f,$00
+	defb $c0,$e0,$f0,$f0,$f0,$f0,$f0,$00
+	defb $3f,$3f,$3f,$3f,$3f,$1c,$38,$70
+	defb $f0,$f8,$f0,$f0,$c0,$e0,$70,$38
+	defb $0f,$1f,$3f,$3f,$2b,$2b,$3f,$00
+	defb $c0,$e0,$f0,$f0,$f0,$f0,$f0,$00
+	defb $3f,$7f,$ff,$ff,$3f,$18,$0d,$03
+	defb $f0,$f8,$ec,$ec,$e0,$e0,$c0,$80
+; Char_Solver_Right
+	defb $03,$07,$0f,$0f,$0f,$0f,$0f,$00
+	defb $f0,$f8,$fc,$fc,$d4,$d4,$fc,$00
+	defb $0f,$1f,$0f,$0f,$03,$07,$0e,$1c
+	defb $fc,$fc,$fc,$fc,$fc,$38,$1c,$0e
+	defb $03,$07,$0f,$0f,$0f,$0f,$0f,$00
+	defb $f0,$f8,$fc,$fc,$d4,$d4,$fc,$00
+	defb $0f,$1f,$37,$37,$07,$07,$03,$01
+	defb $fc,$fe,$ff,$ff,$fc,$18,$b0,$c0
+; Char_Solver_Up
+	defb $07,$0f,$1f,$1f,$1f,$1f,$1f,$00
+	defb $e0,$f0,$f8,$f8,$f8,$f8,$f8,$00
+	defb $3f,$7f,$7f,$7f,$1f,$1e,$00,$00
+	defb $f8,$fa,$fa,$f8,$f8,$78,$78,$78
+	defb $07,$0f,$1f,$1f,$1f,$1f,$1f,$00
+	defb $e0,$f0,$f8,$f8,$f8,$f8,$f8,$00
+	defb $1f,$5f,$5f,$1f,$1f,$1e,$1e,$1e
+	defb $fc,$fe,$fe,$fe,$f8,$78,$00,$00
+; Char_Solver_Down
+	defb $07,$0f,$1f,$1f,$1d,$1d,$1f,$00
+	defb $e0,$f0,$f8,$f8,$b8,$b8,$f8,$00
+	defb $1f,$5f,$5f,$1f,$1f,$1e,$1e,$1e
+	defb $fc,$fe,$fe,$fe,$f8,$78,$00,$00
+	defb $07,$0f,$1f,$1f,$1d,$1d,$1f,$00
+	defb $e0,$f0,$f8,$f8,$b8,$b8,$f8,$00
+	defb $3f,$7f,$7f,$7f,$1f,$1e,$00,$00
+	defb $f8,$fa,$fa,$f8,$f8,$78,$78,$78
+; Char_Monster_Left
+	defb $04,$06,$0f,$1a,$1a,$1f,$15,$50
+	defb $80,$c0,$e0,$f0,$f0,$f0,$70,$76
+	defb $6f,$3f,$1f,$0f,$07,$03,$01,$00
+	defb $ee,$fc,$f8,$f0,$e0,$e0,$f0,$78
+	defb $00,$04,$06,$0f,$1a,$1a,$1f,$15
+	defb $00,$80,$c0,$e0,$f0,$f0,$f0,$70
+	defb $10,$3f,$7f,$df,$0f,$07,$03,$01
+	defb $70,$f8,$fc,$f6,$f0,$e0,$f6,$fc
+; Char_Monster_Right
+	defb $01,$03,$07,$0f,$0f,$0f,$0e,$6e
+	defb $20,$60,$f0,$58,$58,$f8,$a8,$0a
+	defb $77,$3f,$1f,$0f,$07,$07,$0f,$1e
+	defb $f6,$fc,$f8,$f0,$e0,$c0,$80,$00
+	defb $00,$01,$03,$07,$0f,$0f,$0f,$0e
+	defb $00,$20,$60,$f0,$58,$58,$f8,$a8
+	defb $0e,$1f,$3f,$6f,$0f,$07,$6f,$3f
+	defb $08,$fc,$fe,$fb,$f0,$e0,$c0,$80
+; Char_Monster_Up
+	defb $02,$06,$0f,$1f,$1f,$1f,$1f,$5f
+	defb $40,$60,$f0,$f8,$f8,$f8,$f8,$fa
+	defb $6f,$3f,$1f,$0f,$0f,$07,$03,$01
+	defb $f6,$fc,$f8,$f0,$f0,$e0,$c0,$80
+	defb $00,$02,$06,$0f,$1f,$1f,$1f,$1f
+	defb $00,$40,$60,$f0,$f8,$f8,$f8,$f8
+	defb $1f,$0f,$3f,$6f,$0f,$0f,$07,$03
+	defb $f8,$f0,$fc,$f6,$f0,$f0,$e0,$c0
+; Char_Monster_Down
+	defb $02,$06,$0f,$1d,$1d,$1f,$1a,$58
+	defb $40,$60,$f0,$b8,$b8,$f8,$58,$1a
+	defb $6f,$3f,$1f,$0f,$0f,$07,$03,$01
+	defb $f6,$fc,$f8,$f0,$f0,$e0,$c0,$80
+	defb $00,$02,$06,$0f,$1d,$1d,$1f,$1a
+	defb $00,$40,$60,$f0,$b8,$b8,$f8,$58
+	defb $18,$0f,$3f,$6f,$0f,$0f,$07,$03
+	defb $18,$f0,$fc,$f6,$f0,$f0,$e0,$c0
 
-ColorPatternSource_: public ColorPatternSource_
-;	color16
-;	Char_Solver_Left
-	defb	$00, $00, $ff, $ff, $00, $0f, $ff, $ff
-	defb	$00, $ff, $ff, $ff, $00, $ff, $ff, $ff
-	defb	$00, $f0, $f0, $ff, $00, $f0, $f0, $ff
-	defb	$00, $ff, $ff, $ff, $00, $00, $00, $00
-	defb	$ff, $00, $00, $00, $ff, $f0, $00, $00
-	defb	$ff, $ff, $00, $00, $ff, $ff, $00, $00
-	defb	$ff, $ff, $00, $00, $ff, $ff, $00, $00
-	defb	$ff, $ff, $00, $00, $00, $00, $00, $00
-	defb	$00, $55, $55, $55, $00, $59, $99, $55
-	defb	$00, $59, $99, $55, $00, $55, $55, $55
-	defb	$00, $55, $55, $55, $00, $0f, $ff, $00
-	defb	$00, $ff, $f0, $00, $0f, $ff, $00, $00
-	defb	$55, $5f, $00, $00, $55, $5f, $f0, $00
-	defb	$55, $ff, $00, $00, $55, $ff, $00, $00
-	defb	$55, $00, $00, $00, $ff, $f0, $00, $00
-	defb	$0f, $ff, $00, $00, $00, $ff, $f0, $00
 
-	defb	$00, $00, $ff, $ff, $00, $0f, $ff, $ff
-	defb	$00, $ff, $ff, $ff, $00, $ff, $ff, $ff
-	defb	$00, $f0, $f0, $ff, $00, $f0, $f0, $ff
-	defb	$00, $ff, $ff, $ff, $00, $00, $00, $00
-	defb	$ff, $00, $00, $00, $ff, $f0, $00, $00
-	defb	$ff, $ff, $00, $00, $ff, $ff, $00, $00
-	defb	$ff, $ff, $00, $00, $ff, $ff, $00, $00
-	defb	$ff, $ff, $00, $00, $00, $00, $00, $00
-	defb	$00, $55, $55, $55, $0f, $59, $99, $55
-	defb	$ff, $59, $99, $55, $ff, $55, $55, $55
-	defb	$00, $55, $55, $55, $00, $0f, $f0, $00
-	defb	$00, $00, $ff, $0f, $00, $00, $00, $ff
-	defb	$55, $5f, $00, $00, $55, $5f, $f0, $00
-	defb	$55, $50, $ff, $00, $55, $50, $ff, $00
-	defb	$55, $50, $00, $00, $ff, $f0, $00, $00
-	defb	$ff, $00, $00, $00, $f0, $00, $00, $00
-;	Char_Solver_Right
-	defb	$00, $00, $00, $ff, $00, $00, $0f, $ff
-	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
-	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
-	defb	$00, $00, $ff, $ff, $00, $00, $00, $00
-	defb	$ff, $ff, $00, $00, $ff, $ff, $f0, $00
-	defb	$ff, $ff, $ff, $00, $ff, $ff, $ff, $00
-	defb	$ff, $0f, $0f, $00, $ff, $0f, $0f, $00
-	defb	$ff, $ff, $ff, $00, $00, $00, $00, $00
-	defb	$00, $00, $f5, $55, $00, $0f, $f5, $55
-	defb	$00, $00, $ff, $55, $00, $00, $ff, $55
-	defb	$00, $00, $00, $55, $00, $00, $0f, $ff
-	defb	$00, $00, $ff, $f0, $00, $0f, $ff, $00
-	defb	$55, $55, $55, $00, $55, $99, $95, $00
-	defb	$55, $99, $95, $00, $55, $55, $55, $00
-	defb	$55, $55, $55, $00, $00, $ff, $f0, $00
-	defb	$00, $0f, $ff, $00, $00, $00, $ff, $f0
-
-	defb	$00, $00, $00, $ff, $00, $00, $0f, $ff
-	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
-	defb	$00, $00, $ff, $ff, $00, $00, $ff, $ff
-	defb	$00, $00, $ff, $ff, $00, $00, $00, $00
-	defb	$ff, $ff, $00, $00, $ff, $ff, $f0, $00
-	defb	$ff, $ff, $ff, $00, $ff, $ff, $ff, $00
-	defb	$ff, $0f, $0f, $00, $ff, $0f, $0f, $00
-	defb	$ff, $ff, $ff, $00, $00, $00, $00, $00
-	defb	$00, $00, $f5, $55, $00, $0f, $f5, $55
-	defb	$00, $ff, $05, $55, $00, $ff, $05, $55
-	defb	$00, $00, $05, $55, $00, $00, $0f, $ff
-	defb	$00, $00, $00, $ff, $00, $00, $00, $0f
-	defb	$55, $55, $55, $00, $55, $99, $95, $f0
-	defb	$55, $99, $95, $ff, $55, $55, $55, $ff
-	defb	$55, $55, $55, $00, $00, $0f, $f0, $00
-	defb	$f0, $ff, $00, $00, $ff, $00, $00, $00
-;	Char_Solver_Up
-	defb	$00, $00, $0f, $ff, $00, $00, $ff, $ff
-	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
-	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
-	defb	$00, $0f, $ff, $ff, $00, $00, $00, $00
-	defb	$ff, $f0, $00, $00, $ff, $ff, $00, $00
-	defb	$ff, $ff, $f0, $00, $ff, $ff, $f0, $00
-	defb	$ff, $ff, $f0, $00, $ff, $ff, $f0, $00
-	defb	$ff, $ff, $f0, $00, $00, $00, $00, $00
-	defb	$00, $f5, $55, $55, $0f, $f5, $55, $55
-	defb	$0f, $f5, $55, $55, $0f, $f5, $55, $55
-	defb	$00, $05, $55, $55, $00, $0f, $ff, $f0
-	defb	$00, $00, $00, $00, $00, $00, $00, $00
-	defb	$55, $55, $50, $00, $55, $55, $50, $f0
-	defb	$55, $55, $50, $f0, $55, $55, $50, $00
-	defb	$55, $55, $50, $00, $0f, $ff, $f0, $00
-	defb	$0f, $ff, $f0, $00, $0f, $ff, $f0, $00
-
-	defb	$00, $00, $0f, $ff, $00, $00, $ff, $ff
-	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
-	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
-	defb	$00, $0f, $ff, $ff, $00, $00, $00, $00
-	defb	$ff, $f0, $00, $00, $ff, $ff, $00, $00
-	defb	$ff, $ff, $f0, $00, $ff, $ff, $f0, $00
-	defb	$ff, $ff, $f0, $00, $ff, $ff, $f0, $00
-	defb	$ff, $ff, $f0, $00, $00, $00, $00, $00
-	defb	$00, $05, $55, $55, $0f, $05, $55, $55
-	defb	$0f, $05, $55, $55, $00, $05, $55, $55
-	defb	$00, $05, $55, $55, $00, $0f, $ff, $f0
-	defb	$00, $0f, $ff, $f0, $00, $0f, $ff, $f0
-	defb	$55, $55, $5f, $00, $55, $55, $5f, $f0
-	defb	$55, $55, $5f, $f0, $55, $55, $5f, $f0
-	defb	$55, $55, $50, $00, $0f, $ff, $f0, $00
-	defb	$00, $00, $00, $00, $00, $00, $00, $00
-;	Char_Solver_Down
-	defb	$00, $00, $0f, $ff, $00, $00, $ff, $ff
-	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
-	defb	$00, $0f, $ff, $0f, $00, $0f, $ff, $0f
-	defb	$00, $0f, $ff, $ff, $00, $00, $00, $00
-	defb	$ff, $f0, $00, $00, $ff, $ff, $00, $00
-	defb	$ff, $ff, $f0, $00, $ff, $ff, $f0, $00
-	defb	$f0, $ff, $f0, $00, $f0, $ff, $f0, $00
-	defb	$ff, $ff, $f0, $00, $00, $00, $00, $00
-	defb	$00, $05, $55, $55, $0f, $05, $55, $99
-	defb	$0f, $05, $55, $99, $00, $05, $55, $55
-	defb	$00, $05, $55, $55, $00, $0f, $ff, $f0
-	defb	$00, $0f, $ff, $f0, $00, $0f, $ff, $f0
-	defb	$55, $55, $5f, $00, $99, $55, $5f, $f0
-	defb	$99, $55, $5f, $f0, $55, $55, $5f, $f0
-	defb	$55, $55, $50, $00, $0f, $ff, $f0, $00
-	defb	$00, $00, $00, $00, $00, $00, $00, $00
-
-	defb	$00, $00, $0f, $ff, $00, $00, $ff, $ff
-	defb	$00, $0f, $ff, $ff, $00, $0f, $ff, $ff
-	defb	$00, $0f, $ff, $0f, $00, $0f, $ff, $0f
-	defb	$00, $0f, $ff, $ff, $00, $00, $00, $00
-	defb	$ff, $f0, $00, $00, $ff, $ff, $00, $00
-	defb	$ff, $ff, $f0, $00, $ff, $ff, $f0, $00
-	defb	$f0, $ff, $f0, $00, $f0, $ff, $f0, $00
-	defb	$ff, $ff, $f0, $00, $00, $00, $00, $00
-	defb	$00, $f5, $55, $55, $0f, $f5, $55, $99
-	defb	$0f, $f5, $55, $99, $0f, $f5, $55, $55
-	defb	$00, $05, $55, $55, $00, $0f, $ff, $f0
-	defb	$00, $00, $00, $00, $00, $00, $00, $00
-	defb	$55, $55, $50, $00, $99, $55, $50, $f0
-	defb	$99, $55, $50, $f0, $55, $55, $50, $00
-	defb	$55, $55, $50, $00, $0f, $ff, $f0, $00
-	defb	$0f, $ff, $f0, $00, $0f, $ff, $f0, $00
-;	Char_Monster_Left
-	defb	$00, $00, $0b, $00, $00, $00, $0b, $b0
-	defb	$00, $00, $bb, $bb, $00, $0b, $b0, $b0
-	defb	$00, $0b, $b0, $b0, $00, $0b, $bb, $bb
-	defb	$00, $0b, $0b, $0b, $0b, $0b, $00, $00
-	defb	$b0, $00, $00, $00, $bb, $00, $00, $00
-	defb	$bb, $b0, $00, $00, $bb, $bb, $00, $00
-	defb	$bb, $bb, $00, $00, $bb, $bb, $00, $00
-	defb	$0b, $bb, $00, $00, $0b, $bb, $0b, $b0
-	defb	$0b, $b0, $bb, $bb, $00, $bb, $bb, $bb
-	defb	$00, $0b, $bb, $bb, $00, $00, $bb, $bb
-	defb	$00, $00, $0b, $bb, $00, $00, $00, $bb
-	defb	$00, $00, $00, $0b, $00, $00, $00, $00
-	defb	$bb, $b0, $bb, $b0, $bb, $bb, $bb, $00
-	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
-	defb	$bb, $b0, $00, $00, $bb, $b0, $00, $00
-	defb	$bb, $bb, $00, $00, $0b, $bb, $b0, $00
-
-	defb	$00, $00, $00, $00, $00, $00, $0b, $00
-	defb	$00, $00, $0b, $b0, $00, $00, $bb, $bb
-	defb	$00, $0b, $b0, $b0, $00, $0b, $b0, $b0
-	defb	$00, $0b, $bb, $bb, $00, $0b, $0b, $0b
-	defb	$00, $00, $00, $00, $b0, $00, $00, $00
-	defb	$bb, $00, $00, $00, $bb, $b0, $00, $00
-	defb	$bb, $bb, $00, $00, $bb, $bb, $00, $00
-	defb	$bb, $bb, $00, $00, $0b, $bb, $00, $00
-	defb	$00, $0b, $00, $00, $00, $bb, $bb, $bb
-	defb	$0b, $bb, $bb, $bb, $bb, $0b, $bb, $bb
-	defb	$00, $00, $bb, $bb, $00, $00, $0b, $bb
-	defb	$00, $00, $00, $bb, $00, $00, $00, $0b
-	defb	$0b, $bb, $00, $00, $bb, $bb, $b0, $00
-	defb	$bb, $bb, $bb, $00, $bb, $bb, $0b, $b0
-	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
-	defb	$bb, $bb, $0b, $b0, $bb, $bb, $bb, $00
-;	Char_Monster_Right
-	defb	$00, $00, $00, $0b, $00, $00, $00, $bb
-	defb	$00, $00, $0b, $bb, $00, $00, $bb, $bb
-	defb	$00, $00, $bb, $bb, $00, $00, $bb, $bb
-	defb	$00, $00, $bb, $b0, $0b, $b0, $bb, $b0
-	defb	$00, $b0, $00, $00, $0b, $b0, $00, $00
-	defb	$bb, $bb, $00, $00, $0b, $0b, $b0, $00
-	defb	$0b, $0b, $b0, $00, $bb, $bb, $b0, $00
-	defb	$b0, $b0, $b0, $00, $00, $00, $b0, $b0
-	defb	$0b, $bb, $0b, $bb, $00, $bb, $bb, $bb
-	defb	$00, $0b, $bb, $bb, $00, $00, $bb, $bb
-	defb	$00, $00, $0b, $bb, $00, $00, $0b, $bb
-	defb	$00, $00, $bb, $bb, $00, $0b, $bb, $b0
-	defb	$bb, $bb, $0b, $b0, $bb, $bb, $bb, $00
-	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
-	defb	$bb, $b0, $00, $00, $bb, $00, $00, $00
-	defb	$b0, $00, $00, $00, $00, $00, $00, $00
-
-	defb	$00, $00, $00, $00, $00, $00, $00, $0b
-	defb	$00, $00, $00, $bb, $00, $00, $0b, $bb
-	defb	$00, $00, $bb, $bb, $00, $00, $bb, $bb
-	defb	$00, $00, $bb, $bb, $00, $00, $bb, $b0
-	defb	$00, $00, $00, $00, $00, $b0, $00, $00
-	defb	$0b, $b0, $00, $00, $bb, $bb, $00, $00
-	defb	$0b, $0b, $b0, $00, $0b, $0b, $b0, $00
-	defb	$bb, $bb, $b0, $00, $b0, $b0, $b0, $00
-	defb	$00, $00, $bb, $b0, $00, $0b, $bb, $bb
-	defb	$00, $bb, $bb, $bb, $0b, $b0, $bb, $bb
-	defb	$00, $00, $bb, $bb, $00, $00, $0b, $bb
-	defb	$0b, $b0, $bb, $bb, $00, $bb, $bb, $bb
-	defb	$00, $00, $b0, $00, $bb, $bb, $bb, $00
-	defb	$bb, $bb, $bb, $b0, $bb, $bb, $b0, $bb
-	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
-	defb	$bb, $00, $00, $00, $b0, $00, $00, $00
-;	Char_Monster_Up
-	defb	$00, $00, $00, $b0, $00, $00, $0b, $b0
-	defb	$00, $00, $bb, $bb, $00, $0b, $bb, $bb
-	defb	$00, $0b, $bb, $bb, $00, $0b, $bb, $bb
-	defb	$00, $0b, $bb, $bb, $0b, $0b, $bb, $bb
-	defb	$0b, $00, $00, $00, $0b, $b0, $00, $00
-	defb	$bb, $bb, $00, $00, $bb, $bb, $b0, $00
-	defb	$bb, $bb, $b0, $00, $bb, $bb, $b0, $00
-	defb	$bb, $bb, $b0, $00, $bb, $bb, $b0, $b0
-	defb	$0b, $b0, $bb, $bb, $00, $bb, $bb, $bb
-	defb	$00, $0b, $bb, $bb, $00, $00, $bb, $bb
-	defb	$00, $00, $bb, $bb, $00, $00, $0b, $bb
-	defb	$00, $00, $00, $bb, $00, $00, $00, $0b
-	defb	$bb, $bb, $0b, $b0, $bb, $bb, $bb, $00
-	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
-	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
-	defb	$bb, $00, $00, $00, $b0, $00, $00, $00
-
-	defb	$00, $00, $00, $00, $00, $00, $00, $b0
-	defb	$00, $00, $0b, $b0, $00, $00, $bb, $bb
-	defb	$00, $0b, $bb, $bb, $00, $0b, $bb, $bb
-	defb	$00, $0b, $bb, $bb, $00, $0b, $bb, $bb
-	defb	$00, $00, $00, $00, $0b, $00, $00, $00
-	defb	$0b, $b0, $00, $00, $bb, $bb, $00, $00
-	defb	$bb, $bb, $b0, $00, $bb, $bb, $b0, $00
-	defb	$bb, $bb, $b0, $00, $bb, $bb, $b0, $00
-	defb	$00, $0b, $bb, $bb, $00, $00, $bb, $bb
-	defb	$00, $bb, $bb, $bb, $0b, $b0, $bb, $bb
-	defb	$00, $00, $bb, $bb, $00, $00, $bb, $bb
-	defb	$00, $00, $0b, $bb, $00, $00, $00, $bb
-	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
-	defb	$bb, $bb, $bb, $00, $bb, $bb, $0b, $b0
-	defb	$bb, $bb, $00, $00, $bb, $bb, $00, $00
-	defb	$bb, $b0, $00, $00, $bb, $00, $00, $00
-;	Char_Monster_Down
-	defb	$00, $00, $00, $b0, $00, $00, $0b, $b0
-	defb	$00, $00, $bb, $bb, $00, $0b, $bb, $0b
-	defb	$00, $0b, $bb, $0b, $00, $0b, $bb, $bb
-	defb	$00, $0b, $b0, $b0, $0b, $0b, $b0, $00
-	defb	$0b, $00, $00, $00, $0b, $b0, $00, $00
-	defb	$bb, $bb, $00, $00, $b0, $bb, $b0, $00
-	defb	$b0, $bb, $b0, $00, $bb, $bb, $b0, $00
-	defb	$0b, $0b, $b0, $00, $00, $0b, $b0, $b0
-	defb	$0b, $b0, $bb, $bb, $00, $bb, $bb, $bb
-	defb	$00, $0b, $bb, $bb, $00, $00, $bb, $bb
-	defb	$00, $00, $bb, $bb, $00, $00, $0b, $bb
-	defb	$00, $00, $00, $bb, $00, $00, $00, $0b
-	defb	$bb, $bb, $0b, $b0, $bb, $bb, $bb, $00
-	defb	$bb, $bb, $b0, $00, $bb, $bb, $00, $00
-	defb	$bb, $bb, $00, $00, $bb, $b0, $00, $00
-	defb	$bb, $00, $00, $00, $b0, $00, $00, $00
-
-	defb	$00, $00, $00, $00, $00, $00, $00, $b0
-	defb	$00, $00, $0b, $b0, $00, $00, $bb, $bb
-	defb	$00, $0b, $bb, $0b, $00, $0b, $bb, $0b
-	defb	$00, $0b, $bb, $bb, $00, $0b, $b0, $b0
-	defb	$00, $00, $00, $00, $0b, $00, $00, $00
-	defb	$0b, $b0, $00, $00, $bb, $bb, $00, $00
-	defb	$b0, $bb, $b0, $00, $b0, $bb, $b0, $00
-	defb	$bb, $bb, $b0, $00, $0b, $0b, $b0, $00
-	defb	$00, $0b, $b0, $00, $00, $00, $bb, $bb
-	defb	$00, $bb, $bb, $bb, $0b, $b0, $bb, $bb
-	defb	$00, $00, $bb, $bb, $00, $00, $bb, $bb
-	defb	$00, $00, $0b, $bb, $00, $00, $00, $bb
-	defb	$00, $0b, $b0, $00, $bb, $bb, $00, $00
-	defb	$bb, $bb, $bb, $00, $bb, $bb, $0b, $b0
-	defb	$bb, $bb, $00, $00, $bb, $bb, $00, $00
-	defb	$bb, $b0, $00, $00, $bb, $00, $00, $00
 
 PaletteValues_: public PaletteValues_
 	defb	$c0, $c0, $c0, $c0, $c0, $f0, $d8, $c0
@@ -461,3 +259,79 @@ PaletteValues_: public PaletteValues_
 ; 1 0 1 MAGENTA $E8 / $A8 PARME
 ; 1 1 0 CYAN    $F0 / $B0 BLEU CIEL
 ; 1 1 1 BLANC   $F8 / $B8 ORANGE
+
+
+
+ColorSource_: public ColorSource_
+; Char_Solver_Left
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $05,$09,$09,$05,$05,$0f,$0f,$0f
+	defb $0f,$0f,$0f,$0f,$05,$0f,$0f,$0f
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $05,$0f,$0f,$0f,$05,$0f,$0f,$0f
+	defb $0f,$0f,$0f,$0f,$05,$0f,$0f,$0f
+; Char_Solver_Right
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$05,$0f,$0f,$0f
+	defb $05,$09,$09,$05,$05,$0f,$0f,$0f
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$05,$0f,$0f,$0f
+	defb $05,$0f,$0f,$0f,$05,$0f,$0f,$0f
+; Char_Solver_Up
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$05,$0f,$00,$00
+	defb $05,$0f,$0f,$05,$05,$0f,$0f,$0f
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $05,$0f,$0f,$05,$05,$0f,$0f,$0f
+	defb $0f,$0f,$0f,$0f,$05,$0f,$00,$00
+; Char_Solver_Down
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $05,$0f,$0f,$05,$05,$0f,$0f,$0f
+	defb $0f,$0f,$0f,$0f,$05,$0f,$00,$00
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
+	defb $0f,$0f,$0f,$0f,$05,$0f,$00,$00
+	defb $05,$0f,$0f,$05,$05,$0f,$0f,$0f
+; Char_Monster_Left
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$00
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+; Char_Monster_Right
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$00
+	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+; Char_Monster_Up
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+; Char_Monster_Down
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
+	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
