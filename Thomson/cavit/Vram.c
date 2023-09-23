@@ -3,17 +3,15 @@
 #include "CopyMemory.h"
 #include "Chars.h"
 
-extern byte[] MonoPatternSource, ColorPatternSource;
-
-byte[PatternSize * Char_End] PatternRam;
+extern byte[PatternSize * Char_End] PatternRam;
 byte[PatternSize * Char_End] ColorRam;
 
 void InitVram()
 {
-    MakePatternMono(Char_Ascii, MonoPatternSource, 0x40, 0x0f);
-    MakePatternMono(Char_Logo, MonoPatternSource + Char_Logo * CharHeight, 16 + 11, 0x03);
-    MakePatternMono(Char_Bedrock, MonoPatternSource + Char_Bedrock * CharHeight, 1, 0x07);
-    MakePatternColor(Char_Man, ColorPatternSource, Char_End - Char_Man);
+    MakeMono(Char_Logo - Char_Ascii,   ColorRam, 0x0f);
+    MakeMono(Char_Bedrock - Char_Logo, ColorRam + Char_Logo * CharHeight, 0x03);
+    MakeMono(Char_Man - Char_Bedrock,  ColorRam + Char_Bedrock * CharHeight, 0x07);
+    MakeColor(Char_End - Char_Man,     ColorRam + Char_Man * CharHeight);
     ClearScreen();
 }
 
