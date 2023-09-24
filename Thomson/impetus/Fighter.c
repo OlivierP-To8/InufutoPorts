@@ -1,7 +1,7 @@
 #include "Fighter.h"
 #include "VVram.h"
 #include "Sprite.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "FighterBullet.h"
 #include "Bang.h"
 #include "Barrier.h"
