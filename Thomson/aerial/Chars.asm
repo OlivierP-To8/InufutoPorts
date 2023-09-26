@@ -222,68 +222,6 @@ PaletteValues8c_: public PaletteValues8c_
 
 
 ColorSource_: public ColorSource_
-; MyFighter_Right
-	defb $00,$00,$00,$00,$0f,$0f,$0f,$0f
-	defb $00,$00,$00,$00,$0f,$0f,$0f,$0f
-	defb $0f,$0f,$0f,$0f,$0f,$00,$00,$00
-	defb $0f,$0f,$0f,$0f,$0f,$00,$00,$00
-; MyFighter_RightDown
-	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$0f
-	defb $00,$00,$00,$00,$0f,$0f,$0f,$0f
-	defb $0f,$0f,$0f,$0f,$00,$00,$00,$00
-	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$0f
-; MyFighter_RightUp
-	defb $00,$00,$00,$00,$0f,$0f,$0f,$0f
-	defb $00,$0f,$0f,$0f,$0f,$0f,$0f,$0f
-	defb $0f,$0f,$0f,$0f,$0f,$0f,$00,$00
-	defb $0f,$0f,$0f,$0f,$00,$00,$00,$00
-; EnemyFighter_Left
-	defb $00,$00,$00,$00,$0a,$0a,$0a,$0a
-	defb $00,$00,$00,$00,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$00,$00,$00
-	defb $0a,$0a,$0a,$0a,$0a,$00,$00,$00
-; EnemyFighter_Right
-	defb $00,$00,$00,$00,$0b,$0b,$0b,$0b
-	defb $00,$00,$00,$00,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$00,$00,$00
-	defb $0b,$0b,$0b,$0b,$0b,$00,$00,$00
-; Track
-	defb $04,$04,$04,$04,$04,$04,$04,$04
-	defb $00,$00,$04,$04,$04,$04,$04,$04
-	defb $04,$04,$04,$04,$04,$04,$04,$04
-	defb $04,$04,$04,$00,$04,$04,$04,$04
-; Rocket
-	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$0f
-	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$0f
-	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$0f
-	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$0f
-; SmallBang
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$00
-; LargeBang
-	defb $00,$00,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $00,$00,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$00,$00,$00
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$0a,$0a,$0a
-	defb $0a,$0a,$0a,$0a,$0a,$00,$00,$00
-	defb $0a,$0a,$0a,$0a,$0a,$00,$00,$00
-; Item
-	defb $00,$00,$00,$0c,$0c,$0c,$0c,$0c
-	defb $00,$00,$00,$0c,$0c,$0c,$0c,$0c
-	defb $0c,$0c,$0c,$0c,$0c,$00,$00,$00
-	defb $0c,$0c,$0c,$0c,$0c,$00,$00,$00
 ; fort
 	defb $00,$05,$05,$05,$05,$05,$05,$05
 	defb $05,$05,$05,$05,$05,$05,$05,$05
