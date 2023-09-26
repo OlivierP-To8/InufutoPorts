@@ -17,7 +17,8 @@ void InitVram()
     MakeMono(Char_A      - Char_R,    ColorRam + Char_R * CharHeight, 0x0b);
     MakeMono(Char_S      - Char_A,    ColorRam + Char_A * CharHeight, 0x05);
     MakeMono(Char_Solver - Char_S,    ColorRam + Char_S * CharHeight, 0x06);
-    MakeColor(Char_End - Char_Solver, ColorRam + Char_Solver * CharHeight);
+    MakeColor(Char_Monster - Char_Solver, ColorRam + Char_Solver * CharHeight);
+    MakeMono(Char_End - Char_Monster, ColorRam + Char_Monster * CharHeight, 0x0b);
     ClearScreen();
 }
 

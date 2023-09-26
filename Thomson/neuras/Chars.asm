@@ -299,39 +299,3 @@ ColorSource_: public ColorSource_
 	defb $0f,$0f,$0f,$0f,$0f,$0f,$0f,$00
 	defb $0f,$0f,$0f,$0f,$05,$0f,$00,$00
 	defb $05,$0f,$0f,$05,$05,$0f,$0f,$0f
-; Char_Monster_Left
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$00
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-; Char_Monster_Right
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$00
-	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-; Char_Monster_Up
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-; Char_Monster_Down
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $00,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
-	defb $0b,$0b,$0b,$0b,$0b,$0b,$0b,$0b
