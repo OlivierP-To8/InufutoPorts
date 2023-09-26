@@ -13,7 +13,10 @@ void InitVram()
     MakeMono(Char_Line_Normal - Char_Item,     ColorRam + Char_Item * CharHeight, 0x0e);
     MakeMono(Char_Line_Red - Char_Line_Normal, ColorRam + Char_Line_Normal * CharHeight, 0x0f);
     MakeMono(Char_Man - Char_Line_Red,         ColorRam + Char_Line_Red * CharHeight, 0x0a);
-    MakeColor(Char_End - Char_Man,             ColorRam + Char_Man * CharHeight);
+    MakeColor(Char_Monster - Char_Man,         ColorRam + Char_Man * CharHeight);
+    MakeMono(Char_Point - Char_Monster,        ColorRam + Char_Monster * CharHeight, 0x0b);
+    MakeMono(Char_Increaser - Char_Point,      ColorRam + Char_Point * CharHeight, 0x0f);
+    MakeMono(Char_End - Char_Increaser,        ColorRam + Char_Increaser * CharHeight, 0x0c);
     ClearScreen();
 }
 
