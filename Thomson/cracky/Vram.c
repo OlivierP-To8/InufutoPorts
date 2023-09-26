@@ -12,7 +12,8 @@ void InitVram()
     MakeMono(Char_Ladder - Char_Logo, ColorRam + Char_Logo * CharHeight, 0x05);
     MakeMono(Char_Item - Char_Ladder, ColorRam + Char_Ladder * CharHeight, 0x07);
     MakeMono(Char_Man - Char_Item,    ColorRam + Char_Item * CharHeight, 0x0e);
-    MakeColor(Char_End - Char_Man,    ColorRam + Char_Man * CharHeight);
+    MakeColor(Char_Monster - Char_Man, ColorRam + Char_Man * CharHeight);
+    MakeMono(Char_End - Char_Monster, ColorRam + Char_Monster * CharHeight, 0x0b);
     ClearScreen();
 }
 
