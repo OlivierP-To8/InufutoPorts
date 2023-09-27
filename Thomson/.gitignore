@@ -148,3 +148,6 @@ impetus/Status.asm
 impetus/Tile.asm
 impetus/Vram.asm
 impetus/VVram.asm
+AUTO.LOAD/File.asm
+AUTO.LOAD/Main.asm
+AUTO.LOAD/Vram.asm
