@@ -173,70 +173,82 @@ PatternRam_: public PatternRam_
 	defb $00,$00,$00,$00,$07,$0f,$19,$d0
 	defb $7e,$66,$3c,$00,$00,$00,$00,$00
 	defb $e0,$6c,$6f,$03,$01,$00,$00,$00
-; Char_Ghost
+; Char_Ghost_Right0
 	defb $01,$03,$07,$0f,$0f,$0f,$0e,$6e
 	defb $20,$60,$f0,$58,$58,$f8,$a8,$0a
 	defb $77,$3f,$1f,$0f,$07,$07,$0f,$1e
 	defb $f6,$fc,$f8,$f0,$e0,$c0,$80,$00
+; Char_Ghost_Right1
 	defb $00,$01,$03,$07,$0f,$0f,$0f,$0e
 	defb $00,$20,$60,$f0,$58,$58,$f8,$a8
 	defb $0e,$1f,$3f,$6f,$0f,$07,$6f,$3f
 	defb $08,$fc,$fe,$fb,$f0,$e0,$c0,$80
+; Char_Ghost_Left0
 	defb $04,$06,$0f,$1a,$1a,$1f,$15,$50
 	defb $80,$c0,$e0,$f0,$f0,$f0,$70,$76
 	defb $6f,$3f,$1f,$0f,$07,$03,$01,$00
 	defb $ee,$fc,$f8,$f0,$e0,$e0,$f0,$78
+; Char_Ghost_Left1
 	defb $00,$04,$06,$0f,$1a,$1a,$1f,$15
 	defb $00,$80,$c0,$e0,$f0,$f0,$f0,$70
 	defb $10,$3f,$7f,$df,$0f,$07,$03,$01
 	defb $70,$f8,$fc,$f6,$f0,$e0,$f6,$fc
-
+; Char_Ghost_Down0
 	defb $02,$06,$0f,$1d,$1d,$1f,$1a,$58
 	defb $40,$60,$f0,$b8,$b8,$f8,$58,$1a
 	defb $6f,$3f,$1f,$0f,$0f,$07,$03,$01
 	defb $f6,$fc,$f8,$f0,$f0,$e0,$c0,$80
+; Char_Ghost_Down1
 	defb $00,$02,$06,$0f,$1d,$1d,$1f,$1a
 	defb $00,$40,$60,$f0,$b8,$b8,$f8,$58
 	defb $18,$0f,$3f,$6f,$0f,$0f,$07,$03
 	defb $18,$f0,$fc,$f6,$f0,$f0,$e0,$c0
+; Char_Ghost_Up0
 	defb $02,$06,$0f,$1f,$1f,$1f,$1f,$5f
 	defb $40,$60,$f0,$f8,$f8,$f8,$f8,$fa
 	defb $6f,$3f,$1f,$0f,$0f,$07,$03,$01
 	defb $f6,$fc,$f8,$f0,$f0,$e0,$c0,$80
+; Char_Ghost_Up1
 	defb $00,$02,$06,$0f,$1f,$1f,$1f,$1f
 	defb $00,$40,$60,$f0,$f8,$f8,$f8,$f8
 	defb $1f,$0f,$3f,$6f,$0f,$0f,$07,$03
 	defb $f8,$f0,$fc,$f6,$f0,$f0,$e0,$c0
-
+; Char_Ghost2_Right0
 	defb $01,$03,$07,$0f,$0f,$0f,$0e,$6e
 	defb $20,$60,$f0,$58,$58,$f8,$a8,$0a
 	defb $77,$3f,$1f,$0f,$07,$07,$0f,$1e
 	defb $f6,$fc,$f8,$f0,$e0,$c0,$80,$00
+; Char_Ghost2_Right1
 	defb $00,$01,$03,$07,$0f,$0f,$0f,$0e
 	defb $00,$20,$60,$f0,$58,$58,$f8,$a8
 	defb $0e,$1f,$3f,$6f,$0f,$07,$6f,$3f
 	defb $08,$fc,$fe,$fb,$f0,$e0,$c0,$80
+; Char_Ghost2_Left0
 	defb $04,$06,$0f,$1a,$1a,$1f,$15,$50
 	defb $80,$c0,$e0,$f0,$f0,$f0,$70,$76
 	defb $6f,$3f,$1f,$0f,$07,$03,$01,$00
 	defb $ee,$fc,$f8,$f0,$e0,$e0,$f0,$78
+; Char_Ghost2_Left1
 	defb $00,$04,$06,$0f,$1a,$1a,$1f,$15
 	defb $00,$80,$c0,$e0,$f0,$f0,$f0,$70
 	defb $10,$3f,$7f,$df,$0f,$07,$03,$01
 	defb $70,$f8,$fc,$f6,$f0,$e0,$f6,$fc
-
+; Char_Ghost2_Down0
 	defb $02,$06,$0f,$1d,$1d,$1f,$1a,$58
 	defb $40,$60,$f0,$b8,$b8,$f8,$58,$1a
 	defb $6f,$3f,$1f,$0f,$0f,$07,$03,$01
 	defb $f6,$fc,$f8,$f0,$f0,$e0,$c0,$80
+; Char_Ghost2_Down1
 	defb $00,$02,$06,$0f,$1d,$1d,$1f,$1a
 	defb $00,$40,$60,$f0,$b8,$b8,$f8,$58
 	defb $18,$0f,$3f,$6f,$0f,$0f,$07,$03
 	defb $18,$f0,$fc,$f6,$f0,$f0,$e0,$c0
+; Char_Ghost2_Up0
 	defb $02,$06,$0f,$1f,$1f,$1f,$1f,$5f
 	defb $40,$60,$f0,$f8,$f8,$f8,$f8,$fa
 	defb $6f,$3f,$1f,$0f,$0f,$07,$03,$01
 	defb $f6,$fc,$f8,$f0,$f0,$e0,$c0,$80
+; Char_Ghost2_Up1
 	defb $00,$02,$06,$0f,$1f,$1f,$1f,$1f
 	defb $00,$40,$60,$f0,$f8,$f8,$f8,$f8
 	defb $1f,$0f,$3f,$6f,$0f,$0f,$07,$03
@@ -247,7 +259,7 @@ PatternRam_: public PatternRam_
 	defb $0b,$07,$1f,$39,$36,$7f,$73,$61
 	defb $d0,$e0,$f8,$9c,$6c,$fe,$ce,$86
 ; Char_Rock
-	defb $03,$07,$0e,$1f,$0d,$37,$5b,$77
+	defb $03,$07,$0d,$1f,$0d,$37,$5b,$77
 	defb $80,$60,$f8,$b4,$fe,$ba,$ee,$7b
 	defb $aa,$ff,$ff,$b7,$de,$ab,$76,$1b
 	defb $af,$7f,$ed,$fe,$fd,$6a,$d4,$a8
@@ -269,10 +281,10 @@ PatternRam_: public PatternRam_
 	defb $4a,$4a,$31,$00,$00,$00,$00,$00
 	defb $52,$52,$8c,$00,$00,$00,$00,$00
 ; Char_Box
-	defb $00,$00,$03,$07,$1f,$0f,$37,$3b
-	defb $30,$f8,$fc,$fe,$fe,$ff,$ff,$fc
+	defb $00,$00,$03,$07,$1f,$2f,$77,$3b
+	defb $30,$f8,$fc,$fe,$fe,$fd,$f7,$dc
 	defb $5b,$6d,$75,$78,$3d,$1d,$0d,$05
-	defb $f3,$c7,$27,$ef,$fe,$f8,$e0,$80
+	defb $73,$c7,$27,$ef,$fe,$f8,$e0,$80
 
 
 
