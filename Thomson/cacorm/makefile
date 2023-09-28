@@ -58,7 +58,6 @@ objects = Startup.obj \
 	Movable.obj Actor.obj Man.obj Item.obj Line.obj \
 	Monster.obj Point.obj Increaser.obj \
 	Sprite.obj Sound.obj Math.obj VVram.obj VVramA.obj \
-	CopyMemory.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

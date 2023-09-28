@@ -6,7 +6,6 @@
 #include "Actor.h"
 #include "Sprite.h"
 #include "Chars.h"
-#include "CopyMemory.h"
 #include "Status.h"
 #include "Man.h"
 #include "Item.h"

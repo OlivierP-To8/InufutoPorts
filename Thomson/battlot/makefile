@@ -49,7 +49,7 @@ objects = Startup.obj \
 	Robo.obj MyRobo.obj EnemyRobo.obj Bullet.obj Bang.obj \
 	Print.obj \
 	../Init.obj ../ScanKeys.obj Sound.obj Vram.obj VramA.obj VVram.obj VVramA.obj Sprite.obj \
-	Chars.obj CopyMemory.obj \
+	Chars.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

@@ -57,7 +57,7 @@ VVram.asm: VVram.h Chars.h Vram.h
 objects = Startup.obj \
 	Main.obj Status.obj Stages.obj Stage.obj Fixed.obj Box.obj Rock.obj \
 	Direction.obj Movable.obj Man.obj Monster.obj Chaser.obj Ghost.obj Point.obj \
-	Chars.obj Print.obj VVram.obj VVramA.obj CopyMemory.obj \
+	Chars.obj Print.obj VVram.obj VVramA.obj \
 	../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Sprite.obj Sound.obj \
 	../../tools/cate09.lib
 

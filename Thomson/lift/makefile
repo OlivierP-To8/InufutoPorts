@@ -50,7 +50,7 @@ objects = Startup.obj \
 	Main.obj Status.obj Stage.obj Movable.obj Actor.obj \
 	Stages.obj Chars.obj Man.obj Item.obj Lift.obj Monster.obj Point.obj \
 	../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Print.obj VVram.obj VVramA.obj \
-	Sprite.obj Sound.obj CopyMemory.obj \
+	Sprite.obj Sound.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile
