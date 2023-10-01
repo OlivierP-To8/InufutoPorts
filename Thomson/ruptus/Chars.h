@@ -1,0 +1,16 @@
+constexpr word Char_Space = 0x0;
+constexpr word Char_Ascii = 0x0;
+constexpr word Char_Logo = 0x40;
+constexpr word Char_Barrier = 0x50;
+constexpr word Char_EnemyBullet = 0x52;
+constexpr word Char_Map = 0x53;
+constexpr word Char_Star = 0x55;
+constexpr word Char_FighterBullet = 0x56;
+constexpr word Char_BarrierHead = 0x5A;
+constexpr word Char_Fighter = 0x5B;
+constexpr word Char_Enemy = 0x7B;
+constexpr word Char_Item = 0x9B;
+constexpr word Char_SmallBang = 0x9F;
+constexpr word Char_LargeBang = 0xA3;
+constexpr word Char_Fort = 0xB3;
+constexpr word Char_End = 0xD7;
