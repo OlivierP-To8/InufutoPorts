@@ -4,7 +4,7 @@
 #include "VVram.h"
 #include "Chars.h"
 #include "Direction.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "FighterBullet.h"
 #include "Bang.h"
 #include "Barrier.h"

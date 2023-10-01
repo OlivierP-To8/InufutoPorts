@@ -1,11 +1,14 @@
 include 'Vram.inc'
 include 'VVram.inc'
+include '../ThomsonTO.inc'
 
-INIT1 equ $FF91
 VramTop equ Vram
 
 ext VVramFront_, RowFlags_
 ext PatternRam_
+ext ColorRam_
+ext PaletteValues_
+ext ColorSource_
 
 dseg
 Backup:
@@ -15,10 +18,6 @@ zseg
 yCount:
     defb 0
 xCount:
-    defb 0
-bitCount:
-    defb 0
-pattern:
     defb 0
 pVram:
     defw 0
@@ -30,81 +29,75 @@ flagBit:
     defb 0
 
 
-; void MakePatternMono(byte c, ptr<byte> pSource, byte count, byte color);
+; void MakeMono(byte count, ptr<byte> pDest, byte color);
 dseg
-MakePatternMono_@Param2: public MakePatternMono_@Param2
-    defb 0 ; count
-MakePatternMono_@Param3: public MakePatternMono_@Param3
+MakeMono_@Param2: public MakeMono_@Param2
     defb 0 ; color
-
 cseg
-MakePatternMono_: public MakePatternMono_
+MakeMono_: public MakeMono_
     pshs a,b,x,y
-        ldb #PatternSize
-        mul
-        addd #PatternRam_
-        tfr d,x
 
+        sta <xCount
+
+        ; y pointe où écrire la couleur (pDest)
+
+        ; on prend la couleur correspondante dans la palette
+        ; et on la stocke dans B
+        ldx #PaletteValues_
+        lda MakeMono_@Param2
+        leax a,x
+        ldb ,x
+
+        ; ajout de la couleur
         do
             lda #CharHeight | sta <yCount
             do
-                ldb ,y+
-                lda #VramStep | sta <xCount
-                do
-                    clr <pattern
-                    lda #2 | sta <bitCount
-                    do
-                        lda <pattern
-                        lsla | lsla | lsla | lsla
-                        sta <pattern
+                stb ,y+
 
-                        lda MakePatternMono_@Param3 ; color
-                        bitb #$80
-                        if ne
-                            lda MakePatternMono_@Param3 ; color
-                            anda #$0f
-                        else
-                            lsra | lsra | lsra | lsra
-                        endif
-                        ora <pattern
-                        sta <pattern
-
-                        lslb
-                        dec <bitCount
-                    while ne | wend
-                    lda <pattern | sta ,x+
-                    dec <xCount
-                while ne | wend
                 dec <yCount
             while ne | wend
-            dec MakePatternMono_@Param2 ; count
+
+            dec <xCount
         while ne | wend
+
     puls a,b,x,y
 rts
 
 
-; void MakePatternColor(byte c, ptr<byte> pSource, byte count);
-dseg
-MakePatternColor_@Param2: public MakePatternColor_@Param2
-    defb 0 ; count
+; void MakeColor(byte count, ptr<byte> pDest);
 cseg
-MakePatternColor_: public MakePatternColor_
+MakeColor_: public MakeColor_
     pshs a,b,x,y
-        ldb #PatternSize
-        mul
-        addd #PatternRam_
-        tfr d,x
 
-        lda MakePatternColor_@Param2 ; count
-        ldb #PatternSize
-        mul
+        sta <xCount
 
+        ; y pointe où écrire la couleur (pDest)
+        ; x pointe où lire les index de palette
+        ldx #ColorSource_
+
+        ; ajout de la couleur selon les index de palette dans ColorSource_
         do
-            pshs a,b
-                lda ,y+ | sta ,x+
-            puls a,b
-            subd #1
+            lda #CharHeight | sta <yCount
+            do
+                ; y pointe où lire
+                lda ,x+
+
+                pshs x
+                    ; on prend la couleur correspondante dans la palette
+                    ldx #PaletteValues_
+                    leax a,x
+                    ldb ,x
+
+                    ; et on la stocke dans ColorRam_ (Y)
+                    stb ,y+
+                puls x
+
+                dec <yCount
+            while ne | wend
+
+            dec <xCount
         while ne | wend
+
     puls a,b,x,y
 rts
 
@@ -113,21 +106,29 @@ rts
 cseg
 ClearScreen_:   public ClearScreen_
     pshs a,b,x,y
-        pshs cc | orcc #$50
-            lda INIT1
-            ora #$01
-            sta INIT1
 
-            ldx #Vram
-            do
-                clr ,x+
-                cmpx #Vram+VramRowSize*VramHeight
-            while ne | wend
+        ; commutation du bit de couleur (C0 a 0)
+        lda PRC
+        anda #$fe
+        sta PRC
 
-            lda INIT1
-            anda #not $01
-            sta INIT1
-        puls cc
+        ldx #Vram
+        ldy #$C0C0 ; noir sur noir
+        do
+            sty ,x+
+            cmpx #Vram+VramRowSize*VramHeight
+        while ne | wend
+
+        ; commutation du bit de forme (C0 a 1)
+        lda PRC
+        ora #$01
+        sta PRC
+
+        ldx #Vram
+        do
+            clr ,x+
+            cmpx #Vram+VramRowSize*VramHeight
+        while ne | wend
 
         ldx #Backup
         do
@@ -136,6 +137,7 @@ ClearScreen_:   public ClearScreen_
         while ne | wend
 
         bsr ClearFlags
+
     puls a,b,x,y
 rts
 
@@ -144,35 +146,47 @@ rts
 cseg
 Put_: public Put_
     pshs a,b,x,y
+
         lda #PatternSize
         mul
+
+        pshs a,b,x
+
+        ldy #ColorRam_
+        leay d,y
+
+        ; commutation du bit de couleur (C0 a 0)
+        lda PRC
+        anda #$fe
+        sta PRC
+
+        ldb #CharHeight
+        do
+            lda ,y+
+            sta ,x
+            leax VramWidth,x
+            decb
+        while ne | wend
+
+        puls a,b,x
+
         ldy #PatternRam_
         leay d,y
-        
-        pshs cc | orcc #$50
-            lda INIT1
-            ora #$01
-            sta INIT1
 
-            ldb #CharHeight
-            do
-                pshs b
-                    ldb #VramStep
-                    do
-                        lda ,y+
-                        sta ,x+
-                        decb
-                    while ne | wend
-                    leax VramWidth-VramStep,x
-                puls b
-                decb
-            while ne | wend
+        ; commutation du bit de forme (C0 a 1)
+        lda PRC
+        ora #$01
+        sta PRC
 
-            lda INIT1
-            anda #not $01
-            sta INIT1
-        puls cc
-    puls a,b,x,y    
+        ldb #CharHeight
+        do
+            lda ,y+
+            sta ,x
+            leax VramWidth,x
+            decb
+        while ne | wend
+
+    puls a,b,x,y
     tfr	x,d
     addd #VramStep
 rts
@@ -276,10 +290,14 @@ rts
 
 ext FighterX_, FighterY_
 
+RadFighter_:
+	defb $c0, $30, $0c, $03
+
 ; void DrawFighterOnRader();
 cseg
 DrawFighterOnRader_: public DrawFighterOnRader_
     pshs a,b,x,y
+
         lda FighterY_
         deca
         anda #$fe
@@ -294,28 +312,34 @@ DrawFighterOnRader_: public DrawFighterOnRader_
         lda FighterX_
         deca
         lsra
-        cmpa #32
+        ; on met les 2 derniers bits de A dans B
+        pshs a
+        puls b
+        andb #$03
+        ; on met dans Y la forme correspondant au 2 derniers bits de la position x
+        ldy #RadFighter_
+        leay b,y
+        ; 2 lsra supplémentaires pour diviser par 8 au total
+        lsra
+        lsra
+        cmpa #8
         if cc
-            suba #32
+            suba #8
         endif
         leax a,x
 
-        pshs cc | orcc #$50
-            lda INIT1
-            ora #$01
-            sta INIT1
+        ; commutation du bit de forme (C0 a 1)
+        lda PRC
+        ora #$01
+        sta PRC
 
-            lda ,x
-            eora #$66
-            sta ,x
-            leax VramWidth,x
-            lda ,x
-            eora #$66
-            sta ,x
+        lda ,x
+        eora ,y
+        sta ,x
+        leax VramWidth,x
+        lda ,x
+        eora ,y
+        sta ,x
 
-            lda INIT1
-            anda #not $01
-            sta INIT1
-        puls cc
     puls a,b,x,y
 rts

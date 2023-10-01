@@ -8,5 +8,5 @@ I added 3 linker targets to Inufuto's tools (in tools/asm8-1.5.0/Linker/Thomson*
 * Audio tape (.k7)
 * ROM cartridge (.m7)
 
-I ported 9 games so far, with minimal changes to the graphics most of the time, so there are a few color conflics because the graphic mode compatible with the whole Thomson range only supports 2 colors for 8 pixels. I had to change the color to monochrome in the battlot, aerial and impetus games.
+I ported 10 games so far, with minimal changes to the graphics most of the time, so there are a few color conflics because the graphic mode compatible with the whole Thomson range only supports 2 colors for 8 pixels. I had to change the color to monochrome in the battlot, aerial, impetus and ruptus games.
 

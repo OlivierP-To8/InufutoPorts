@@ -143,4 +143,47 @@ void Title()
     }
     PrintS(Vram + VramRowSize * 17 + 5 * VramStep, "PUSH SPACE KEY");
     PrintS(Vram + VramRowSize * 18 + 5 * VramStep, "OR SHIFT KEY");
+    /*{
+        word vram;
+        byte c;
+        vram = Vram + VramRowSize * 3;
+        for (c = Char_Fighter; c < Char_LargeBang; ) {
+            repeat (2) {
+                repeat (2) {
+                    vram = Put(vram, c);
+                    ++c;
+                }
+                vram += VramRowSize - 2 * VramStep;
+            }
+            vram = vram - 2 * VramRowSize + 2 * VramStep;
+            if (c == 0x9e) {
+                vram += 2 * VramRowSize - 4 * VramStep;
+            }
+        }
+        vram = Vram + VramRowSize * 12 + 6 * VramStep;
+        for (c = Char_LargeBang; c < Char_Fort; ) {
+            repeat (2) {
+                repeat (2) {
+                    vram = Put(vram, c);
+                    ++c;
+                }
+                vram += VramRowSize - 2 * VramStep;
+            }
+            vram = vram - 2 * VramRowSize + 2 * VramStep;
+            if (c == Char_LargeBang + 8) {
+                vram += 2 * VramRowSize - 4 * VramStep;
+            }
+        }
+        vram = Vram + VramRowSize * 12 + 12 * VramStep;
+        for (c = Char_Fort; c < Char_End; ) {
+            repeat (6) {
+                repeat (6) {
+                    vram = Put(vram, c);
+                    ++c;
+                }
+                vram += VramRowSize - 6 * VramStep;
+            }
+            vram = vram - 2 * VramRowSize + 6 * VramStep;
+        }
+    }*/
 }

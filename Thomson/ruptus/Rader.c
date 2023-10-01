@@ -8,7 +8,7 @@ constexpr ptr<byte> LeftTop = Vram + VramRowSize * 12 + 24 * VramStep;
 void PrintRader()
 {
     word vram;
-    vram= LeftTop;
+    vram = LeftTop;
     repeat(12) {
         repeat(8) {
             vram = Put(vram, Char_Map);
@@ -20,9 +20,16 @@ void PrintRader()
 
 void DrawFortRader(byte x, byte y, bool visible)
 {
-    word w;
-    w = ((word)(y & 0xf8) << 7) + ((x & 0xf8) >> 1);
-    Put(LeftTop + w, visible ? Char_Map + 1 : Char_Map);
+    word vram;
+    byte i;
+    vram = LeftTop;
+    i = (y & 0xf8) >> 3;
+    while (i > 0) {
+        vram += VramRowSize;
+        i--;
+    }
+    vram += (x & 0xf8) >> 3;
+    Put(vram, visible ? Char_MapOn : Char_MapOff);
 }
 
 
