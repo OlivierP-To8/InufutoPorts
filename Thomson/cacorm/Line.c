@@ -29,7 +29,6 @@ byte LineLastX, LineLastY;
 byte LinePrevX, LinePrevY;
 bool LineRed;
 
-extern void _deb();
 byte SetLineCell(byte x, byte y, byte bits)
 {
     ptr<byte> pCell;

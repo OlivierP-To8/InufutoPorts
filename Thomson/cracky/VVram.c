@@ -2,7 +2,6 @@
 #include "Chars.h"
 #include "Sprite.h"
 #include "Vram.h"
-#include "Sound.h"
 
 byte[VVramWidth * VVramHeight] VVramBack, VVramFront;
 byte[4] RowFlags;
@@ -21,5 +20,4 @@ void DrawAll()
         DrawSprites();
         VVramToVramChanged();
     }
-    CallSound();
 }

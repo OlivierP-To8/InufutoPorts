@@ -1,4 +1,5 @@
 #include "Main.h"
+#include "../Init.h"
 #include "../ScanKeys.h"
 #include "Sprite.h"
 #include "Vram.h"
@@ -12,11 +13,6 @@
 #include "Point.h"
 #include "VVram.h"
 
-extern void Init();
-extern void Fin();
-extern void WaitTimer(byte t);
-// extern void //PollVSync();
-
 constexpr byte MaxTimeDenom = 50;
 constexpr byte BonusRate = 9;
 
@@ -27,8 +23,6 @@ byte CurrentStage;
 byte StageTime;
 byte Clock;
 sbyte monsterNum;
-
-// extern void DrawAll();
 
 void Main()
 {
@@ -107,7 +101,6 @@ void Main()
             WaitTimer(2);
             //PollVSync();        
             DrawAll();
-            CallSound();
         }
         ++Clock;
         if ((Man.status & Movable_Live) == 0) {
@@ -128,8 +121,6 @@ void Main()
     PrintStatus();
     ++CurrentStage;
     goto stage;
-// exit:
-//     Fin();
 }
 
 

@@ -1,7 +1,3 @@
-extern word SoundProc;
-
-extern void InitSound();
-extern void CallSound();
 extern void Sound_Fire();
 extern void Sound_Hit();
 extern void Sound_Loose();

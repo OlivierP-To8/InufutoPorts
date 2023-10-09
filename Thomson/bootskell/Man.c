@@ -143,7 +143,6 @@ void LooseMan()
         // UpdateSprites();
         DrawAll();
         Sound_Loose();
-        //CallSound();
         ++i;
     } while (i < 8);
 }

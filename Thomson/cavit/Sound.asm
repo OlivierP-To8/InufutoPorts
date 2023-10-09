@@ -1,32 +1,6 @@
 include '../ThomsonTO.inc'
 
-dseg
-SoundProc_: public SoundProc_
-    defw 0
-Volume:
-    defb 0
-
 cseg
-
-InitSound_: public InitSound_
-    pshs x
-        ldx #0
-        stx SoundProc_
-    puls x
-rts
-
-
-CallSound_: public CallSound_
-    pshs x
-        ldx SoundProc_
-        if ne
-            jsr ,x
-        endif
-        ldx #0
-        stx SoundProc_
-    puls x
-rts
-
 
 Melody:
     pshs b

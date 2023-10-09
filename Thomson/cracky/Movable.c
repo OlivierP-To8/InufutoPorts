@@ -1,8 +1,6 @@
 #include "Movable.h"
 #include "Stage.h"
 
-extern void _deb();
-
 constexpr byte HitRange = (CoordRate * 4 / 3);
 
 void LocateMovable(ptr<Movable> pMovable, byte b)

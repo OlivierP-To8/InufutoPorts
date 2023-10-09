@@ -6,5 +6,3 @@ extern byte StageTime;
 extern byte ItemCount;
 
 extern void AddScore(word pts);
-
-extern void WaitTimer(byte t);

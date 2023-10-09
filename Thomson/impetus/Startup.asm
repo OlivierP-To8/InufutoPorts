@@ -1,7 +1,7 @@
 include 'Vram.inc'
 include '../ThomsonTO.inc'
 
-ext InitVram_, InitSound_, Main_
+ext InitVram_, Main_
 
 dseg
 TimerCount: 
@@ -18,8 +18,8 @@ cseg
     orcc #$50 ; disables IRQ & FIRQ
         clr TimerCount
 
-        ; intervalle du timer pour une seconde
-        ldd #2600
+        ; intervalle du timer : VBL 20ms
+        ldd #2500
         std TMSB
         lda #$46
         sta TCR
@@ -35,7 +35,6 @@ cseg
     andcc #not $50 ; enables IRQ & FIRQ
 
     jsr InitVram_
-    jsr InitSound_
 jmp Main_
 
 

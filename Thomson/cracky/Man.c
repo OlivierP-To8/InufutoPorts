@@ -8,8 +8,6 @@
 #include "Main.h"
 #include "Sound.h"
 
-extern void _deb();
-
 // constexpr byte Color = 15;
 constexpr byte PatternMask = 0x0f;
 constexpr byte Pattern_Left = (Char_Man_Left - Char_Man) / 4;

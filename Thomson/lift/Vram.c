@@ -1,6 +1,5 @@
 #include "Vram.h"
 #include "VVram.h"
-#include "CopyMemory.h"
 #include "Chars.h"
 
 extern byte[PatternSize * Char_End] PatternRam;

@@ -3,8 +3,6 @@
 #include "VVram.h"
 #include "Chars.h"
 
-extern void _deb();
-
 constexpr byte MaxCount = 3;
 constexpr byte MaxTime = 3;
 

@@ -22,8 +22,6 @@ static const sbyte[] DirectionTable = {
 byte MonsterCount;
 Movable[MaxMonsterCount] Monsters;
 
-extern void _deb();
-
 static void DecideDirection(ptr<Movable> pMonster)
 {
     byte[4] directions;

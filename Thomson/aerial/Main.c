@@ -97,7 +97,6 @@ loop:
         WaitTimer(4);
         DrawAll();
         //PollVSync();
-        CallSound();
     }
     if (RemainCount == 0) {
         // StopBGM();
@@ -108,8 +107,6 @@ loop:
     // UpdateSprites();
     ++Clock;
     goto loop;
-// exit:
-//     Fin();
 }
 
 

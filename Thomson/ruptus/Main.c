@@ -1,4 +1,5 @@
 #include "Main.h"
+#include "../Init.h"
 #include "../ScanKeys.h"
 #include "Stage.h"
 #include "Vram.h"
@@ -15,12 +16,6 @@
 #include "Bang.h"
 #include "Item.h"
 #include "Sound.h"
-
-extern void Init();
-// extern void Fin();
-extern void WaitTimer(byte t);
-// extern void WaitSync();
-extern void DrawAll();
 
 word Score;
 word HiScore;
@@ -52,7 +47,6 @@ void Main()
     stage:
     InitStage();
     try:
-    InitSound();
     InitTrying();
     ClearScreen();
     PrintStatus();
@@ -87,7 +81,6 @@ void Main()
         if ((Clock & 3) == 0) {
             WaitTimer(1);
             DrawAll();
-            CallSound();
         }
         ++Clock;
     } while (FortCount > 0);
@@ -96,8 +89,6 @@ void Main()
     PrintStatus();
     ++CurrentStage;
     goto stage;
-// exit:
-//     Fin();
 }
 
 void DrawAll()
@@ -108,9 +99,9 @@ void DrawAll()
         DrawForts();
         DrawBarriers();
         VVramBackToFront();
-                                        // EraseSprites();
+        // EraseSprites();
         DrawSprites();
-                                        // VVramToVramChanged();
+        // VVramToVramChanged();
         VVramToVramAll();
         VVramChanged = false;
     }

@@ -33,8 +33,6 @@ void HideSprite(byte index)
     p->code = InvalidCode;
 }
 
-void __deb() {}
-
 void EraseSprites() 
 {
     ptr<Sprite> p;
@@ -55,7 +53,6 @@ void EraseSprites()
             bits = ((byte)1) << (y & 7);
             pFront[0] = pBack[0];
             if (p->oldCode == Char_FighterBullet && p->oldY == 8) {
-                __deb();
                 y = p->oldY;
             }
             *pFlags |= bits;

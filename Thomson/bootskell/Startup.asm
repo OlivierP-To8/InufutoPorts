@@ -1,7 +1,7 @@
 include 'Vram.inc'
 include '../ThomsonTO.inc'
 
-ext InitVram_, InitSound_, Main_
+ext InitVram_, Main_
 
 dseg
 TimerCount: 
@@ -35,7 +35,6 @@ cseg
     andcc #not $50 ; enables IRQ & FIRQ
 
     jsr InitVram_
-    jsr InitSound_
 jmp Main_
 
 

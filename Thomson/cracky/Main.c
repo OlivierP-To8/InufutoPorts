@@ -1,4 +1,5 @@
 #include "Main.h"
+#include "../Init.h"
 #include "../ScanKeys.h"
 #include "Vram.h"
 #include "VVram.h"
@@ -9,8 +10,6 @@
 #include "Man.h"
 #include "Destruction.h"
 #include "Monster.h"
-
-extern void Init();
 
 constexpr byte MaxTimeDenom = 50 / (8 / CoordRate);
 constexpr byte BonusRate = 8;
@@ -24,7 +23,6 @@ byte ItemCount;
 static byte Clock;
 static sbyte monsterNum;
 
-extern void _deb();
 void Main()
 {
     byte key, timeDenom;
@@ -80,11 +78,9 @@ void Main()
                 PrintTime();
                 if (StageTime == 0) {
                     PrintTimeUp();
-                    CallSound();
                     lose:
                     // StopBGM();
                     LooseMan();
-                    CallSound();
                     --RemainCount;
                     if (RemainCount > 0) {
                         goto try;
@@ -117,8 +113,6 @@ void Main()
     PrintStatus();
     ++CurrentStage;
     goto stage;
-// exit:
-//     Fin();
 }
 
 
@@ -130,5 +124,3 @@ void AddScore(word pts)
     }
     PrintScore();
 }
-
-void _deb(){}

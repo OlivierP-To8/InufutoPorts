@@ -3,8 +3,6 @@
 #include "VVram.h"
 #include "Vram.h"
 
-extern void _deb();
-
 constexpr byte InvalidCode = 0xff;
 Sprite[SpriteCount] Sprites;
 

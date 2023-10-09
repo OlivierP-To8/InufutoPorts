@@ -1,5 +1,6 @@
 #include "Main.h"
 #include "Stage.h"
+#include "../Init.h"
 #include "../ScanKeys.h"
 #include "Status.h"
 #include "Sprite.h"
@@ -10,11 +11,6 @@
 #include "Fort.h"
 #include "Sound.h"
 #include "VVram.h"
-
-extern void Init();
-extern void WaitTimer(byte t);
-// extern void WaitBlankOn();
-// extern void WaitBlankOff();
 
 constexpr byte MaxTimeDenom = 50;
 constexpr byte BonusRate = 4;
@@ -56,7 +52,6 @@ void Main()
     InitStage();   
     try:
     Clock = 0;
-    // InitSound();
     InitTrying();
     PrintStatus();
     // DrawFence();
@@ -97,7 +92,6 @@ void Main()
             // WaitBlankOn();
             WaitTimer(5);
             DrawAll();
-            CallSound();
         }
         ++Clock;
         if (MyFort.life == 0) {
@@ -134,8 +128,6 @@ void Main()
     PrintStatus();
     ++CurrentStage;
     goto stage;
-// exit:
-//     Fin();
 }
 
 static void Wait()
@@ -162,7 +154,6 @@ void DrawAll()
         DrawSprites();
         VVramToVramChanged();
     }
-    CallSound();
 }
 
 void AddScore(word pts) 

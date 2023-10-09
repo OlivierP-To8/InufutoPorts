@@ -1,69 +1,32 @@
 include '../ThomsonTO.inc'
 
-dseg
-SoundProc_: public SoundProc_
-    defw 0
-Volume:
-    defb 0
-
 cseg
-
-InitSound_: public InitSound_
-    pshs x
-        ldx #0
-        stx SoundProc_
-    puls x
-rts
-
-
-CallSound_: public CallSound_
-    pshs x
-        ldx SoundProc_
-        if ne
-            jsr ,x
-        endif
-        ldx #0
-        stx SoundProc_
-    puls x
-rts
 
 fire_notes:
     defb 1,1,F0, 1,1,D0S, 1,1,C0S, 1,2,B0, 1,2,A0, 1,1,G0, 0
 Sound_Fire_: public Sound_Fire_
-    pshs a,b,x,y
+    pshs x
         ldx #fire_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 hit_notes:
     defb 1,2,F0, 1,2,G0, 1,2,A0, 1,2,B0, 1,1,C0, 1,1,D0, 1,1,E0, 1,1,F0
     defb 0
-Sound_Hit:
-    pshs a,b,x,y
-        ldx #hit_notes
-        bsr Melody
-    puls a,b,x,y
-rts
 Sound_Hit_: public Sound_Hit_
     pshs x
-        ldx #Sound_Hit
-        stx SoundProc_
+        ldx #hit_notes
+        bsr Melody
     puls x
 rts
 
 loose_notes:
     defb 1,1,F0, 1,1,E0, 1,1,D0, 1,1,C0, 1,2,B0, 1,2,A0, 1,2,G0, 1,2,F0, 0
-Sound_Loose:
-    pshs a,b,x,y
-        ldx #loose_notes
-        bsr Melody
-    puls a,b,x,y
-rts
 Sound_Loose_: public Sound_Loose_
     pshs x
-        ldx #Sound_Loose
-        stx SoundProc_
+        ldx #loose_notes
+        bsr Melody
     puls x
 rts
 
@@ -120,16 +83,10 @@ N16 equ N8/2
 
 up_notes:
     defb 1,2,C0, 1,2,C0S, 1,2,D0, 1,2,F0, 1,2,A0, 1,1,C0, 0
-Sound_Up:
-    pshs a,b,x,y
-        ldx #up_notes
-        bsr Melody
-    puls a,b,x,y
-rts
 Sound_Up_: public Sound_Up_
     pshs x
-        ldx #Sound_Up
-        stx SoundProc_
+        ldx #up_notes
+        bsr Melody
     puls x
 rts
 
@@ -138,22 +95,21 @@ start_notes:
 	defb 3,2,A0, 3,2,G0, 3,2,A0, 6,1,C0, 3,1,E0, 12,1,D0, 3,2,P0, 5,1,C0, 3,1,C0, 6,1,D0
     defb 0
 Sound_Start_: public Sound_Start_
-    pshs a,b,x,y
+    pshs x
         ldx #start_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 
 clear_notes: 
     defb 3,2,E0, 3,2,G0, 3,1,C0, 3,2,A0, 3,2,P0, 3,2,A0, 3,2,P0, 3,2,G0, 3,2,P0, 3,2,G0, 3,2,P0, 3,2,G0, 3,2,P0, 3,2,G0, 6,2,A0
     defb 0
-Sound_Clear_:
-    public Sound_Clear_
-    pshs a,b,x,y
+Sound_Clear_: public Sound_Clear_
+    pshs x
         ldx #clear_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts
 
 
@@ -161,8 +117,8 @@ over_notes:
     defb 2,2,E0, 3,2,E0, 3,2,G0, 6,2,E0, 3,1,C0, 3,2,B0, 3,2,A0, 3,2,G0, 3,2,A0, 3,2,P0, 6,2,A0, 3,2,G0, 6,2,A0
     defb 0
 Sound_GameOver_: public Sound_GameOver_
-    pshs a,b,x,y
+    pshs x
         ldx #over_notes
         bsr Melody
-    puls a,b,x,y
+    puls x
 rts

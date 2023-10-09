@@ -122,8 +122,6 @@ void Main()
     PrintStatus();
     ++CurrentStage;
     goto stage;
-// exit:
-//     Fin();
 }
 
 

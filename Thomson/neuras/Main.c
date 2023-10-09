@@ -107,8 +107,6 @@ play:
         PrintStatus();
         ++CurrentStage;
     };
-// exit:
-//     Fin();
 }
 
 

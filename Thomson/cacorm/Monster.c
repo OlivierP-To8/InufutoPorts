@@ -17,7 +17,6 @@ byte MonsterCount;
 Actor[Count] Monsters;
 static byte Clock;
 
-extern void _deb();
 void InitMonsters()
 {
     ptr<Actor> pMonster;

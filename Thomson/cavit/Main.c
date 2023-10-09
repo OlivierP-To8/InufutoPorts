@@ -1,4 +1,5 @@
 #include "Main.h"
+#include "../Init.h"
 #include "../ScanKeys.h"
 #include "Sprite.h"
 #include "Vram.h"
@@ -12,11 +13,6 @@
 #include "Point.h"
 #include "Box.h"
 #include "VVram.h"
-
-extern void Init();
-// extern void Fin();
-extern void WaitTimer(byte t);
-// extern void PollVSync();
 
 constexpr byte MaxTimeDenom = 50;
 constexpr byte BonusRate = 3;
@@ -60,7 +56,6 @@ void Main()
     Clock = 0;
     monsterNum = 0;
     timeDenom = MaxTimeDenom;
-    InitSound();
     InitTrying();
     // UpdateSprites();
     DrawAll();
@@ -102,7 +97,6 @@ void Main()
         if ((Clock & 0x0f) == 0) {
             WaitTimer(5);
             DrawAll();
-            CallSound();
         }
         //PollVSync();
         ++Clock;
@@ -120,7 +114,6 @@ void Main()
         }
     } while (BoxCount != 0);
     DrawAll();
-    CallSound();
     // StopBGM();
     Sound_Clear();
     while (StageTime >= BonusRate) {
@@ -134,8 +127,6 @@ void Main()
     PrintStatus();
     ++CurrentStage;
     goto stage;
-// exit:
-//     Fin();
 }
 
 

@@ -11,8 +11,6 @@
 #include "Monster.h"
 #include "Destruction.h"
 
-extern void _deb();
-
 ptr<Stage> pStage;
 ptr<byte> pStageBytes;
 byte[ColumnCount / ColumnsPerByte * FloorCount] CellMap;

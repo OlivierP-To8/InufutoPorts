@@ -89,7 +89,6 @@ loop:
         UpdateBangs();
         WaitTimer(5);
         DrawAll();
-        CallSound();
         ScanKeys();
     }
 
@@ -102,8 +101,6 @@ loop:
 
     ++Clock;
     goto loop;
-// exit:
-//     Fin();
 }
 
 

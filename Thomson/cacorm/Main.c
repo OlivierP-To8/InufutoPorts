@@ -26,10 +26,6 @@ byte StageTime;
 static byte Clock;
 static sbyte monsterNum;
 
-// extern void DrawAll();
-// extern byte PrevKey;
-
-extern void _deb();
 void Main()
 {
     byte key, timeDenom;
@@ -103,7 +99,6 @@ void Main()
             WaitTimer(2);
             //PollVSync();        
             DrawAll();
-            //CallSound();
         }
         ++Clock;
         if ((Man.status & Actor_Live) == 0) {
@@ -126,8 +121,6 @@ void Main()
     PrintStatus();
     ++CurrentStage;
     goto stage;
-// exit:
-//     Fin();
 }
 
 
@@ -139,5 +132,3 @@ void AddScore(word pts)
     }
     PrintScore();
 }
-
-void _deb(){}
