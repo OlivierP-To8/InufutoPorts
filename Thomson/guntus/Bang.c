@@ -46,13 +46,13 @@ void StartBang(byte x, byte y, bool large)
 
 
 
-static byte Show(byte x, byte y, byte sprite, byte code, byte type)
+static byte Show(byte x, byte y, byte sprite, byte pattern)
 {
     if (sprite < NextSprite) {
         x -= Size;
         y -= Size;
         if (x < RangeX && y < RangeY) {
-            ShowSprite(sprite, x, y, code, type);
+            ShowSprite(sprite, x, y, pattern);
             return sprite + 1;
         }
     }
@@ -72,13 +72,13 @@ void UpdateBangs()
         count = pBang->status & 0x0f;
 
         if (mode == Status_Large_Large) {
-            sprite = Show(pBang->x - Size, pBang->y - Size, sprite, Char_Bang + 8, 2);
-            sprite = Show(pBang->x + Size, pBang->y - Size, sprite, Char_Bang + 24, 2);
-            sprite = Show(pBang->x - Size, pBang->y + Size, sprite, Char_Bang + 16, 3);
-            sprite = Show(pBang->x + Size, pBang->y + Size, sprite, Char_Bang + 32, 3);
+            sprite = Show(pBang->x - Size, pBang->y - Size, sprite, Char_Bang + 4);
+            sprite = Show(pBang->x + Size, pBang->y - Size, sprite, Char_Bang + 8);
+            sprite = Show(pBang->x - Size, pBang->y + Size, sprite, Char_Bang + 12);
+            sprite = Show(pBang->x + Size, pBang->y + Size, sprite, Char_Bang + 16);
         }
         else {
-            sprite = Show(pBang->x, pBang->y, sprite, Char_Bang, 1);
+            sprite = Show(pBang->x, pBang->y, sprite, Char_Bang);
         }
 
         ++count;

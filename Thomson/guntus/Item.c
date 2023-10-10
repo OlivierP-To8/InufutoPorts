@@ -8,8 +8,6 @@
 #include "Coord.h"
 #include "Chars.h"
 
-constexpr byte Color = 0x98;
-constexpr byte Size = 2;
 constexpr byte Range = VramHeight * CoordRate;
 constexpr byte InvalidY = 0xff;
 
@@ -22,7 +20,7 @@ void InitItem()
 
 static void Show()
 {
-    ShowSprite(Sprite_Item, ItemX, ItemY, Char_Item, 1);
+    ShowSprite(Sprite_Item, ItemX, ItemY, Char_Item);
 }
 
 static void Hide()

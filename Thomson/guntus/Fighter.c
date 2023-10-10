@@ -1,7 +1,7 @@
 #include "Fighter.h"
 #include "Vram.h"
 #include "Sprite.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "FighterBullet.h"
 #include "Bang.h"
 #include "Sound.h"
@@ -10,7 +10,7 @@
 #include "Chars.h"
 
 constexpr byte InitialX = (WindowWidth / 2 - 1) * CoordRate;
-constexpr byte InitialY = (WindowHeight - 2 - 1) * CoordRate    -1;
+constexpr byte InitialY = (WindowHeight - 2 - 1) * CoordRate;
 constexpr byte CrashRange = 16 * CoordRate;
 constexpr byte ReviveTime = 31 * CoordRate;
 
@@ -20,7 +20,7 @@ static byte ReviveCount;
 
 static void Show()
 {
-    ShowSprite(Sprite_Fighter, FighterX, FighterY, Char_Fighter, 1);
+    ShowSprite(Sprite_Fighter, FighterX, FighterY, Char_Fighter);
 }
 
 static void Hide()
@@ -81,7 +81,7 @@ void MoveFighter()
     }
     if (ReviveCount > 0) {
         --ReviveCount;
-        if (((ReviveCount >> CoordShift) & 1) != 0) {
+        if (((ReviveCount) & 1) != 0) {
             Show();
         }
         else {

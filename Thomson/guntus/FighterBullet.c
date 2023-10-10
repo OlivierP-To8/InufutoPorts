@@ -9,7 +9,6 @@
 #include "MovingEnemy.h"
 #include "EnemyRow.h"
 
-constexpr byte Size = 4;
 constexpr byte Count = Sprite_EnemyBullet - Sprite_FighterBullet;
 constexpr byte Range = VramHeight * CoordRate;
 constexpr byte InvalidY = 0xff;
@@ -36,7 +35,7 @@ void InitFighterBullets()
 
 static void Show(ptr<FighterBullet> pBullet)
 {
-    ShowSprite(pBullet->sprite, pBullet->x + 1, pBullet->y, Char_FighterBullet, 0);
+    ShowSprite(pBullet->sprite, pBullet->x, pBullet->y, Char_FighterBullet);
 }
 
 

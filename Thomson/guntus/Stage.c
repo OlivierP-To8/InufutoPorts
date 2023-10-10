@@ -28,7 +28,6 @@ void InitPlaying()
     InitEnemyBullets();
     PrintStatus();
     InitEnemyRows();
-    InitStarts();
     BackgroundChanged = true;
 }
 

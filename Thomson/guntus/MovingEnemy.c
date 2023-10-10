@@ -66,8 +66,8 @@ void ShowMovingEnemy(ptr<MovingEnemy> pEnemy)
 {
     byte type, pattern;
     type = pEnemy->type;
-    pattern = Char_Enemy + (((type << 3) | pEnemy->direction) << 3);
-    ShowSprite(pEnemy->sprite, pEnemy->x, pEnemy->y, pattern, 1);
+    pattern = Char_Enemy + (((type << 3) | pEnemy->direction) << 2);
+    ShowSprite(pEnemy->sprite, pEnemy->x, pEnemy->y, pattern);
 }
 
 
@@ -144,8 +144,8 @@ static void DecideDirection(ptr<MovingEnemy> pEnemy)
     case Type_Insistent:
         if ((localClock & LongMask) != 0) {
             byte x, y;
-            x = (Rnd() & 0x0f) << (1 + CoordShift);
-            y = ((Rnd() & 0x0f) + 4) << CoordShift;
+            x = (Rnd() & 0x0f) << 1;
+            y = ((Rnd() & 0x0f) + 4);
             dy = Sign(pEnemy->y, y);
             dx = Sign(pEnemy->x, x);
         }

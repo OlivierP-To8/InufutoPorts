@@ -5,7 +5,6 @@
 #include "VVram.h"
 
 constexpr byte RangeY = 32;
-constexpr byte CharCount = 2;
 
 struct Star {
     byte x, y;
@@ -31,54 +30,24 @@ static const Star[] Stars = {
 };
 
 static byte YOffset;
-static byte oldYOffset;
-static byte CharOffset;
-
-void InitStarts()
-{
-    CharOffset = 0;
-    YOffset = 0;
-}
 
 void MoveStars()
 {
-    ++CharOffset;
-    if (CharOffset >= CharCount) {
-        // BackgroundChanged = true;
-        CharOffset -= CharCount;
-        oldYOffset = YOffset;
-        ++YOffset;
-    }
-}
-
-
-void EraseStars()
-{
-    ptr<Star> pStar;
-    for (pStar : Stars) {
-        byte y;
-        y = (pStar->y + oldYOffset) & (RangeY - 1);
-        if (y < WindowHeight) {
-            SetRowFlags(y, 1);
-        }
-    }
+    ++YOffset;
+    BackgroundChanged = true;
 }
 
 
 void DrawStars()
 {
-    // byte c, old;
     ptr<Star> pStar;
     for (pStar : Stars) {
-        byte y, c;
+        byte y;
         ptr<byte> pv;
         y = (pStar->y + YOffset) & (RangeY - 1);
         if (y < WindowHeight) {
-            SetRowFlags(y, 1);
-            pv = VVramPtr(pStar->x, y);
-            *pv = Char_Star + CharOffset;
-            ++pv;
-            *pv = 0;
+            pv = VVramBack + VVramOffset(pStar->x, y);
+            *pv = Char_Star;
         }
     }
 }

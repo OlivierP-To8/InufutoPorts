@@ -93,8 +93,8 @@ void MoveTeams()
                     ptr<Course> pCourse;
                     pMember = pTeam->members[pTeam->nextMember];
                     pCourse = pTeam->pCourse;
-                    pMember->x = pCourse->x << CoordShift;
-                    pMember->y = pCourse->y << CoordShift;
+                    pMember->x = pCourse->x;
+                    pMember->y = pCourse->y;
                     pMember->status = MovingEnemy_Sally;
                     ShowMovingEnemy(pMember);
                     ++pTeam->nextMember;

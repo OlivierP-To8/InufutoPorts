@@ -38,9 +38,10 @@ void InitEnemyRows()
         pRow->flags[1] = 0;
     };
     EnemyRowCount = pStage->rowCount;
-    EnemyRowLeft = (MinInitialX + (pStage->min << 1)) << CoordShift;
-    EnemyRowWidth = ((pStage->max - pStage->min + 1) << 1) << CoordShift;
+    EnemyRowLeft = (MinInitialX + (pStage->min << 1));
+    EnemyRowWidth = ((pStage->max - pStage->min + 1) << 1);
     EnemyRowDirection = -1;
+    BackgroundChanged = true;
     nextRow = EnemyRowCount - 1;
     nextColumn = 0;
 }
@@ -48,13 +49,13 @@ void InitEnemyRows()
 
 byte FixedEnemyY(byte target)
 {
-    return ((target & 0xf0) >> (3 - CoordShift)) + Top * CoordRate;
+    return ((target & 0xf0) >> 3) + Top * CoordRate;
 }
 
 
 byte FixedEnemyX(byte target)
 {
-    return ((target & 0x0f) << (CoordShift + 1)) + EnemyRowLeft;
+    return ((target & 0x0f) << 1) + EnemyRowLeft;
 }
 
 
@@ -62,19 +63,16 @@ void DrawEnemyRows()
 {
     ptr<EnemyRow> pRow;
     ptr<byte> pVVramRow;
-    byte y;
-    y = Top;
-    pVVramRow = (VVram + VVramWidth * Top) + (word)(EnemyRowLeft << 1);
+    pVVramRow = (VVramBack + VVramWidth * Top) + (word)(EnemyRowLeft);
     for (pRow : EnemyRows) {
         byte n;
         n = pRow->memberCount;
         if (n != 0) {
             ptr<byte> pVVram;
-            byte mask, bits, type, cType;
+            byte mask, bits, cType;
             ptr<byte> pFlag;
             bool left;
-            type = pRow->type;
-            cType = (type << (3 + 3)) + Char_Enemy;
+            cType = (pRow->type << (3 + 2)) + Char_Enemy;
             pVVram = pVVramRow;
             pFlag = pRow->flags;
             bits = *pFlag; ++pFlag;
@@ -85,7 +83,7 @@ void DrawEnemyRows()
                     --n;
                 }
                 else {
-                    pVVram += 4 * VVramStep;
+                    pVVram += 2;
                 }
 
                 mask <<= 1;
@@ -95,10 +93,8 @@ void DrawEnemyRows()
                 }
                 if (n == 0) goto exit;
             }
-            exit:
-            SetRowFlags(y, 3);
+            exit:;
         }
-        y += 2;
         pVVramRow += VVramWidth * 2;
     }
 }
@@ -133,8 +129,8 @@ static bool StartAttacking(byte rowIndex)
             ptr<MovingEnemy> pEnemy;
             pEnemy = StartMovingEnemy(MovingEnemy_Attack, pRow->type);
             if (pEnemy != nullptr) {
-                pEnemy->x = EnemyRowLeft + (columnIndex << (CoordShift + 1));
-                pEnemy->y = (rowIndex << (CoordShift + 1)) + Top * CoordRate;
+                pEnemy->x = EnemyRowLeft + (columnIndex << 1);
+                pEnemy->y = (rowIndex << 1) + Top * CoordRate;
                 pEnemy->target = (rowIndex << 4) | columnIndex;
                 pEnemy->bulletCount = CurrentStage + 1;
                 pRow->flags[byteIndex] &= ~bit;
@@ -169,6 +165,7 @@ void MoveEnemyRows()
     }
     EnemyRowLeft = newX;
     if (newX != oldX) {
+        BackgroundChanged = true;
         if (FormationCount == 0 && FreeEnemyCount != 0) {
             repeat (MaxCount) {
                 byte rowIndex;

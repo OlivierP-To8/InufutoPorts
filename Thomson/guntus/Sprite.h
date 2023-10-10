@@ -15,8 +15,7 @@ constexpr byte SpriteCount = 20;
 
 extern void InitSprites();
 extern void HideAllSprites();
-extern void ShowSprite(byte index, byte x, byte y, byte code, byte type);
+extern void ShowSprite(byte index, byte x, byte y, byte code);
 extern void HideSprite(byte index);
 extern void EraseSprites();
 extern void DrawSprites();
-extern void SetSpriteRowFlags();

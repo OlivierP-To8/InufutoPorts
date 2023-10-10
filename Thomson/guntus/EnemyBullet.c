@@ -7,7 +7,6 @@
 #include "Chars.h"
 #include "Math.h"
 
-constexpr byte Color = 0xd8;
 constexpr byte RangeX = WindowWidth * CoordRate - 1;
 constexpr byte RangeY = WindowHeight * CoordRate;
 
@@ -36,7 +35,7 @@ void InitEnemyBullets()
 
 static void Show(ptr<EnemyBullet> pBullet)
 {
-    ShowSprite(pBullet->sprite, pBullet->x, pBullet->y, Char_EnemyBullet, 0);
+    ShowSprite(pBullet->sprite, pBullet->x, pBullet->y, Char_EnemyBullet);
 }
 
 
@@ -101,12 +100,10 @@ void MoveEnemyBullets()
             pBullet->denominatorY += HiVelocity;
         }
         if (
+            pBullet->x >= RangeX || pBullet->y >= RangeY ||
             (
-                pBullet->x >= RangeX || pBullet->y >= RangeY ||
-                (
-                    (pBullet->clock & CoordMask) == 0 && 
-                    HitBulletFighter(pBullet->x, pBullet->y)
-                )
+                (pBullet->clock & CoordMask) == 0 && 
+                HitBulletFighter(pBullet->x, pBullet->y)
             )
         ) {
             HideSprite(pBullet->sprite);

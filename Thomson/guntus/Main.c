@@ -1,6 +1,6 @@
-#include "Init.h"
+#include "../Init.h"
 #include "Stage.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Sprite.h"
 #include "Fighter.h"
 #include "FighterBullet.h"
@@ -58,7 +58,6 @@ stage:
     ClearTime = 150 * CoordRate / 8;
     InitStage();
 loop:
-    ScanKeys();
     if ((Clock & 0x01) == 0) {
         MoveFighter();
         MoveEnemyBullets();
@@ -73,11 +72,11 @@ loop:
         StartTeam();
         MoveEnemyRows();
     }
-    if ((Clock & 0x03) == 0) {
+    // if ((Clock & 0x01) == 0) {
         UpdateBangs();
-        WaitTimer(1);
+        WaitTimer(3);
         DrawAll();
-    }
+    // }
     MoveFighterBullets();
     if (RemainCount == 0) {
         // StopBGM();
@@ -97,6 +96,4 @@ loop:
     // RotateSprites();
     // UpdateSprites();
     goto loop;
-// exit:
-//     Fin();
 }

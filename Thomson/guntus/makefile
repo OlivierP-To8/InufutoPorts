@@ -1,16 +1,24 @@
 name=guntus
 
-all: $(name).cas
+all: $(name).m7 $(name).k7 $(name).fd
 
-cseg=2000
-zseg=5700
-dseg=5730
+#Check the end of $(name).symbols.txt:
+#	CSEG, DSEG and ZSEG must not overlap
+#	CSEG must end before 9FFF or start at A000
+zseg=8000
+dseg=8020
+cseg=A000
+#	DROM must end before 7FFF for TO7 without RAM expansion
+zrom=7000
+drom=7020
+crom=0022
 
-.c.asm:
-	Cate09.exe $*.c
+%.obj: %.c
+	../../tools/Cate09 $*.c
+	../../tools/Asm09 $*.asm
 
-.asm.obj:
-	Asm09.exe $*.asm
+%.obj: %.asm
+	../../tools/Asm09 $*.asm
 
 Bang.asm: Bang.c Bang.h Vram.h Sprite.h Stage.h Chars.h \
 	Coord.h 
@@ -22,13 +30,13 @@ EnemyRow.asm: EnemyRow.c EnemyRow.h Coord.h Vram.h Stage.h Chars.h \
 	MovingEnemy.h Sound.h Bang.h Enemy.h Math.h Status.h \
 	Team.h Stage.h MovingEnemy.h Direction.h Sprite.h Fighter.h \
 	VVram.h 
-Fighter.asm: Fighter.c Fighter.h Vram.h Sprite.h ScanKeys.h FighterBullet.h \
+Fighter.asm: Fighter.c Fighter.h Vram.h Sprite.h ../ScanKeys.h FighterBullet.h \
 	Bang.h Sound.h Status.h Coord.h Chars.h 
 FighterBullet.asm: FighterBullet.c FighterBullet.h Stage.h Sprite.h Fighter.h Vram.h \
 	Sound.h Coord.h Chars.h MovingEnemy.h EnemyRow.h 
 Item.asm: Item.c Item.h Sprite.h Vram.h Fighter.h Status.h \
 	Status.h Sound.h Coord.h Chars.h 
-Main.asm: Main.c Init.h Stage.h ScanKeys.h Sprite.h Fighter.h \
+Main.asm: Main.c ../Init.h Stage.h ../ScanKeys.h Sprite.h Fighter.h \
 	FighterBullet.h EnemyBullet.h Status.h Bang.h Sound.h Team.h \
 	Stage.h MovingEnemy.h Direction.h Sprite.h EnemyRow.h Vram.h \
 	VVram.h Star.h Enemy.h Item.h Coord.h 
@@ -50,12 +58,10 @@ Vram.asm: Vram.c Vram.h VVram.h Chars.h
 VVram.asm: VVram.c Vram.h VVram.h Chars.h Sprite.h EnemyRow.h \
 	Star.h Sound.h 
 Chars.obj: Chars.asm 
-Init.obj: Init.asm 
 Math.obj: Math.asm 
 Print.obj: Print.asm 
-ScanKeys.obj: ScanKeys.asm 
 Sound.obj: Sound.asm 
-SpriteA.obj: SpriteA.asm Vram.inc VVram.inc 
+Startup.obj: Startup.asm 
 VramA.obj: VramA.asm Vram.inc VVram.inc Chars.inc 
 VVramA.obj: VVramA.asm VVram.inc 
 
@@ -64,12 +70,25 @@ objects= Startup.obj \
 	Bang.obj Direction.obj Enemy.obj EnemyBullet.obj EnemyRow.obj Fighter.obj \
 	FighterBullet.obj Item.obj MovingEnemy.obj Print.obj Sprite.obj \
 	Stage.obj Stages.obj Star.obj Status.obj Team.obj Vram.obj \
-	VVram.obj Chars.obj Init.obj Math.obj ScanKeys.obj \
-	Sound.obj SpriteA.obj VramA.obj VVramA.obj \
-	..\..\cate\cate09.lib
+	VVram.obj Chars.obj ../Init.obj Math.obj ../ScanKeys.obj \
+	Sound.obj VramA.obj VVramA.obj \
+	../../tools/cate09.lib
 
-$(name).c10: $(objects)
-	LinkBE.exe $(name).c10 $(cseg) $(dseg) $(zseg) $(objects)
+$(name).fd: $(objects) makefile
+	../../tools/LinkBE $(name).fd $(cseg) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).fd.symbols.txt
 
-$(name).cas: $(name).c10
-	copy $(name).c10 $(name).cas /y
+$(name).k7: $(objects) makefile
+	../../tools/LinkBE $(name).k7 $(cseg) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).k7.symbols.txt
+
+$(name).m7: $(objects) makefile
+	../../tools/LinkBE $(name).m7 $(crom) $(drom) $(zrom) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).m7.symbols.txt
+
+clean:
+	-rm *.lst *.obj $(name).fd $(name).k7 $(name).m7 $(name).*.symbols.txt
+	@for c in $(shell ls *.c); do rm $${c%.*}.asm; done

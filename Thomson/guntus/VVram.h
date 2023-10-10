@@ -1,12 +1,12 @@
-constexpr byte VVramStep = 2;
-constexpr byte VVramWidth = WindowWidth * 4;
+constexpr byte VVramWidth = WindowWidth;
 constexpr byte VVramHeight = WindowHeight;
 
-extern byte[] VVram;
+extern byte[] VVramBack, VVramFront;
 extern bool BackgroundChanged;
 
 extern void ClearVVram();
-extern ptr<byte> VVramPtr(byte x, byte y);
+extern void VVramBackToFront();
+extern word VVramOffset(byte x, byte y);
 extern void SetRowFlags(byte y, byte b);
 
 extern void DrawAll();
