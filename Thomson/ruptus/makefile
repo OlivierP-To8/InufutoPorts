@@ -9,8 +9,8 @@ zseg=8000
 dseg=8020
 cseg=A000
 #	DROM must end before 7FFF for TO7 without RAM expansion
-zrom=6E00
-drom=6E20
+zrom=7000
+drom=7020
 crom=0022
 
 %.obj: %.c
