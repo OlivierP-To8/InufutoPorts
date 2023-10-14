@@ -5,8 +5,6 @@
 #include "Vram.h"
 #include "Man.h"
 
-extern void _deb();
-
 constexpr byte InvalidPattern = 0xff;
 // constexpr byte SpriteColor = 7;
 

@@ -203,3 +203,15 @@ ascend/Stages.asm
 ascend/Status.asm
 ascend/Vram.asm
 ascend/VVram.asm
+hopman/Goal.asm
+hopman/Lift.asm
+hopman/Main.asm
+hopman/Man.asm
+hopman/Monster.asm
+hopman/Movable.asm
+hopman/Sprite.asm
+hopman/Stage.asm
+hopman/Stages.asm
+hopman/Status.asm
+hopman/Vram.asm
+hopman/VVram.asm

@@ -1,113 +1,112 @@
-include "Vram.inc"
-include "VVram.inc"
-include "Chars.inc"
+include 'Vram.inc'
+include 'VVram.inc'
+include '../ThomsonTO.inc'
 
-ext VVram_
-ext MonoPattern, ColorPattern
-
-INIT1 equ $FF91
 VramTop equ Vram+VramRowSize*2
 
+ext VVram_
+ext PatternRam_
+ext ColorRam_
+ext PaletteValues_
+ext PaletteValues8c_
+ext ColorSource_
 
 dseg
-PatternRam:
-    defs PatternSize*Char_End
 Backup:
     defs VVramWidth*(VVramHeight-2)
 
 zseg
-CharColor:
-    defb 0
-CharCount:
-    defb 0
 yCount:
     defb 0
 xCount:
     defb 0
-bitCount:
-    defb 0
-pattern:
-    defb 0
 pVram:
     defw 0
-; pFlag:
-;     defw 0
-; flagByte:
-;     defb 0
-; flagBit:
-;     defb 0
 
+
+; void MakeMono(byte count, ptr<byte> pDest, byte color);
+dseg
+MakeMono_@Param2: public MakeMono_@Param2
+    defb 0 ; color
 cseg
-InitVram: public InitVram
-    ldy #MonoPattern+CharHeight*Char_Ascii
-    ldx #PatternRam+PatternSize*Char_Ascii
-    ldd #($0f shl 8) or (Char_Logo-Char_Ascii)
-    bsr MakePatternMono
+MakeMono_: public MakeMono_
+    pshs a,b,x,y
 
-    ldy #MonoPattern+CharHeight*Char_Logo
-    ldx #PatternRam+PatternSize*Char_Logo
-    ldd #($07 shl 8) or (Char_Needle-Char_Logo)
-    bsr MakePatternMono
+        sta <xCount
 
-    ldy #MonoPattern+CharHeight*Char_Needle
-    ldx #PatternRam+PatternSize*Char_Needle
-    ldd #($05 shl 8) or (Char_Man-Char_Needle)
-    bsr MakePatternMono
+        ; y pointe où écrire la couleur (pDest)
 
-    ldy #ColorPattern
-    ldx #PatternRam+PatternSize*Char_Man
-    ldb #Char_End-Char_Man
-    bsr MakePatternColor
-rts
+        ; on prend la couleur correspondante dans la palette
+        ; et on la stocke dans B
+        ; utilisation de la palette réduite à 8 couleurs pour TO7
+        ldb $FFF0
+        if eq ; si TO7 (valeur 0)
+            ldx #PaletteValues8c_
+        else
+            ldx #PaletteValues_
+        endif
+        lda MakeMono_@Param2
+        leax a,x
+        ldb ,x
 
-MakePatternMono:
-    std <CharColor
-    do
-        lda #CharHeight | sta <yCount
+        ; ajout de la couleur
         do
-            ldb ,y+
-            lda #VramStep | sta <xCount
+            lda #CharHeight | sta <yCount
             do
-                clr <pattern
-                lda #2 | sta <bitCount
-                do
-                    lda <pattern
-                    lsla | lsla | lsla | lsla
-                    sta <pattern
+                stb ,y+
 
-                    lda <CharColor
-                    bitb #$80
-                    if ne
-                        lda <CharColor
-                        anda #$0f
-                    else
-                        lsra | lsra | lsra | lsra
-                    endif
-                    ora <pattern
-                    sta <pattern
-
-                    lslb
-                    dec <bitCount
-                while ne | wend
-                lda <pattern | sta ,x+
-                dec <xCount
+                dec <yCount
             while ne | wend
-            dec <yCount
+
+            dec <xCount
         while ne | wend
-        dec <CharCount
-    while ne | wend
+
+    puls a,b,x,y
 rts
 
 
-MakePatternColor:
-    lda #PatternSize
-    mul
-    do
-        pshs a,b
-            lda ,y+ | sta ,x+
-        puls a,b
-        subd #1
-    while ne | wend
+; void MakeColor(byte count, ptr<byte> pDest);
+cseg
+MakeColor_: public MakeColor_
+    pshs a,b,x,y
+
+        sta <xCount
+
+        ; y pointe où écrire la couleur (pDest)
+        ; x pointe où lire les index de palette
+        ldx #ColorSource_
+
+        ; ajout de la couleur selon les index de palette dans ColorSource_
+        do
+            lda #CharHeight | sta <yCount
+            do
+                ; y pointe où lire
+                lda ,x+
+
+                pshs x
+                    ; utilisation de la palette réduite à 8 couleurs pour TO7
+                    ldb MODELE
+                    if eq ; si TO7 (valeur 0)
+                        ldx #PaletteValues8c_
+                    else
+                        ldx #PaletteValues_
+                    endif
+
+                    ; on prend la couleur correspondante dans la palette
+                    leax a,x
+                    ldb ,x
+
+                    ; et on la stocke dans ColorRam_ (Y)
+                    stb ,y+
+                puls x
+
+                dec <yCount
+            while ne | wend
+
+            dec <xCount
+        while ne | wend
+
+    puls a,b,x,y
 rts
 
 
@@ -115,27 +114,36 @@ rts
 cseg
 ClearScreen_:   public ClearScreen_
     pshs a,b,x,y
-        pshs cc | orcc #$50
-            lda INIT1
-            ora #$01
-            sta INIT1
 
-            ldx #Vram
-            do
-                clr ,x+
-                cmpx #Vram+VramRowSize*VramHeight
-            while ne | wend
+        ; commutation du bit de couleur (C0 a 0)
+        lda PRC
+        anda #$fe
+        sta PRC
 
-            lda INIT1
-            anda #not $01
-            sta INIT1
-        puls cc
+        ldx #Vram
+        ldy #$C0C0 ; noir sur noir
+        do
+            sty ,x+
+            cmpx #Vram+VramRowSize*VramHeight
+        while ne | wend
+
+        ; commutation du bit de forme (C0 a 1)
+        lda PRC
+        ora #$01
+        sta PRC
+
+        ldx #Vram
+        do
+            clr ,x+
+            cmpx #Vram+VramRowSize*VramHeight
+        while ne | wend
 
         ldx #Backup
         do
             clr ,x+
             cmpx #Backup+VVramWidth*(VVramHeight-2)
         while ne | wend
+
     puls a,b,x,y
 rts
 
@@ -144,35 +152,47 @@ rts
 cseg
 Put_: public Put_
     pshs a,b,x,y
+
         lda #PatternSize
         mul
-        ldy #PatternRam
+
+        pshs a,b,x
+
+        ldy #ColorRam_
         leay d,y
-        
-        pshs cc | orcc #$50
-            lda INIT1
-            ora #$01
-            sta INIT1
 
-            ldb #CharHeight
-            do
-                pshs b
-                    ldb #VramStep
-                    do
-                        lda ,y+
-                        sta ,x+
-                        decb
-                    while ne | wend
-                    leax VramWidth-VramStep,x
-                puls b
-                decb
-            while ne | wend
+        ; commutation du bit de couleur (C0 a 0)
+        lda PRC
+        anda #$fe
+        sta PRC
 
-            lda INIT1
-            anda #not $01
-            sta INIT1
-        puls cc
-    puls a,b,x,y    
+        ldb #CharHeight
+        do
+            lda ,y+
+            sta ,x
+            leax VramWidth,x
+            decb
+        while ne | wend
+
+        puls a,b,x
+
+        ldy #PatternRam_
+        leay d,y
+
+        ; commutation du bit de forme (C0 a 1)
+        lda PRC
+        ora #$01
+        sta PRC
+
+        ldb #CharHeight
+        do
+            lda ,y+
+            sta ,x
+            leax VramWidth,x
+            decb
+        while ne | wend
+
+    puls a,b,x,y
     tfr	x,d
     addd #VramStep
 rts
@@ -208,6 +228,7 @@ VVramToVram_: public VVramToVram_
             ldd <pVram
             addd #VramRowSize-VVramWidth*VramStep
             std <pVram
+
             dec <yCount
         while ne | wend
     puls a,b,x,y

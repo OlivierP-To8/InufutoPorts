@@ -1,5 +1,6 @@
 #include "Main.h"
-#include "ScanKeys.h"
+#include "../Init.h"
+#include "../ScanKeys.h"
 #include "Vram.h"
 #include "Sound.h"
 #include "Sprite.h"
@@ -23,10 +24,11 @@ byte ItemCount;
 static byte Clock;
 static sbyte monsterNum;
 
-extern void _deb();
 void Main()
 {
     byte key, timeDenom;
+
+    Init();
 
     HiScore = 0;
     Score = 0;
@@ -126,8 +128,6 @@ void Main()
     }
     ++CurrentStage;
     goto stage;
-// exit:
-//     Fin();
 }
 
 
@@ -139,5 +139,3 @@ void AddScore(word pts)
     }
     PrintScore();
 }
-
-void _deb(){}

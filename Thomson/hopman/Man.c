@@ -2,15 +2,13 @@
 #include "Stage.h"
 #include "Chars.h"
 #include "Sprite.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Sound.h"
 #include "Goal.h"
 #include "Vram.h"
 #include "Main.h"
 #include "Lift.h"
 #include "VVram.h"
-
-extern void _deb();
 
 constexpr byte SpriteColor = 15;
 constexpr byte Bottom = FloorCount * FloorHeight + StageTop - 3;

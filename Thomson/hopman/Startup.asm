@@ -1,13 +1,9 @@
-INIT0 equ $FF90
-INIT1 equ $FF91
-VMODE equ $FF98
-VRES equ $FF99
+include 'Vram.inc'
+include '../ThomsonTO.inc'
 
-ext InitVram, InitSound, Main_
+ext InitVram_, Main_
 
 dseg
-IrqJmp:
-    defs 3
 TimerCount: 
     defb 0 public TimerCount
 
@@ -15,79 +11,36 @@ zseg
 Direct: public Direct
 
 cseg
-    lda INIT0
-    anda #not $80
-    ora #$40
-    sta INIT0
+    ; system stack = $608b-$60cc
+    lds #DIRECT  ; Stack à zseg du makefile
 
-    lda INIT1
-    anda #$fe
-    sta INIT1
-
-    ; lda VMODE
-    ; anda #$0f
-    ; ora #$80
-    lda #$80
-    sta VMODE
-
-    lda #$1a
-    sta VRES
-
-    ldd #$c000
-    sta $FF9D
-    stb $FF9D+1
-
-    ldx #$FFA8
-    lda #$38
-    do
-        sta ,x+
-        inca
-        cmpa #$3c
-    while ne | wend
-    lda #$30
-    do
-        sta ,x+
-        inca
-        cmpa #$33
-    while ne | wend
-
-    pshs cc | orcc #$50
-        lda #$7e
-        sta IrqJmp
-        ldx $10d
-        stx IrqJmp+1
-        ldx #Handler
-        stx $10d
+    ; mise en place de l'interruption pour le timer d'une seconde
+    orcc #$50 ; disables IRQ & FIRQ
         clr TimerCount
-    puls cc
 
-    ldx #PaletteValues
-    ldy #$FFB0
-    ldb #16
-    do
-        lda ,x+
-        sta ,y+
-        decb
-    while ne | wend
+        ; intervalle du timer pour une seconde
+        ldd #2600
+        std TMSB
+        lda #$46
+        sta TCR
 
-    ; Sound
-    lda $FF23
-    ora #$08
-    sta $FF23
+        ; mise en place de la routine
+        ldd #Handler
+        std TIMEPT
 
-    jsr InitVram
-    jsr InitSound
+        ; IRQ timer validée par bit 5 du registre STATUS à 1
+        lda STATUS
+        ora #$20
+        sta STATUS
+    andcc #not $50 ; enables IRQ & FIRQ
+
+    jsr InitVram_
 jmp Main_
-
-cseg
-PaletteValues:
-	defb	$00, $07, $3d, $0b, $34, $20, $19, $35
-	defb	$38, $1c, $17, $2d, $12, $1b, $25, $3f
 
 
 Handler:
     inc TimerCount
-jmp IrqJmp
+jmp KBIN ; validation de l'interruption
 
 
 dseg

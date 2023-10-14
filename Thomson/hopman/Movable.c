@@ -3,8 +3,6 @@
 #include "Lift.h"
 #include "Math.h"
 
-extern void _deb();
-
 constexpr byte HitRangeX = 1;
 constexpr byte HitRangeY = HitRangeX;
 

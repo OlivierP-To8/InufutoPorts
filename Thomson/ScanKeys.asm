@@ -1,14 +1,17 @@
 include 'ThomsonTO.inc'
 
-Keys_Left equ $04
-Keys_Right equ $08
 Keys_Up equ $01
 Keys_Down equ $02
-Keys_Dir equ $0f
+Keys_Left equ $04
+Keys_Right equ $08
 Keys_Button0 equ $10
 Keys_Button1 equ $20
 
-    cseg
+zseg
+trigger:
+    defb 0
+
+cseg
 table:
     defb $08, Keys_Left    ; ←
     defb $09, Keys_Right   ; →
@@ -25,31 +28,32 @@ ScanKeys_: public ScanKeys_
         anda #$40     ; keep b6 for trigger of joystick 0
         if eq         ; if trigger button is pressed
             lda #Keys_Button0
-        else
-            lda PRA1  ; get direction data (if bit is 0)
-            coma      ; value of direction
-            anda #$0f ; only for joystick 0
-            if eq     ; if no direction
-                ldb MODELE ; check the Thomson model
-                cmpb #$02
-                if eq ; if TO9
-                    ldb PRA
-                    lsrb
-                    if cs ; if a key is pressed
-                        ldb SRDR
-                    else
-                        bra FIN
-                    endif
+        endif
+        sta trigger
+        lda PRA1  ; get direction data (if bit is 0)
+        coma      ; value of direction
+        anda #$0f ; only for joystick 0
+        adda trigger
+        if eq     ; if no direction or trigger
+            ldb MODELE ; check the Thomson model
+            cmpb #$02
+            if eq ; if TO9
+                ldb PRA
+                lsrb
+                if cs ; if a key is pressed
+                    ldb SRDR
                 else
-                    ; keyboard test
-                    clrb
-                    jsr KTST ; 49 cycles
-                    if cs ; if a key is pressed (carry set)
-                        jsr GETC ; 218 cycles
-                        ; code of pressed key in B
-                    else
-                        bra FIN
-                    endif
+                    bra FIN
+                endif
+            else
+                ; keyboard test
+                clrb
+                jsr KTST ; 49 cycles
+                if cs ; if a key is pressed (carry set)
+                    jsr GETC ; 218 cycles
+                    ; code of pressed key in B
+                else
+                    bra FIN
                 endif
 
                 ldx #table

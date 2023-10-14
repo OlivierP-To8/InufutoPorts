@@ -1,18 +1,21 @@
-constexpr word Vram = 0x8000;
+constexpr word Vram = 0x40A4;
 
-constexpr byte VramWidth = 128;
+constexpr byte VramWidth = 40;
 constexpr byte VramHeight = 24;
 constexpr byte CharHeight = 8;
-constexpr byte VramStep = VramWidth / 32;
+constexpr byte VramStep = 1;
 constexpr byte VramRowSize = VramWidth * CharHeight;
 constexpr byte PatternSize = VramStep * CharHeight;
 
 constexpr byte StatusHeight = 2;
 constexpr byte WindowWidth = 32;
 
+extern void MakeMono(byte count, ptr<byte> pDest, byte color);
+extern void MakeColor(byte count, ptr<byte> pDest);
 extern void ClearScreen();
 extern word Put(word vram, byte c);
 extern void VVramToVram();
 
+extern void InitVram();
 extern word PrintC(word vram, byte c);
 extern void Put2C(word vram, byte c);
