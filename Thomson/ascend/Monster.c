@@ -13,9 +13,6 @@ constexpr byte MaxCount = SpriteCount - Sprite_Monster;
 
 Actor[MaxCount] Monsters;
 
-extern void _deb();
-
-
 void InitMonsters()
 {
     ptr<byte> pBytes;

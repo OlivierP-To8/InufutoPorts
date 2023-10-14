@@ -1,22 +1,30 @@
 name=ascend
 
-all: $(name).cas
+all: $(name).m7 $(name).k7 $(name).fd
 
-cseg=2000
-zseg=4900
-dseg=4930
+#Check the end of $(name).symbols.txt:
+#	CSEG, DSEG and ZSEG must not overlap
+#	CSEG must end before 9FFF or start at A000
+zseg=8000
+dseg=8020
+cseg=A000
+#	DROM must end before 7FFF for TO7 without RAM expansion
+zrom=6F00
+drom=6F20
+crom=0022
 
-.c.asm:
-	Cate09.exe $*.c
+%.obj: %.c
+	../../tools/Cate09 $*.c
+	../../tools/Asm09 $*.asm
 
-.asm.obj:
-	Asm09.exe $*.asm
+%.obj: %.asm
+	../../tools/Asm09 $*.asm
 
-Main.asm: Main.c Main.h ScanKeys.h Vram.h Sound.h Status.h Stage.h \
+Main.asm: Main.c Main.h ../ScanKeys.h Vram.h Sound.h Status.h Stage.h \
 	Movable.h Actor.h Sprite.h Man.h Fire.h Monster.h VVram.h
 Movable.asm: Movable.c Movable.h
 Actor.asm: Actor.c Movable.h Actor.h Stage.h Block.h Sprite.h Man.h
-Man.asm: Man.c Movable.h Actor.h Man.h Sprite.h Chars.h Stage.h ScanKeys.h \
+Man.asm: Man.c Movable.h Actor.h Man.h Sprite.h Chars.h Stage.h ../ScanKeys.h \
 	Block.h Sound.h Main.h Fire.h Status.h VVram.h
 Fire.asm: Fire.c Movable.h Actor.h Sprite.h Fire.h Chars.h Math.h Main.h \
 	Stage.h Man.h Vram.h VVram.h
@@ -40,13 +48,26 @@ Print.asm: Print.c Print.h Vram.h
 
 objects = Startup.obj \
 	Main.obj Status.obj Stage.obj Stages.obj Chars.obj \
-	Init.obj ScanKeys.obj Vram.obj VramA.obj Print.obj VVram.obj VVramA.obj \
-	Sprite.obj Sound.obj Math.obj CopyMemory.obj \
+	../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Print.obj VVram.obj VVramA.obj \
+	Sprite.obj Sound.obj Math.obj \
 	Actor.obj Movable.obj Man.obj Fire.obj Monster.obj Block.obj \
-	..\..\cate\cate09.lib
+	../../tools/cate09.lib
 
-$(name).c10: $(objects)
-	LinkBE.exe $(name).c10 $(cseg) $(dseg) $(zseg) $(objects)
+$(name).fd: $(objects) makefile
+	../../tools/LinkBE $(name).fd $(cseg) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).fd.symbols.txt
 
-$(name).cas: $(name).c10
-	copy $(name).c10 $(name).cas /y
+$(name).k7: $(objects) makefile
+	../../tools/LinkBE $(name).k7 $(cseg) $(dseg) $(zseg) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).k7.symbols.txt
+
+$(name).m7: $(objects) makefile
+	../../tools/LinkBE $(name).m7 $(crom) $(drom) $(zrom) $(objects)
+	-@tail -n3 $(name).symbols.txt
+	-@mv -f $(name).symbols.txt $(name).m7.symbols.txt
+
+clean:
+	-rm *.lst *.obj $(name).fd $(name).k7 $(name).m7 $(name).*.symbols.txt
+	@for c in $(shell ls *.c); do rm $${c%.*}.asm; done

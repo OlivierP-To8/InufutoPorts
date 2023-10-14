@@ -17,7 +17,6 @@ Actor[MaxCount] Fires;
 static sbyte spawnCount;
 static byte spawnRate;
 
-extern void _deb();
 void InitFires()
 {
     byte sprite;

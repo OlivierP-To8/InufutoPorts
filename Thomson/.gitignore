@@ -189,3 +189,17 @@ guntus/Status.asm
 guntus/Team.asm
 guntus/Vram.asm
 guntus/VVram.asm
+ascend/Actor.asm
+ascend/Block.asm
+ascend/Fire.asm
+ascend/Main.asm
+ascend/Man.asm
+ascend/Monster.asm
+ascend/Movable.asm
+ascend/Print.asm
+ascend/Sprite.asm
+ascend/Stage.asm
+ascend/Stages.asm
+ascend/Status.asm
+ascend/Vram.asm
+ascend/VVram.asm

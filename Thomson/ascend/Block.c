@@ -12,8 +12,6 @@ constexpr byte Size = 2;
 
 Block[MaxBlockCount] Blocks;
 
-extern void _deb();
-
 void InitBlocks()
 {
     ptr<byte> pBytes;

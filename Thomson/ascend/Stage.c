@@ -26,7 +26,6 @@ static byte timeRate;
 byte topY, topRow, yMod, topYRange;
 byte[WindowWidth * VisibleFloorCount * FloorHeight] Background;
 
-extern void _deb();
 void InitStage() 
 {
     {

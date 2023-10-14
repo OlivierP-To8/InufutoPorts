@@ -4,7 +4,7 @@
 #include "Man.h"
 #include "Stage.h"
 #include "Chars.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Vram.h"
 #include "Block.h"
 #include "Sound.h"
@@ -23,7 +23,6 @@ byte PowerTime;
 static byte MinY;
 static byte oldKeyX, oldKeyY;
 
-extern void _deb();
 void ShowMan()
 {
     byte pattern;
