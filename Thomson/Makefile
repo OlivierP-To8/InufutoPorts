@@ -3,10 +3,10 @@ BINNAMES = CRACKY.BIN CAVIT.BIN LIFT.BIN CACORM.BIN NEURAS.BIN BOOTSKELL.BIN BAT
 
 .PHONY: all clean $(SUBDIRS)
 
-all: $(SUBDIRS) dist.zip
+all: $(SUBDIRS) InufuTO.zip
 
 clean:
-	-rm -f $(BINNAMES) BOOT.BIN LOAD.BIN fdfs InufuTO.fd dist.zip *.lst *.obj
+	-rm -f $(BINNAMES) BOOT.BIN LOAD.BIN fdfs InufuTO.fd InufuTO.zip *.lst *.obj
 	-$(MAKE) -C AUTO.BOOT $@
 	-$(MAKE) -C AUTO.LOAD $@
 	for c in $(SUBDIRS); do $(MAKE) -C $$c $@; done
@@ -32,7 +32,6 @@ LOAD.BIN: fdfs ScanKeys.obj
 	$(MAKE) -C AUTO.LOAD
 	./fdfs -ext AUTO.LOAD/LOAD.fd LOAD.BIN
 
-dist.zip: fdfs $(SUBDIRS)
+InufuTO.zip: fdfs $(SUBDIRS)
 	./fdfs -addDOS InufuTO.fd BASIC.DOS AUTO.BAT $(BINNAMES)
-	find . -regex ".*\.\(m7\|k7\)" -print | zip $@ InufuTO.fd -@
-
+	find . -mindepth 2 -regex ".*\.\(m7\|k7\|fd\)" -print | zip $@ InufuTO.fd -@
