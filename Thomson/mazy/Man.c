@@ -1,6 +1,6 @@
 #include "Man.h"
 #include "Map.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Chars.h"
 #include "Vram.h"
 #include "VVram.h"

@@ -1,11 +1,9 @@
 include "VVram.inc"
+include "Chars.inc"
 
 ext VVram_
 ext Map_
 ext BaseX_, BaseY_
-
-Char_Space equ 0
-Char_Wall equ 5
 
 MapStep equ 8
 

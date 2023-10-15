@@ -47,7 +47,6 @@ static void RotBit2()
 }
 
 
-void _deb(){}
 void InitMap()
 {
     ptr<byte> pMapRow;

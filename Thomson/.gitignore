@@ -215,3 +215,11 @@ hopman/Stages.asm
 hopman/Status.asm
 hopman/Vram.asm
 hopman/VVram.asm
+mazy/Knife.asm
+mazy/Main.asm
+mazy/Man.asm
+mazy/Map.asm
+mazy/Monster.asm
+mazy/Status.asm
+mazy/Vram.asm
+mazy/VVram.asm

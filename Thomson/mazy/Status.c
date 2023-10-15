@@ -107,24 +107,31 @@ void Title()
     Put2(Vram + VramRowSize * 14 + 9, Char_Goal);
     
     PrintStatus(); 
-    PrintS(Vram + VramRowSize * 3 + 8, "--- CHARACTER ---");
+    PrintS(Vram + VramRowSize * 3 + 8, "--- CHARACTERS ---");
     PrintS(Vram + VramRowSize * 6 + 14, "MAN");
     PrintS(Vram + VramRowSize * 9 + 14, "CHASER");
     PrintS(Vram + VramRowSize * 12 + 14, "DISTURBER");
     PrintS(Vram + VramRowSize * 15 + 14, "EXIT");
 
-    PrintS(Vram + VramRowSize * 22 + 9, "PUSH SPACE KEY");
-    PrintS(Vram + VramRowSize * 23 + 9, "OR TAB KEY");
-    // {
-    //     word vram;
-    //     byte c;
-    //     vram = Vram;
-    //     for (c = 0; c < Char_End; ) {
-    //         vram = Put(vram, c);
-    //         ++c;
-    //         if ((c & 15) == 0) {
-    //             vram += VramRowSize - 16 * VramStep;
-    //         }
-    //     }
-    // }
+    //PrintS(Vram + VramRowSize * 22 + 9, "PUSH SPACE KEY");
+    //PrintS(Vram + VramRowSize * 23 + 9, "OR TAB KEY");
+    PrintS(Vram + VramRowSize * 21 + 7, "PUSH TRIGGER BUTTON");
+    /*{
+        word vram;
+        byte c;
+        vram = Vram + VramRowSize * 17 + 5 * VramStep;
+        for (c = Char_Man; c < Char_Title; ) {
+            repeat (2) {
+                repeat (2) {
+                    vram = Put(vram, c);
+                    ++c;
+                }
+                vram += VramRowSize - 2 * VramStep;
+            }
+            vram = vram - 2 * VramRowSize + 2 * VramStep;
+            if (c == Char_Man_Up) {
+                vram += 2 * VramRowSize - 20 * VramStep;
+            }
+        }
+    }*/
 }

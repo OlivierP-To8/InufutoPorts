@@ -1,12 +1,12 @@
 #include "Main.h"
-#include "ScanKeys.h"
+#include "../ScanKeys.h"
 #include "Man.h"
 #include "Knife.h"
 #include "Monster.h"
 #include "Status.h"
 #include "Vram.h"
 #include "Sound.h"
-#include "Init.h"
+#include "../Init.h"
 #include "VVram.h"
 #include "Map.h"
 
@@ -28,7 +28,7 @@ constexpr byte BonusRate = 3;
 void Main()
 {
     byte key;
-    Init(); 
+    Init();
     HiScore = 0;
     Score = 0;
     CurrentStage = 0;
@@ -61,7 +61,7 @@ title:
         DrawAll();
         PrintStatus();
         Sound_Start();
-        StartBGM();
+        //StartBGM();
         do {
             MoveKnives();
             MoveMan();
@@ -75,7 +75,7 @@ title:
                 --StageTime;
                 PrintTime();
                 if (StageTime == 0) {
-                    StopBGM();
+                    //StopBGM();
                     PrintTimeUp();
                     repeat (15) {
                         Sound_Loose();
@@ -85,7 +85,7 @@ title:
             }
 
             if (ManLost) {
-                StopBGM();
+                //StopBGM();
                 EndMan();
                 lose:
                 --RemainCount;
@@ -95,7 +95,7 @@ title:
                 goto title;
             }
         } while (!StageClear);
-        StopBGM();
+        //StopBGM();
         DrawMan();
         Sound_Clear();
         while (StageTime != 0) {
@@ -107,8 +107,6 @@ title:
         }
         ++CurrentStage;
     };
-// exit:
-//     Fin();
 }
 
 
