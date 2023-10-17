@@ -53,17 +53,18 @@ Print.asm: Print.c Print.h Vram.h
 Status.asm: Status.c Status.h Stage.h Chars.h  Vram.h Print.h Main.h VVram.h Rader.h
 Rader.asm: Rader.c Rader.h Vram.h Fighter.h
 Sprite.asm: Sprite.c Sprite.h VVram.h Chars.h Vram.h
-Vram.asm: Vram.c Vram.h VVram.h CopyMemory.h Chars.h
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 VramA.obj: VramA.asm Vram.inc
 Print.obj: Print.asm Vram.inc
 Sound.obj: Sound.asm
 
-objects = Startup.obj \
-	Main.obj ../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Sprite.obj VVram.obj \
+objects = Startup.obj Main.obj \
+	Vram.obj VramA.obj Sprite.obj VVram.obj \
 	Chars.obj Status.obj Print.obj Sound.obj \
 	Stages.obj Stage.obj Direction.obj Mover.obj Fighter.obj Fort.obj Barrier.obj \
 	Enemy.obj Star.obj FighterBullet.obj EnemyBullet.obj Bang.obj Item.obj \
 	Rader.obj CopyMemory.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

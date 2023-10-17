@@ -40,17 +40,18 @@ Monster.asm: Monster.c Actor.h Monster.h Sprite.h Stage.h Man.h Main.h \
 	Lift.h 
 Point.asm: Point.c Movable.h Point.h Sprite.h Main.h Chars.h
 
-Vram.asm: Vram.c Vram.h Chars.h
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 Sprite.asm: Sprite.c Sprite.h Chars.h Vram.h VVram.h
 VVram.asm: VVram.h Chars.h Vram.h Sprite.h Sound.h
 VVramA.obj: VVramA.asm VVram.inc Chars.inc
 Print.asm: Print.c Print.h Vram.h
 
-objects = Startup.obj \
-	Main.obj Status.obj Stage.obj Movable.obj Actor.obj \
+objects = Startup.obj Main.obj \
+	Status.obj Stage.obj Movable.obj Actor.obj \
 	Stages.obj Chars.obj Man.obj Item.obj Lift.obj Monster.obj Point.obj \
-	../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Print.obj VVram.obj VVramA.obj \
+	Vram.obj VramA.obj Print.obj VVram.obj VVramA.obj \
 	Sprite.obj Sound.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

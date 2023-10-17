@@ -162,48 +162,23 @@ void Title()
     /* to test sprite colors
     {
         word vram;
-        vram = Vram + VramRowSize * 3 + VramStep;
-        Put2C(vram, Char_Man_Left0);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Man_Left1);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Man_Right0);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Man_Right1);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Man_Up0);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Man_Up1);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Man_Down0);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Man_Down1);
-
-        Put2C(vram, Char_Monster_Left0);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Monster_Left1);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Monster_Right0);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Monster_Right1);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Monster_Up0);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Monster_Up1);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Monster_Down0);
-        vram = vram + 2 * VramStep;
-        Put2C(vram, Char_Monster_Down1);
-
-        vram = Vram + VramRowSize * 12 + 9 * VramStep;
-        Put2C(vram, Char_Point);
-        vram = vram + 3 * VramStep;
-        Put2C(vram, Char_Point+4);
-        vram = vram + 3 * VramStep;
-        Put2C(vram, Char_Point+8);
-        vram = vram + 3 * VramStep;
-        Put2C(vram, Char_Point+12);
-        vram = vram + 3 * VramStep;
-        Put2C(vram, Char_Increaser);
+        byte c;
+        vram = Vram + VramRowSize * 3 + 4 * VramStep;
+        for (c = Char_Man; c < Char_End; ) {
+            repeat (2) {
+                repeat (2) {
+                    vram = Put(vram, c);
+                    ++c;
+                }
+                vram += VramRowSize - 2 * VramStep;
+            }
+            vram = vram - 2 * VramRowSize + 2 * VramStep;
+            if (c == Char_Monster) {
+                vram += 2 * VramRowSize - 16 * VramStep;
+            }
+            if (c == Char_Point) {
+                vram += 8 * VramRowSize - 16 * VramStep;
+            }
+        }
     }*/
 }

@@ -46,7 +46,7 @@ Ghost.asm: Ghost.c Ghost.h Sprite.h Stage.h Man.h Direction.h Main.h Chars.h
 Point.h: Movable.h
 Point.asm: Point.c Point.h Sprite.h Main.h Chars.h
 
-Vram.asm: Vram.c Vram.h Sprite.h
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 VramA.obj: VramA.asm Vram.inc 
 Print.asm: Print.c Print.h Vram.h
 Sprite.h: Movable.h
@@ -54,11 +54,12 @@ Sprite.asm: Sprite.c Sprite.h Chars.h Vram.h VVram.h
 VVram.h: Vram.h
 VVram.asm: VVram.h Chars.h Vram.h
 
-objects = Startup.obj \
-	Main.obj Status.obj Stages.obj Stage.obj Fixed.obj Box.obj Rock.obj \
+objects = Startup.obj Main.obj \
+	Status.obj Stages.obj Stage.obj Fixed.obj Box.obj Rock.obj \
 	Direction.obj Movable.obj Man.obj Monster.obj Chaser.obj Ghost.obj Point.obj \
 	Chars.obj Print.obj VVram.obj VVramA.obj \
-	../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Sprite.obj Sound.obj \
+	Vram.obj VramA.obj Sprite.obj Sound.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

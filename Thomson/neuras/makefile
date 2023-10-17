@@ -39,7 +39,7 @@ Stage.asm: Stage.c Stage.h Stages.h MapToVVram.h Vram.h Solver.h \
 Stages.asm: Stages.c Stage.h Stages.h 
 Status.asm: Status.c Status.h Vram.h Stage.h Main.h Sprite.h \
 	Card.h Stage.h Chars.h Print.h 
-Vram.asm: Vram.c Vram.h VVram.h Chars.h 
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 VVram.asm: VVram.c VVram.h Chars.h Sprite.h Vram.h 
 Chars.obj: Chars.asm 
 Sound.obj: Sound.asm 
@@ -47,10 +47,11 @@ Startup.obj: Startup.asm
 VramA.obj: VramA.asm Vram.inc VVram.inc 
 VVramA.obj: VVramA.asm VVram.inc 
 
-objects = Startup.obj \
-	Main.obj Stage.obj Stages.obj Chars.obj Solver.obj Card.obj Monster.obj \
-	../Init.obj Vram.obj VramA.obj VVram.obj VVramA.obj MapToVVram.obj Sprite.obj \
-	../ScanKeys.obj Status.obj Sound.obj Print.obj \
+objects = Startup.obj Main.obj \
+	Stage.obj Stages.obj Chars.obj Solver.obj Card.obj Monster.obj \
+	Vram.obj VramA.obj VVram.obj VVramA.obj MapToVVram.obj Sprite.obj \
+	Status.obj Sound.obj Print.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

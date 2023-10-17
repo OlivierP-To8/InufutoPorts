@@ -37,7 +37,7 @@ Monster.asm: Monster.c Movable.h Monster.h Sprite.h Stage.h Movable.h Block.h \
 Point.asm: Point.c Movable.h Point.h Sprite.h Main.h	
 
 Math.asm: Math.c Math.h
-Vram.asm: Vram.c Vram.h
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 Print.asm: Print.c Print.h Vram.h
 VVram.asm: VVram.c VVram.h Chars.h Vram.h
 Sprite.asm: Sprite.c Sprite.h Chars.h Vram.h VVram.h
@@ -48,12 +48,13 @@ Sound.obj: Sound.asm
 VramA.obj: VramA.asm Vram.inc VVram.inc
 VVramA.obj: VVramA.asm VVram.inc 
 
-objects = Startup.obj \
-	Main.obj Status.obj Stage.obj Movable.obj \
+objects = Startup.obj Main.obj \
+	Status.obj Stage.obj Movable.obj \
 	Man.obj Block.obj Monster.obj Point.obj \
 	Stages.obj Chars.obj VVram.obj VVramA.obj \
-	../Init.obj ../ScanKeys.obj Vram.obj VramA.obj Print.obj \
+	Vram.obj VramA.obj Print.obj \
 	Sprite.obj Sound.obj CopyMemory.obj Math.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

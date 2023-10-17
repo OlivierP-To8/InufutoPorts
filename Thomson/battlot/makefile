@@ -37,19 +37,19 @@ EnemyRobo.asm: EnemyRobo.c Robo.h Sprite.h Main.h Fort.h Stage.h Direction.h Bul
 Bullet.asm: Bullet.c Bullet.h Sprite.h Stage.h Direction.h Stage.h Robo.h Fort.h Chars.h
 Bang.asm: Bang.c Bang.h Sprite.h Stage.h Chars.h
 
-Vram.asm: Vram.c Vram.h
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 VramA.obj: VramA.asm Vram.inc 
 Print.asm: Print.c Print.h Vram.h
 Sprite.asm: Sprite.c Sprite.h Chars.h Vram.h VVram.h
 VVram.h: Vram.h
 VVram.asm: VVram.h Chars.h
 
-objects = Startup.obj \
-	Main.obj Stages.obj Stage.obj Status.obj Fort.obj Direction.obj  \
+objects = Startup.obj Main.obj \
+	Stages.obj Stage.obj Status.obj Fort.obj Direction.obj  \
 	Robo.obj MyRobo.obj EnemyRobo.obj Bullet.obj Bang.obj \
-	Print.obj \
-	../Init.obj ../ScanKeys.obj Sound.obj Vram.obj VramA.obj VVram.obj VVramA.obj Sprite.obj \
-	Chars.obj \
+	Print.obj Chars.obj \
+	Sound.obj Vram.obj VramA.obj VVram.obj VVramA.obj Sprite.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

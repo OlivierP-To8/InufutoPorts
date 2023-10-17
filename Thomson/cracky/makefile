@@ -38,7 +38,7 @@ Stage.asm: Stage.c Stage.h Movable.h Stages.h Stage.h Movable.h \
 Stages.asm: Stages.c Stage.h Movable.h Stages.h Stage.h Movable.h 
 Status.asm: Status.c Status.h Vram.h Main.h Print.h Chars.h \
 	Sprite.h Movable.h 
-Vram.asm: Vram.c Vram.h VVram.h CopyMemory.h Chars.h 
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 VVram.asm: VVram.c VVram.h Chars.h Sprite.h Movable.h Vram.h \
 	Sound.h 
 Chars.obj: Chars.asm 
@@ -51,11 +51,12 @@ Startup.obj: Startup.asm
 VramA.obj: VramA.asm Vram.inc VVram.inc 
 VVramA.obj: VVramA.asm VVram.inc 
 
-objects = Startup.obj \
-	Destruction.obj Main.obj Man.obj Monster.obj Movable.obj Sprite.obj \
+objects = Startup.obj Main.obj \
+	Destruction.obj Man.obj Monster.obj Movable.obj Sprite.obj \
 	Stage.obj Stages.obj Status.obj Vram.obj VVram.obj Chars.obj \
-	CopyMemory.obj Math.obj Print.obj ../Init.obj ../ScanKeys.obj Sound.obj StageA.obj \
-	 VramA.obj VVramA.obj \
+	CopyMemory.obj Math.obj Print.obj Sound.obj StageA.obj \
+	VramA.obj VVramA.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

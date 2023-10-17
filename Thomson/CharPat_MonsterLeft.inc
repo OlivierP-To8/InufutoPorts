@@ -1,0 +1,10 @@
+; Char_Monster_Left0
+	defb $04,$06,$0f,$1a,$1a,$1f,$15,$50
+	defb $80,$c0,$e0,$f0,$f0,$f0,$70,$76
+	defb $6f,$3f,$1f,$0f,$07,$03,$01,$00
+	defb $ee,$fc,$f8,$f0,$e0,$e0,$f0,$78
+; Char_Monster_Left1
+	defb $00,$04,$06,$0f,$1a,$1a,$1f,$15
+	defb $00,$80,$c0,$e0,$f0,$f0,$f0,$70
+	defb $10,$3f,$7f,$df,$0f,$07,$03,$01
+	defb $70,$f8,$fc,$f6,$f0,$e0,$f6,$fc

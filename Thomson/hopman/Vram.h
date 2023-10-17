@@ -10,8 +10,6 @@ constexpr byte PatternSize = VramStep * CharHeight;
 constexpr byte StatusHeight = 2;
 constexpr byte WindowWidth = 32;
 
-extern void MakeMono(byte count, ptr<byte> pDest, byte color);
-extern void MakeColor(byte count, ptr<byte> pDest);
 extern void ClearScreen();
 extern word Put(word vram, byte c);
 extern void VVramToVram();

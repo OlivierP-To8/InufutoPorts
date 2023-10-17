@@ -124,8 +124,9 @@ void Title()
             vram += 4 * VramStep - VramRowSize * 4;
         }
     }
-    PrintS(Vram + VramRowSize * 18 + (WindowWidth - 14) * VramStep / 2, "PUSH SPACE KEY");
-    PrintS(Vram + VramRowSize * 20 + (WindowWidth - 14) * VramStep / 2, "OR SHIFT KEY");
+    //PrintS(Vram + VramRowSize * 18 + (WindowWidth - 14) * VramStep / 2, "PUSH SPACE KEY");
+    //PrintS(Vram + VramRowSize * 20 + (WindowWidth - 14) * VramStep / 2, "OR SHIFT KEY");
+    PrintS(Vram + VramRowSize * 18 + (WindowWidth - 18) * VramStep / 2, "PUSH TRIGGER BUTTON");
     PrintS(Vram + VramRowSize * 23 + (WindowWidth - 12) * VramStep, "INUFUTO 2022");
     /*{
         word vram;

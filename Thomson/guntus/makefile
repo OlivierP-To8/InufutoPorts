@@ -54,7 +54,7 @@ Star.asm: Star.c Star.h Vram.h Chars.h Coord.h VVram.h
 Status.asm: Status.c Status.h Vram.h Print.h Chars.h Sprite.h 
 Team.asm: Team.c Team.h Stage.h MovingEnemy.h Direction.h Sprite.h \
 	Coord.h Enemy.h 
-Vram.asm: Vram.c Vram.h VVram.h Chars.h 
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 VVram.asm: VVram.c Vram.h VVram.h Chars.h Sprite.h EnemyRow.h \
 	Star.h Sound.h 
 Chars.obj: Chars.asm 
@@ -65,13 +65,13 @@ Startup.obj: Startup.asm
 VramA.obj: VramA.asm Vram.inc VVram.inc Chars.inc 
 VVramA.obj: VVramA.asm VVram.inc 
 
-objects= Startup.obj \
-	Main.obj \
+objects= Startup.obj Main.obj \
 	Bang.obj Direction.obj Enemy.obj EnemyBullet.obj EnemyRow.obj Fighter.obj \
 	FighterBullet.obj Item.obj MovingEnemy.obj Print.obj Sprite.obj \
 	Stage.obj Stages.obj Star.obj Status.obj Team.obj Vram.obj \
-	VVram.obj Chars.obj ../Init.obj Math.obj ../ScanKeys.obj \
+	VVram.obj Chars.obj Math.obj \
 	Sound.obj VramA.obj VVramA.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

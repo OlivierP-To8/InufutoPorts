@@ -10,8 +10,6 @@ constexpr word Vram = 0x40A4;
 constexpr byte WindowWidth = 26;
 constexpr byte WindowHeight = VramHeight;
 
-extern void MakeMono(byte count, ptr<byte> pDest, byte color);
-extern void MakeColor(byte count, ptr<byte> pDest);
 extern void ClearScreen();
 extern word Put(word vram, byte c);
 extern void VVramToVramAll();

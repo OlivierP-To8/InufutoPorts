@@ -7,8 +7,6 @@ VramTop equ Vram
 ext VVramFront_, RowFlags_
 ext PatternRam_
 ext ColorRam_
-ext PaletteValues_
-ext ColorSource_
 
 dseg
 Backup:
@@ -27,79 +25,6 @@ flagByte:
     defb 0
 flagBit:
     defb 0
-
-
-; void MakeMono(byte count, ptr<byte> pDest, byte color);
-dseg
-MakeMono_@Param2: public MakeMono_@Param2
-    defb 0 ; color
-cseg
-MakeMono_: public MakeMono_
-    pshs a,b,x,y
-
-        sta <xCount
-
-        ; y pointe où écrire la couleur (pDest)
-
-        ; on prend la couleur correspondante dans la palette
-        ; et on la stocke dans B
-        ldx #PaletteValues_
-        lda MakeMono_@Param2
-        leax a,x
-        ldb ,x
-
-        ; ajout de la couleur
-        do
-            lda #CharHeight | sta <yCount
-            do
-                stb ,y+
-
-                dec <yCount
-            while ne | wend
-
-            dec <xCount
-        while ne | wend
-
-    puls a,b,x,y
-rts
-
-
-; void MakeColor(byte count, ptr<byte> pDest);
-cseg
-MakeColor_: public MakeColor_
-    pshs a,b,x,y
-
-        sta <xCount
-
-        ; y pointe où écrire la couleur (pDest)
-        ; x pointe où lire les index de palette
-        ldx #ColorSource_
-
-        ; ajout de la couleur selon les index de palette dans ColorSource_
-        do
-            lda #CharHeight | sta <yCount
-            do
-                ; y pointe où lire
-                lda ,x+
-
-                pshs x
-                    ; on prend la couleur correspondante dans la palette
-                    ldx #PaletteValues_
-                    leax a,x
-                    ldb ,x
-
-                    ; et on la stocke dans ColorRam_ (Y)
-                    stb ,y+
-                puls x
-
-                dec <yCount
-            while ne | wend
-
-            dec <xCount
-        while ne | wend
-
-    puls a,b,x,y
-rts
 
 
 ; void ClearScreen();

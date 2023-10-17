@@ -128,7 +128,13 @@ void Title()
 {
     ClearScreen();
     HideAllSprites();
-    PrintStatus();
+    {
+        byte RemainFighterCountSauv;
+        RemainFighterCountSauv = RemainFighterCount;
+        RemainFighterCount = 0;
+        PrintStatus();
+        RemainFighterCount = RemainFighterCountSauv;
+    }
 
     {
         ptr<byte> p;
@@ -141,8 +147,9 @@ void Title()
             p += 16;
         }
     }
-    PrintS(Vram + VramRowSize * 17 + 5 * VramStep, "PUSH SPACE KEY");
-    PrintS(Vram + VramRowSize * 18 + 5 * VramStep, "OR SHIFT KEY");
+    //PrintS(Vram + VramRowSize * 17 + 5 * VramStep, "PUSH SPACE KEY");
+    //PrintS(Vram + VramRowSize * 18 + 5 * VramStep, "OR SHIFT KEY");
+    PrintS(Vram + VramRowSize * 17 + 2 * VramStep, "PUSH TRIGGER BUTTON");
     /*{
         word vram;
         byte c;

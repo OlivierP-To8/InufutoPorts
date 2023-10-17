@@ -55,7 +55,7 @@ Stages.asm: Stages.c Stage.h Stages.h Chars.h
 Status.asm: Status.c Status.h Vram.h Main.h Sprite.h VVram.h \
 	Chars.h Print.h CopyMemory.h 
 Tile.asm: Tile.c Tile.h Chars.h 
-Vram.asm: Vram.c Vram.h VVram.h CopyMemory.h Chars.h 
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 VVram.asm: VVram.c VVram.h Chars.h Sprite.h Vram.h Fort.h \
 	Barrier.h 
 Chars.obj: Chars.asm 
@@ -66,12 +66,13 @@ VramA.obj: VramA.asm Vram.inc VVram.inc
 VVramA.obj: VVramA.asm VVram.inc 
 
 
-objects = Startup.obj \
-	Main.obj Stages.obj Stage.obj Fighter.obj FighterBullet.obj SkyEnemy.obj \
+objects = Startup.obj Main.obj \
+	Stages.obj Stage.obj Fighter.obj FighterBullet.obj SkyEnemy.obj \
 	Barrier.obj GroundEnemy.obj Fort.obj EnemyBullet.obj Bang.obj Item.obj \
 	Status.obj VVram.obj VVramA.obj  Print.obj \
-	../Init.obj ../ScanKeys.obj Sound.obj Vram.obj VramA.obj Sprite.obj Chars.obj \
+	Sound.obj Vram.obj VramA.obj Sprite.obj Chars.obj \
 	Math.obj CopyMemory.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

@@ -32,7 +32,7 @@ Monster.asm: Monster.c Monster.h Map.h Chars.h VVram.h Man.h \
 	Main.h Sound.h 
 Status.asm: Status.c Status.h Vram.h Main.h Chars.h Print.h \
 	Knife.h 
-Vram.asm: Vram.c Vram.h VVram.h CopyMemory.h Chars.h 
+Vram.asm: Vram.c Vram.h Chars.h ../VramColor.h
 VVram.asm: VVram.c VVram.h Chars.h Map.h 
 Chars.obj: Chars.asm 
 CopyMemory.obj: CopyMemory.asm 
@@ -45,9 +45,10 @@ VVramA.obj: VVramA.asm VVram.inc
 
 objects = Startup.obj Main.obj \
 	Knife.obj Man.obj Map.obj Monster.obj Print.obj \
-	Status.obj Vram.obj VVram.obj Chars.obj ../Init.obj \
-	../ScanKeys.obj Sound.obj Stages.obj VramA.obj VVramA.obj \
+	Status.obj Vram.obj VVram.obj Chars.obj \
+	Sound.obj Stages.obj VramA.obj VVramA.obj \
 	Math.obj CopyMemory.obj \
+	../Init.obj ../ScanKeys.obj ../VramColor.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

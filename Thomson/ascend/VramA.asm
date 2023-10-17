@@ -7,9 +7,6 @@ VramTop equ Vram+VramRowSize*2
 ext VVram_
 ext PatternRam_
 ext ColorRam_
-ext PaletteValues_
-ext PaletteValues8c_
-ext ColorSource_
 
 dseg
 Backup:
@@ -22,92 +19,6 @@ xCount:
     defb 0
 pVram:
     defw 0
-
-
-; void MakeMono(byte count, ptr<byte> pDest, byte color);
-dseg
-MakeMono_@Param2: public MakeMono_@Param2
-    defb 0 ; color
-cseg
-MakeMono_: public MakeMono_
-    pshs a,b,x,y
-
-        sta <xCount
-
-        ; y pointe où écrire la couleur (pDest)
-
-        ; on prend la couleur correspondante dans la palette
-        ; et on la stocke dans B
-        ; utilisation de la palette réduite à 8 couleurs pour TO7
-        ldb $FFF0
-        if eq ; si TO7 (valeur 0)
-            ldx #PaletteValues8c_
-        else
-            ldx #PaletteValues_
-        endif
-        lda MakeMono_@Param2
-        leax a,x
-        ldb ,x
-
-        ; ajout de la couleur
-        do
-            lda #CharHeight | sta <yCount
-            do
-                stb ,y+
-
-                dec <yCount
-            while ne | wend
-
-            dec <xCount
-        while ne | wend
-
-    puls a,b,x,y
-rts
-
-
-; void MakeColor(byte count, ptr<byte> pDest);
-cseg
-MakeColor_: public MakeColor_
-    pshs a,b,x,y
-
-        sta <xCount
-
-        ; y pointe où écrire la couleur (pDest)
-        ; x pointe où lire les index de palette
-        ldx #ColorSource_
-
-        ; ajout de la couleur selon les index de palette dans ColorSource_
-        do
-            lda #CharHeight | sta <yCount
-            do
-                ; y pointe où lire
-                lda ,x+
-
-                pshs x
-                    ; utilisation de la palette réduite à 8 couleurs pour TO7
-                    ldb MODELE
-                    if eq ; si TO7 (valeur 0)
-                        ldx #PaletteValues8c_
-                    else
-                        ldx #PaletteValues_
-                    endif
-
-                    ; on prend la couleur correspondante dans la palette
-                    leax a,x
-                    ldb ,x
-
-                    ; et on la stocke dans ColorRam_ (Y)
-                    stb ,y+
-                puls x
-
-                dec <yCount
-            while ne | wend
-
-            dec <xCount
-        while ne | wend
-
-    puls a,b,x,y
-rts
 
 
 ; void ClearScreen();

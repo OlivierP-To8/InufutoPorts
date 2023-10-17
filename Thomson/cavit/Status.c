@@ -145,4 +145,19 @@ void Title()
     //PrintS(Vram + VramRowSize * 19 + 9 * VramStep, "PUSH SPACE KEY");
     //PrintS(Vram + VramRowSize * 20 + 9 * VramStep, "OR SHIFT KEY");
     PrintS(Vram + VramRowSize * 19 + 6 * VramStep, "PUSH TRIGGER BUTTON");
+    /*{
+        word vram;
+        byte c;
+        vram = Vram + VramRowSize * 4;
+        for (c = Char_Man; c < Char_Ghost; ) {
+            repeat (2) {
+                repeat (2) {
+                    vram = Put(vram, c);
+                    ++c;
+                }
+                vram += VramRowSize - 2 * VramStep;
+            }
+            vram = vram - 2 * VramRowSize + 2 * VramStep;
+        }
+    }*/
 }

@@ -16,11 +16,12 @@ clean:
 
 Init.obj: Init.asm
 ScanKeys.obj: ScanKeys.asm
+VramColor.obj: VramColor.asm
 
 fdfs:
 	gcc -O2 -o fdfs fdfs.c
 
-$(SUBDIRS): fdfs Init.obj ScanKeys.obj
+$(SUBDIRS): fdfs Init.obj ScanKeys.obj VramColor.obj
 	$(MAKE) -C $@
 	./fdfs -ext $@/$@.fd $@.bin
 
