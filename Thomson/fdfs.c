@@ -130,7 +130,7 @@ int findFreeEntry()
 	return -1;
 }
 
-void addFileEntry(char *filename, byte block, int sizeLeft)
+int addFileEntry(char *filename, byte block, int sizeLeft)
 {
 	/* Le répertoire est situé sur la piste 20 de la disquette.
 	Le répertoire commence au secteur 3 et occupe une place de 14 secteurs.
@@ -168,7 +168,8 @@ void addFileEntry(char *filename, byte block, int sizeLeft)
 			2: programme en langage machine
 			3: fichier de texte*/
 	ThomsonFileType fileType = BASIC_PRG;
-	if (strcmp(extension, ".BIN") == 0)
+	if ((strcmp(extension, ".BIN") == 0) ||
+		(strcmp(extension, ".CHG") == 0))
 	{
 		fileType = ASM_PRG;
 	}
@@ -203,6 +204,8 @@ void addFileEntry(char *filename, byte block, int sizeLeft)
 	{
 		floppyDisk[entry+24+i] = 0x00;
 	}
+
+	return entry;
 }
 
 void addFileBlock(byte block, byte *bytes, int size, int offset)
@@ -252,7 +255,20 @@ void addFile(char *filename, byte *bytes, int size)
 				sizeLeft -= sectorBytes;
 			}
 			floppyDisk[FAT+blocks[blocksnb-1]] = nbSectors;
-			addFileEntry(filename, blocks[0], sizeLeft+sectorBytes);
+			int entry = addFileEntry(filename, blocks[0], sizeLeft+sectorBytes);
+			if (strcmp(strrchr(filename,'.'), ".CHG") == 0)
+			{
+				for (int i=0; i<size; i+=16384)
+				{
+					floppyDisk[entry+30]++; // number of 16K banks
+				}
+				byte checksum = 0;
+				for (int i=0; i<8; i++)
+				{
+					checksum += floppyDisk[entry+i];
+				}
+				floppyDisk[entry+31] = checksum;
+			}
 		}
 		sizeLeft -= blockBytes;
 	}
