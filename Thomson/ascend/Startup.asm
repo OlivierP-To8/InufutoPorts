@@ -49,10 +49,17 @@ WaitTimer_param:
 cseg
 WaitTimer_: public WaitTimer_
     sta WaitTimer_param
-        do
-            lda TimerCount
-            cmpa WaitTimer_param
-        while cs | wend
+
+    ; correction pour la version ROM
+    lda STATUS
+    ora #$20
+    sta STATUS
+
+    do
+        lda TimerCount
+        cmpa WaitTimer_param
+    while cs | wend
+
     lda WaitTimer_param
     orcc #$50
         clr TimerCount
