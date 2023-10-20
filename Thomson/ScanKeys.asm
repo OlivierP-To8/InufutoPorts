@@ -24,45 +24,38 @@ ScanKeys_: public ScanKeys_
     pshs b,x
 
         ; joystick test
-        lda PRB1      ; get trigger data (if bit is 0)
-        anda #$40     ; keep b6 for trigger of joystick 0
-        if eq         ; if trigger button is pressed
+        lda PRB1                  ; get trigger data (if bit is 0)
+        coma                      ; to check bit is 1
+        anda #$44                 ; keep b6 and b2 for any trigger of joystick 0
+        if ne                     ; if trigger button is pressed
             lda #Keys_Button0
         endif
         sta trigger
-        lda PRA1  ; get direction data (if bit is 0)
-        coma      ; value of direction
-        anda #$0f ; only for joystick 0
+        lda PRA1                  ; get direction data (if bit is 0)
+        coma                      ; value of direction
+        anda #$0f                 ; only for joystick 0
         adda trigger
-        if eq     ; if no direction or trigger
-            ldb MODELE ; check the Thomson model
-            cmpb #$02
-            if eq ; if TO9
-                ldb PRA
-                lsrb
-                if cs ; if a key is pressed
+        if eq                     ; if no direction or trigger
+            ; keyboard test
+            jsr KTST              ; fast test if key pressed
+            if cs                 ; if a key is pressed (carry set)
+                ldb MODELE        ; check the Thomson model
+                cmpb #$02
+                if eq             ; if TO9
                     ldb SRDR
                 else
-                    bra FIN
-                endif
-            else
-                ; keyboard test
-                clrb
-                jsr KTST ; 49 cycles
-                if cs ; if a key is pressed (carry set)
-                    jsr GETC ; 218 cycles
-                    ; code of pressed key in B
-                else
-                    bra FIN
+                    clrb
+                    jsr GETC      ; code of pressed key in B
                 endif
 
+                ; convert scankey to internal value
                 ldx #table
                 do
-                    lda ,x
-                while ne
-                    cmpb ,x+
+                    lda ,x        ; A = scankey to compare with B
+                while ne          ; while not end of table (A==0)
+                    cmpb ,x+      ; compare B with table value
                     if eq
-                        lda ,x
+                        lda ,x    ; A = interval value of pressed key (next value in table)
                         bra FIN
                     endif
                     leax 1,x
