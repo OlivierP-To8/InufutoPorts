@@ -11,8 +11,11 @@ zseg
 Direct: public Direct
 
 cseg
-    ; system stack = $608b-$60cc
-    lds #DIRECT  ; Stack à zseg du makefile
+    ; set S (system stack) and DP (direct page) registers to ZSEG value from makefile
+    lds #DIRECT
+
+    lda #high Direct
+    tfr a,dp
 
     ; mise en place de l'interruption pour le timer d'une seconde
     orcc #$50 ; disables IRQ & FIRQ
@@ -49,18 +52,12 @@ WaitTimer_param:
 cseg
 WaitTimer_: public WaitTimer_
     sta WaitTimer_param
-
-    ; correction pour la version ROM
-    lda STATUS
-    ora #$20
-    sta STATUS
-
     do
         lda TimerCount
         cmpa WaitTimer_param
     while cs | wend
-
     lda WaitTimer_param
+
     orcc #$50
         clr TimerCount
     andcc #not $50

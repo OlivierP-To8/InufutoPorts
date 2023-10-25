@@ -10,8 +10,11 @@ zseg
 Direct: public Direct
 
 cseg
-    ; system stack = $608b-$60cc
-    lds #DIRECT  ; Stack à zseg du makefile
+    ; set S (system stack) and DP (direct page) registers to ZSEG value from makefile
+    lds #DIRECT
+
+    lda #high Direct
+    tfr a,dp
 
     ; identification du modèle
     ;    00 = T9000,TO7  => bord écran par PRC + modifier la palette en 8c
