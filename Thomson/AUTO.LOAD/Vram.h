@@ -7,10 +7,8 @@ constexpr byte PatternSize = VramStep * CharHeight;
 
 constexpr word Vram = 0x4000;
 
-extern void MakePatternMono(byte c, ptr<byte> pSource, byte count, byte color);
 extern void ClearScreen();
 extern word Put(word vram, byte c);
 
-extern void InitVram();
 extern word PrintC(word vram, byte c);
 extern word PrintS(word vram, ptr<byte> p);

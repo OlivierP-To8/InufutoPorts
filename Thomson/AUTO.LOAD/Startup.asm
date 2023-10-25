@@ -4,7 +4,7 @@
 include 'Vram.inc'
 include '../ThomsonTO.inc'
 
-ext InitVram_, Main_
+ext ClearScreen_, Main_
 
 zseg
 Direct: public Direct
@@ -69,6 +69,6 @@ cseg
         cmpx #$5F3F
     while ne | wend
 
-    jsr InitVram_
+    jsr ClearScreen_
 jmp Main_
 

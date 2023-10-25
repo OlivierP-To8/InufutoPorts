@@ -12,42 +12,9 @@ pattern:
     defb 0
 
 
-; void MakePatternMono(byte c, ptr<byte> pSource, byte count, byte color);
-dseg
-MakePatternMono_@Param2: public MakePatternMono_@Param2
-    defb 0 ; count
-MakePatternMono_@Param3: public MakePatternMono_@Param3
-    defb 0 ; color
-cseg
-MakePatternMono_: public MakePatternMono_
-    pshs a,b,x,y
-
-        ldb #PatternSize
-        mul
-        addd #PatternRam_
-        tfr d,x
-
-        ; ajout de la forme
-        lda MakePatternMono_@Param2 | sta <xCount
-        do
-            lda #CharHeight | sta <yCount
-            do
-                ldb ,y+
-                stb ,x+
-
-                dec <yCount
-            while ne | wend
-
-            dec <xCount
-        while ne | wend
-
-    puls a,b,x,y
-rts
-
-
 ; void ClearScreen();
 cseg
-ClearScreen_:   public ClearScreen_
+ClearScreen_: public ClearScreen_
     pshs a,b,x,y
 
         ; commutation du bit de couleur (C0 a 0)

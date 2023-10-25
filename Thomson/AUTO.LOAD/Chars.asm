@@ -1,6 +1,6 @@
 cseg
 
-MonoPatternSource_: public MonoPatternSource_
+PatternRam_: public PatternRam_
 ;   ascii from https://github.com/dhepper/font8x8/blob/master/font8x8_basic.h
 ;   with inverted bit order
     defb $00,$00,$00,$00,$00,$00,$00,$00 ; (space)
