@@ -12,9 +12,8 @@ void Main()
 {
     byte nbFiles;
 
-    PrintS(Vram + 0*VramRowSize + 11*VramStep, "Adaptation Thomson");
-    PrintS(Vram + 1*VramRowSize + 11*VramStep, " des jeux Inufuto");
-    PrintS(Vram + 2*VramRowSize + 11*VramStep, " par OlivierP-To8");
+    PrintS(Vram, "Thomson adaptation of the Inufuto games");
+    PrintS(Vram + 3*VramRowSize + 12*VramStep, "by OlivierP-To8");
 
     nbFiles = listBinFiles();
     if (nbFiles > 0)
@@ -62,6 +61,7 @@ void Main()
             }
             else if ((key & (Keys_Button0 | Keys_Button1)) != 0)
             {
+                PrintS(Vram + 22*VramRowSize + 1*VramStep, "Press STOP key to return to this menu.");
                 loadBinFile(sel);
             }
         } while (true);

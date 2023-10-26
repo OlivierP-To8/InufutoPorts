@@ -60,6 +60,26 @@ ScanKeys_: public ScanKeys_
                     endif
                     leax 1,x
                 wend
+
+                ; press STOP key to exit game, only if loaded from floppy (not K7, M7 or CHG)
+                cmpb #$02
+                if eq
+                    ldx #$9558    ; start of string to test
+                    do
+                        cmpx #$958f
+                    while ne
+                        addb ,X+  ; compute checksum
+                    wend
+                    cmpb #$09
+                    if eq         ; if loaded from custom BIN loader
+                        pshs pc   ; test if the PC is in the game or loader
+                        puls x
+                        cmpx #$A000
+                        if ge     ; if PC is in the game
+                            jmp $9500
+                        endif
+                    endif
+                endif
             endif
         endif
     FIN:

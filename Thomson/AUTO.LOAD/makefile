@@ -5,9 +5,10 @@ all: $(name).fd
 #Check the end of $(name).symbols.txt:
 #	CSEG, DSEG and ZSEG must not overlap
 #	CSEG, DSEG and ZSEG mustn't be in the CSEG of the BIN files to load
-zseg=7900
-dseg=7920
+zseg=7400
+dseg=7420
 cseg=9500
+# /!\ cseg value is used in ScanKeys.asm
 
 %.obj: %.c
 	../../tools/Cate09 $*.c
