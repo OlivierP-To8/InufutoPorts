@@ -14,6 +14,7 @@ void Main()
 
     PrintS(Vram, "Thomson adaptation of the Inufuto games");
     PrintS(Vram + 3*VramRowSize + 12*VramStep, "by OlivierP-To8");
+    PrintS(Vram + 22*VramRowSize + 3*VramStep, "A joystick is highly recommended.");
 
     nbFiles = listBinFiles();
     if (nbFiles > 0)
