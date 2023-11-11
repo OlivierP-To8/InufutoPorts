@@ -12,7 +12,6 @@ constexpr word blockBytes = 8*sectorBytes; // 8 secteurs par bloc
 constexpr byte freeBlock = 0xff;
 constexpr byte reservedBlock = 0xfe;
 
-extern byte InitDrive(byte drive);
 extern byte ReadSector(byte track, byte sector, ptr<byte> pDest);
 extern void RunAddress(word address);
 

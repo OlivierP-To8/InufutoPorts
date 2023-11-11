@@ -3,26 +3,7 @@
 
 include '../ThomsonTO.inc'
 
-; byte InitDrive(byte drive);
-InitDrive_: public InitDrive_
-
-    ; drive in A
-    sta DKDRV
-
-    ; init controller
-    lda #$01
-    sta DKOPC
-
-    ; call ROM
-    jsr DKCONT
-    if cs
-        ; error
-        lda DKSTA
-    else
-        lda #0
-    endif
-
-rts
+ext printError_
 
 
 ; byte ReadSector(byte track, byte sector, ptr<byte> pDest);
@@ -39,32 +20,22 @@ ReadSector_: public ReadSector_
         ; sector in B
         stb DKSEC
 
-        ; search for track DKTRK
-        lda #$40
+        ; buffer address
+        ldd ReadSector_@Param2
+        std DKBUF
+
+        ; read sector command
+        lda #$02
         sta DKOPC
 
         ; call ROM
-        jsr DKCONT
+        jsr DKCO
         if cs
             ; error
             lda DKSTA
+            jsr printError_
         else
-            ; buffer address
-            ldd ReadSector_@Param2
-            std DKBUF
-
-            ; read sector
-            lda #$02
-            sta DKOPC
-
-            ; call ROM
-            jsr DKCONT
-            if cs
-                ; error
-                lda DKSTA
-            else
-                lda #0
-            endif
+            lda #0
         endif
 
     puls b

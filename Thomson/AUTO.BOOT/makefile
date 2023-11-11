@@ -6,8 +6,8 @@ all: $(name).fd
 #	CSEG, DSEG and ZSEG must not overlap
 #	CSEG, DSEG and ZSEG must be in the DSEG of the BIN files to load
 #	CSEG must be 6200
-zseg=63ff
-dseg=6300
+zseg=7300
+dseg=7300
 cseg=6200
 
 %.obj: %.asm

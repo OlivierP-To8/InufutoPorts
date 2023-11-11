@@ -29,15 +29,15 @@ SETP    equ $EC00   ;Programmation de la palette
 CHPL    equ $E833   ;Ecriture d'un point "caractère"
 KBIN    equ $E830   ;Sortie programme d'interruption
 MENU    equ $E82D   ;Retour au menu principal
-DKC0    equ $E82A   ;Contrôleur de disque
+DKCO    equ $E82A   ;Contrôleur de disque
 JOYS    equ $E827   ;Lecture des manette de jeux
 GETS    equ $E824   ;Lecture de l'écran
 GETP    equ $E821   ;Lecture de la couleur d'un point
 NOTE    equ $E81E   ;Génération de musique
 LPIN    equ $E81B   ;Lecture du bouton du crayon optique
 GETL    equ $E818   ;Lecture du crayon optique
-K7C0    equ $E815   ;Lecture/écriture sur cassette
-RSC0    equ $E812   ;Gestion de l'interface de communication
+K7CO    equ $E815   ;Lecture/écriture sur cassette
+RSCO    equ $E812   ;Gestion de l'interface de communication
 PLOT    equ $E80F   ;Allumage ou extinction d'un point
 DRAW    equ $E80C   ;Tracé d'un segment de droite
 KTST    equ $E809   ;Lecture rapide du clavier
@@ -136,7 +136,7 @@ CONFIG  equ $6074   ;Flags de présence périphériques.
 CSR     equ $E7C0   ;registre d'état composite
 
 CRC     equ $E7C1   ;registre de contrôle périphérique
-                    ;b2 : sortie son 1 bit
+                    ;b3 : sortie son 1 bit
                     ;CP1: inutilisé (TO9)
                     ;CP1: request clavier (TO8, TO9+)
                     ;CP2: sortie son (TO9)

@@ -37,7 +37,7 @@ typedef enum
 
 byte *floppyDisk = NULL;
 
-void formatDisk()
+void formatDisk(char *diskname)
 {
 	byte filler = 0xe5;
 
@@ -60,6 +60,21 @@ void formatDisk()
 	for (int i=20*trackSize; i<21*trackSize; i++)
 	{
 		floppyDisk[i] = freeBlock;
+	}
+	// Nom de la disquette sur les 8 premiers octets
+	if (diskname != NULL)
+	{
+		char basename[10] = {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x00};
+		char *folder = strrchr(diskname,'/');
+		char *point = strrchr(diskname,'.');
+		int start = (folder==NULL) ? 0 : 1 + folder - diskname;
+		int end = (point==NULL) ? strlen(diskname) : point - diskname;
+		if ((end - start) > 8)
+		{
+			end = start + 8;
+		}
+		memcpy(basename, &diskname[start], end - start);
+		memcpy(&floppyDisk[20*trackSize], basename, 8);
 	}
 	// Le 1er octet du secteur n'est pas utilisé
 	floppyDisk[FAT-1] = 0x00;
@@ -101,14 +116,14 @@ byte findFreeBlock(byte *blocks, int blocksnb)
 		}
 	}
 	// Chaque fichier ne se compte pas en secteurs mais en blocs de 8 secteurs (2 Ko).
-	// on commence de la piste 40 vers 0
-	for (byte i=80; i>0; i--)
+	// on commence de la piste 39 vers 0
+	for (byte i=79; i>=0; i--)
 	{
 		if ((floppyDisk[FAT+i] == freeBlock) && (!contains(i, inuse, inusenb)) && (!contains(i, blocks, blocksnb)))
 			return i;
 	}
-	// puis de la piste 41 vers 79
-	for (byte i=81; i<2*80; i++)
+	// puis de la piste 40 vers 79
+	for (byte i=80; i<2*80; i++)
 	{
 		if ((floppyDisk[FAT+i] == freeBlock) && (!contains(i, inuse, inusenb)) && (!contains(i, blocks, blocksnb)))
 			return i;
@@ -314,6 +329,7 @@ void addBootLoader(char *bootsector, char *bootloader)
 			memcpy(&floppyDisk[120], "BASIC2", 6);
 			checksum += 0x6c;
 			floppyDisk[127] = checksum;
+			floppyDisk[FAT] = reservedBlock;
 		}
 
 		FILE *fb=fopen(bootloader, "rb");
@@ -323,23 +339,45 @@ void addBootLoader(char *bootsector, char *bootloader)
 		}
 		else
 		{
-			fseek(fb, 0, SEEK_END);
-			int size = ftell(fb);
-			byte *fileData = malloc(size);
-			memset(fileData, 0, size);
-			fseek(fb, 0, SEEK_SET);
-
-			int nbr = fread(fileData, 1, size, fb);
+			byte header[5];
+			unsigned int fileAddr, fileSize, fileEnd;
+			int nbr = fread(header, 1, 5, fb);
 			fclose(fb);
-			printf("lecture de %s (%d octets) %s\n", bootloader, size, size==nbr?"OK":"KO");
 
-			// l'entête du BIN (5 octets) est sur le secteur de boot 0
-			// le binaire hors entête commence sur le secteur 1
-			memcpy(&floppyDisk[251], fileData, size-5);
-			floppyDisk[FAT] = reservedBlock;
-			if (size-10 > 8*sectorSize)
+			fileSize = header[1];
+			fileSize = (fileSize << 8) + header[2];
+			fileAddr = header[3];
+			fileAddr = (fileAddr << 8) + header[4];
+			fileEnd = fileAddr + fileSize;
+
+			printf("header de %s : [%04x-%04x] (%d octets)\n", bootloader, fileAddr, fileEnd, fileSize);
+
+			// les infos permettant de lire le bootloader sont placées sur le secteur 20 piste 1
+			floppyDisk[20*trackSize+12] = (byte)(fileAddr >> 8);
+			floppyDisk[20*trackSize+13] = (byte)(fileAddr & 0xff);
+			floppyDisk[20*trackSize+14] = (byte)(fileEnd >> 8);
+			floppyDisk[20*trackSize+15] = (byte)(fileEnd & 0xff);
+
+			int n = 16;
+			byte block = floppyDisk[REP+13];
+			byte nextb = freeBlock;
+			while (block != freeBlock)
 			{
-				floppyDisk[FAT+1] = reservedBlock;
+				nextb = floppyDisk[FAT+block];
+				int nbs = 8;
+				if (nextb > 0xc0)
+				{
+					nbs = nextb - 0xc0;
+					nextb = freeBlock;
+				}
+				byte track = (block >> 1);
+				byte sector = (block & 0x01) ? 9 : 1;
+				for (int s=0; s<nbs; s++)
+				{
+					floppyDisk[20*trackSize+n++] = track;
+					floppyDisk[20*trackSize+n++] = sector+s;
+				}
+				block = nextb;
 			}
 		}
 	}
@@ -433,7 +471,7 @@ void list(FILE *f)
 int main(int argc, char **argv)
 {
 	floppyDisk = malloc(diskSize);
-	formatDisk();
+	formatDisk(argc >= 3 ? argv[2] : NULL);
 
 	if ((argc==3) && (strcmp(argv[1], "-format") == 0))
 	{
@@ -492,8 +530,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			addBootLoader(argv[3], argv[4]);
-			for (int i=5; i<argc; i++)
+			for (int i=4; i<argc; i++)
 			{
 				FILE *fi=fopen(argv[i], "rb");
 				if (fi==NULL)
@@ -515,6 +552,7 @@ int main(int argc, char **argv)
 					addFile(argv[i], fileData, size);
 				}
 			}
+			addBootLoader(argv[3], argv[4]);
 			fwrite(floppyDisk, 1, diskSize, fd);
 			fclose(fd);
 		}

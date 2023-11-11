@@ -13,55 +13,46 @@ byte[maxFiles*nameSize] filename;
 byte[maxFiles] filebloc; // first bloc
 byte[maxFiles] filenbls; // nb bytes in last sector
 
+void printError(byte status)
+{
+    word vram;
+    vram = Vram + 24*VramRowSize;
+   
+    PrintHex(vram + 5, status);
+    PrintS(vram, "Error $");
+}
+
 byte listBinFiles()
 {
-    byte nb, sector, status;
+    byte nb, sector;
     ptr<byte> psrc, pdst;
-
-    InitDrive(0);
-
     nb = 0;
     sector = 3;
-    status = ReadSector(20, sector++, Buffer);
-    if (status != 0x00)
-    {
-        word vram;
-        vram = Vram + 24*VramRowSize;
-        if (status == 0x10)
-        {
-            PrintS(vram, "Lecteur non pret");
-        }
-        else if (status == 0x40)
-        {
-            PrintS(vram, "Controleur non pret");
-        }
-    }
-    else
-    {
-        psrc = Buffer;
-        pdst = filename;
-        while ((*psrc > 0x20) && (*psrc < reservedBlock))
-        {
-            if ((psrc[8]=='B') && (psrc[9]=='I') && (psrc[10]=='N') &&
-                (psrc[11]==0x02) && (psrc[12]==0x00))
-            {
-                // get filename
-                CopyMemory(pdst, psrc, 8);
-                pdst[8] = 0x00;
-                pdst += nameSize;
-                // get first bloc
-                filebloc[nb] = psrc[13];
-                // get nb bytes in last sector
-                filenbls[nb] = psrc[15];
+    psrc = Buffer + 32; // skip first file (LOAD.BIN)
+    pdst = filename;
 
-                nb++;
-            }
-            psrc += 32;
-            if (psrc >= Buffer+sectorSize)
-            {
-                ReadSector(20, sector++, Buffer);
-                psrc = Buffer;
-            }
+    ReadSector(20, sector++, Buffer);
+    while ((*psrc > 0x20) && (*psrc < reservedBlock))
+    {
+        if ((psrc[8]=='B') && (psrc[9]=='I') && (psrc[10]=='N') &&
+            (psrc[11]==0x02) && (psrc[12]==0x00))
+        {
+            // get filename
+            CopyMemory(pdst, psrc, 8);
+            pdst[8] = 0x00;
+            pdst += nameSize;
+            // get first bloc
+            filebloc[nb] = psrc[13];
+            // get nb bytes in last sector
+            filenbls[nb] = psrc[15];
+
+            nb++;
+        }
+        psrc += 32;
+        if (psrc >= Buffer+sectorSize)
+        {
+            ReadSector(20, sector++, Buffer);
+            psrc = Buffer;
         }
     }
 
@@ -70,37 +61,23 @@ byte listBinFiles()
 
 void loadBinFile(byte nb)
 {
-    word vram;
     byte status;
-
-    vram = Vram + 24*VramRowSize;
     status = ReadSector(20, 2, FATtable);
-    if (status != 0x00)
+    if (status == 0x00)
     {
-        if (status == 0x10)
-        {
-            PrintS(vram, "Lecteur non pret");
-        }
-        else if (status == 0x40)
-        {
-            PrintS(vram, "Controleur non pret");
-        }
-    }
-    else
-    {
-        word filesize, fileaddr, address;
+        word vram, filesize, fileaddr, address;
         byte block, nbBytes;
         bool start;
 
-        address = 0x6800;
+        address = 0xA000;
         block = filebloc[nb];
-        nbBytes = sectorBytes;
         start = true;
 
+        vram = Vram + 24*VramRowSize;
         PrintS(vram, "                                        ");
         while (block != freeBlock)
         {
-            byte nextBlock, nbSectors, track, sector, b, skipBuf, skipLen;
+            byte nextBlock, nbSectors, track, sector, b, skipBuf;
             nextBlock = FATtable[block+1];
             nbSectors = 8;
             if (nextBlock > 0xc0)
@@ -117,15 +94,14 @@ void loadBinFile(byte nb)
             b = 0;
             while (b<nbSectors)
             {
+                nbBytes = sectorBytes;
                 skipBuf = 0;
-                skipLen = 0;
                 if ((nextBlock == freeBlock) && (b+1==nbSectors))
                 {
-                    nbBytes = filenbls[nb];
-                    skipLen = 5;
+                    nbBytes = filenbls[nb] - 5;
                 }
 
-                status = ReadSector(track, sector++, Buffer);
+                ReadSector(track, sector, Buffer);
                 if (start)
                 {
                     if (Buffer[0] == 0x00) // start of binary
@@ -143,8 +119,8 @@ void loadBinFile(byte nb)
 
                         start = false;
                         address = fileaddr;
+                        nbBytes -= 5;
                         skipBuf = 5;
-                        skipLen = 5;
                     }
                 }
 
@@ -155,8 +131,9 @@ void loadBinFile(byte nb)
                 PrintS(vram + 19, "Sector");
                 PrintByteNumber2(vram + 26, sector);
 
-                CopyToAddress(address, Buffer+skipBuf, nbBytes-skipLen);
-                address += nbBytes-skipLen;
+                CopyToAddress(address, Buffer+skipBuf, nbBytes);
+                address += nbBytes;
+                sector++;
                 b++;
             }
             block = nextBlock;

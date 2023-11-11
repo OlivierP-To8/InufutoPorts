@@ -24,6 +24,10 @@ cseg
 CopyToAddress_: public CopyToAddress_
     pshs a,b,x,y
         ldd CopyToAddress_@Param2
+        tstb
+        if eq
+            ldd #$00ff
+        endif
         do
             pshs a
                 lda ,y+
