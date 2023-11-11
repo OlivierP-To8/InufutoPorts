@@ -23,7 +23,7 @@ pVram:
 
 ; void ClearScreen();
 cseg
-ClearScreen_:   public ClearScreen_
+ClearScreen_: public ClearScreen_
     pshs a,b,x,y
 
         ; commutation du bit de couleur (C0 a 0)
