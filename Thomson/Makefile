@@ -1,5 +1,5 @@
 SUBDIRS = $(filter-out $(wildcard AUTO*), $(patsubst %/,%,$(wildcard */)))
-BINNAMES = CRACKY.BIN CAVIT.BIN LIFT.BIN CACORM.BIN NEURAS.BIN BOOTSKELL.BIN BATTLOT.BIN AERIAL.BIN IMPETUS.BIN RUPTUS.BIN GUNTUS.BIN ASCEND.BIN HOPMAN.BIN MAZY.BIN
+BINNAMES = HOPMAN.BIN CRACKY.BIN GUNTUS.BIN CACORM.BIN ASCEND.BIN LIFT.BIN AERIAL.BIN BOOTSKELL.BIN IMPETUS.BIN CAVIT.BIN BATTLOT.BIN RUPTUS.BIN NEURAS.BIN MAZY.BIN
 CHGNAMES = $(patsubst %.BIN,%.CHG,$(BINNAMES))
 
 .PHONY: all clean $(SUBDIRS)
@@ -37,6 +37,24 @@ BOOT.BIN: fdfs
 # the loader has CSEG at $9500-$9FFF and DSEG at $7400-$77FF
 # all BINs to be loaded from disk have CSEG at $A000-$D8FF and DSEG at $8000-$9300
 # the system stack is below $8000, down to $7800 (2 Kbytes) without conflict
+# +---------------------------+ $D8FF
+# |                           |
+# |                           |
+# |         CSEG Game         |
+# |                           |
+# |                           |
+# +---------------------------+ $A000
+# |        CSEG Loader        |
+# +---------------------------+ $9500
+# +---------------------------+ $9300
+# |                           |
+# |         DSEG Game         |
+# |                           |
+# +---------------------------+ $8000
+# |      Stack Game (2K)      |
+# +---------------------------+ $7800
+# |        DSEG Loader        |
+# +---------------------------+ $7400
 LOAD.BIN: fdfs ScanKeys.obj
 	$(MAKE) -C AUTO.LOAD
 	./fdfs -ext AUTO.LOAD/LOAD.fd LOAD.BIN
