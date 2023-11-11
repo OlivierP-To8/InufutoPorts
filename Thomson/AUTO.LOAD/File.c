@@ -65,14 +65,15 @@ void loadBinFile(byte nb)
     status = ReadSector(20, 2, FATtable);
     if (status == 0x00)
     {
-        word vram, filesize, fileaddr, address;
-        byte block, nbBytes;
+        word vram, vrprg, filesize, fileaddr, address;
+        byte block, nbBytes, nbSteps;
         bool start;
 
         address = 0xA000;
         block = filebloc[nb];
         start = true;
 
+        vrprg = Vram + 23*VramRowSize;
         vram = Vram + 24*VramRowSize;
         PrintS(vram, "                                        ");
         while (block != freeBlock)
@@ -111,6 +112,12 @@ void loadBinFile(byte nb)
                         fileaddr = Buffer[3];
                         fileaddr = (fileaddr << 8) + Buffer[4];
 
+                        // progress bar centered in screen, size of one step every 2 sectors
+                        nbSteps = (filesize >> 9);
+                        vrprg += ((36 - nbSteps) >> 1);
+                        PrintS(vrprg++, "[");
+                        PrintS(vrprg + nbSteps + 2, "]");
+
                         PrintS(vram + 29, "[");
                         PrintHex(vram + 30, fileaddr);
                         PrintS(vram + 34, "-");
@@ -122,6 +129,12 @@ void loadBinFile(byte nb)
                         nbBytes -= 5;
                         skipBuf = 5;
                     }
+                }
+
+                // progress bar increments every 2 sectors
+                if ((b & 0x01) == 0)
+                {
+                    PrintS(vrprg++, "=>");
                 }
 
                 PrintS(vram, "Block");
