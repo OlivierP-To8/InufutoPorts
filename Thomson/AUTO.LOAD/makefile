@@ -18,16 +18,15 @@ cseg=9500
 	../../tools/Asm09 $*.asm
 
 Main.asm: Main.c ../ScanKeys.h Vram.h File.h
-Vram.asm: Vram.c Vram.h Chars.h
+Vram.asm: Vram.c Vram.h
 File.asm: File.c File.h
-Chars.obj: Chars.asm
 CopyMemory.obj: CopyMemory.asm 
 Floppy.obj: Floppy.asm
 Print.obj: Print.asm 
 Startup.obj: Startup.asm
 VramA.obj: VramA.asm Vram.inc
 
-objects = Startup.obj Main.obj Vram.obj VramA.obj Chars.obj \
+objects = Startup.obj Main.obj Vram.obj VramA.obj \
 	Print.obj ../ScanKeys.obj CopyMemory.obj  File.obj Floppy.obj \
 	../../tools/cate09.lib
 

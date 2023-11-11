@@ -127,6 +127,7 @@ CONFIG  equ $6074   ;Flags de présence périphériques.
                     ;b1 présence ram disque
                     ;b0 interface jeu et musique connectée
 
+PTGENE  equ $60CF   ;Générateur de caractères G0, suite de caractères affichables, correspondants au standard ASCII
 
 ;----------------------------------------------------------
 ;PIA System 6846 ($E7C0-$E7C7)

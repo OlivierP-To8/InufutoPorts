@@ -51,8 +51,16 @@ Put_: public Put_
 
         lda #PatternSize
         mul
-        ldy #PatternRam_
+        ldy PTGENE
         leay d,y
+
+        ; inversion des lignes du caractère
+        ldb #CharHeight
+        do
+            lda ,y+
+            pshs a
+            decb
+        while ne | wend
 
         ; commutation du bit de forme (C0 a 1)
         lda PRC
@@ -61,7 +69,7 @@ Put_: public Put_
 
         ldb #CharHeight
         do
-            lda ,y+
+            puls a
             sta ,x
             leax VramWidth,x
             decb
