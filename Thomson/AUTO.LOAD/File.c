@@ -65,64 +65,73 @@ void loadBinFile(byte nb)
     status = ReadSector(20, 2, FATtable);
     if (status == 0x00)
     {
-        word vram, vrprg, filesize, fileaddr, address;
-        byte block, nbBytes, nbSteps;
+        word vram, vrprg, address;
+        byte block;
         bool start;
 
         address = 0xA000;
         block = filebloc[nb];
         start = true;
 
-        vrprg = Vram + 23*VramRowSize;
-        vram = Vram + 24*VramRowSize;
-        PrintS(vram, "                                        ");
+        vram = Vram + 23*VramRowSize;
+        PrintS(vram, "Block     Track    Sector    [    -    ]");
+        vrprg = Vram + 24*VramRowSize;
+        //PrintS(vrprg, "                                        ");
+
         while (block != freeBlock)
         {
-            byte nextBlock, nbSectors, track, sector, b, skipBuf;
-            nextBlock = FATtable[block+1];
-            nbSectors = 8;
-            if (nextBlock > 0xc0)
-            {
-                nbSectors = nextBlock - 0xc0;
-                nextBlock = freeBlock;
-            }
+            byte track, sector, b, nbSectors, nbBytes, skipBuf;
+
             track = (block >> 1);
             sector = 1;
             if ((block & 0x01) == 0x01)
             {
                 sector = 9;
             }
+
+            PrintByteNumber3(vram + 6, block);
+            PrintByteNumber2(vram + 16, track);
+
+            block = FATtable[block+1];
+            nbSectors = 8;
+            if (block > 0xc0)
+            {
+                nbSectors = block - 0xc0;
+                block = freeBlock;
+            }
+
             b = 0;
             while (b<nbSectors)
             {
                 nbBytes = sectorBytes;
                 skipBuf = 0;
-                if ((nextBlock == freeBlock) && (b+1==nbSectors))
+                if ((block == freeBlock) && (b+1 == nbSectors))
                 {
                     nbBytes = filenbls[nb] - 5;
                 }
 
+                PrintByteNumber2(vram + 26, sector);
                 ReadSector(track, sector, Buffer);
                 if (start)
                 {
                     if (Buffer[0] == 0x00) // start of binary
                     {
+                        word filesize, fileaddr;
+                        byte nbSteps;
+
                         filesize = Buffer[1];
                         filesize = (filesize << 8) + Buffer[2];
                         fileaddr = Buffer[3];
                         fileaddr = (fileaddr << 8) + Buffer[4];
 
                         // progress bar centered in screen, size of one step every 2 sectors
-                        nbSteps = (filesize >> 9);
+                        nbSteps = (Buffer[1] >> 1);
                         vrprg += ((36 - nbSteps) >> 1);
                         PrintS(vrprg++, "[");
                         PrintS(vrprg + nbSteps + 2, "]");
 
-                        PrintS(vram + 29, "[");
                         PrintHex(vram + 30, fileaddr);
-                        PrintS(vram + 34, "-");
                         PrintHex(vram + 35, fileaddr+filesize);
-                        PrintS(vram + 39, "]");
 
                         start = false;
                         address = fileaddr;
@@ -137,21 +146,11 @@ void loadBinFile(byte nb)
                     PrintS(vrprg++, "=>");
                 }
 
-                PrintS(vram, "Block");
-                PrintByteNumber3(vram + 6, block);
-                PrintS(vram + 10, "Track");
-                PrintByteNumber2(vram + 16, track);
-                PrintS(vram + 19, "Sector");
-                PrintByteNumber2(vram + 26, sector);
-
                 CopyToAddress(address, Buffer+skipBuf, nbBytes);
                 address += nbBytes;
                 sector++;
                 b++;
             }
-            block = nextBlock;
         }
-
-        RunAddress(fileaddr);
     }
 }

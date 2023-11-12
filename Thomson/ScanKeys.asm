@@ -26,7 +26,7 @@ ScanKeys_: public ScanKeys_
         ; joystick test
         lda PRB1                  ; get trigger data (if bit is 0)
         coma                      ; to check bit is 1
-        anda #$44                 ; keep b6 and b2 for any trigger of joystick 0
+        anda #$40                 ; keep b6 for trigger of joystick 0
         if ne                     ; if trigger button is pressed
             lda #Keys_Button0
         endif
@@ -64,9 +64,9 @@ ScanKeys_: public ScanKeys_
                 ; press STOP key to exit game, only if loaded from floppy (not K7, M7 or CHG)
                 cmpb #$02
                 if eq
-                    ldx #$9558    ; start of string to test
+                    ldx #$957E    ; start of string to test
                     do
-                        cmpx #$958f
+                        cmpx #$95B5
                     while ne
                         addb ,X+  ; compute checksum
                     wend

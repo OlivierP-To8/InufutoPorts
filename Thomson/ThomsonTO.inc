@@ -129,6 +129,8 @@ CONFIG  equ $6074   ;Flags de présence périphériques.
 
 PTGENE  equ $60CF   ;Générateur de caractères G0, suite de caractères affichables, correspondants au standard ASCII
 
+NBANK   equ $618C   ;Nombre de banques mémoire accessibles
+
 ;----------------------------------------------------------
 ;PIA System 6846 ($E7C0-$E7C7)
 ;----------------------------------------------------------

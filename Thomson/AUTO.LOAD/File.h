@@ -13,7 +13,7 @@ constexpr byte freeBlock = 0xff;
 constexpr byte reservedBlock = 0xfe;
 
 extern byte ReadSector(byte track, byte sector, ptr<byte> pDest);
-extern void RunAddress(word address);
+extern void LoadFile(byte nb, byte bank);
 
 extern byte listBinFiles();
 extern void loadBinFile(byte nb);

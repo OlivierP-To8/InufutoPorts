@@ -4,7 +4,11 @@
 include 'Vram.inc'
 include '../ThomsonTO.inc'
 
-ext ClearScreen_, Main_
+ext InitMemBank_, ClearScreen_, Main_
+
+dseg
+nbbanks_: 
+    defb 0 public nbbanks_
 
 zseg
 Direct: public Direct
@@ -15,6 +19,9 @@ cseg
 
     lda #high Direct
     tfr a,dp
+
+    ; do not interrupt
+    orcc #80
 
     ; identification du modèle
     ;    00 = T9000,TO7  => bord écran par PRC + modifier la palette en 8c
@@ -69,6 +76,24 @@ cseg
         cmpx #$5F3F
     while ne | wend
 
+    ldb MODELE
+    cmpb #$03
+    if ge               ; si TO8/TO8D/TO9+
+        tst NBANK
+        if eq
+            clrb
+            jsr EXTRA   ; reset à froid extramon
+        endif
+        lda NBANK
+        sta nbbanks_    ; nombre de banques mémoire disponibles
+
+        lda $6081
+        ora #$10        ; gestion par registre interne $E7E5
+        sta $6081
+        sta LGA7
+    endif
+
+    jsr InitMemBank_
     jsr ClearScreen_
 jmp Main_
 

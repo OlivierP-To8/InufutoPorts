@@ -6,7 +6,24 @@
 #include "File.h"
 
 extern byte[maxFiles*nameSize] filename;
+byte[maxFiles] filebank;  // mem bank where the game is loaded
+extern byte nbbanks;
 constexpr byte startLine = 6;
+
+void InitMemBank()
+{
+    byte n, b;
+    n = 0;
+    while (n < maxFiles)
+    {
+        b = n + 2;        // bank 0 and 1 are unavailable
+        if (b >= nbbanks) // last bank is always from floppy
+        {
+            b = 0;
+        }
+        filebank[n++] = b;
+    }
+}
 
 void Main()
 {
@@ -42,28 +59,42 @@ void Main()
             key = ScanKeys();
             if ((key == Keys_Down) && (sel < nbFiles-1))
             {
+                sel++;
                 Put(vram, 0);
                 vram += VramRowSize;
                 Put(vram, 30);
-                sel++;
-                do {
-                    key = ScanKeys();
-                } while (key != 0);
             }
             else if ((key == Keys_Up) && (sel > 0))
             {
+                sel--;
                 Put(vram, 0);
                 vram -= VramRowSize;
                 Put(vram, 30);
-                sel--;
-                do {
-                    key = ScanKeys();
-                } while (key != 0);
             }
-            else if ((key & (Keys_Button0 | Keys_Button1)) != 0)
+            else if ((key == Keys_Right) && (sel < nbFiles-4))
+            {
+                sel += 4;
+                Put(vram, 0);
+                vram += 4*VramRowSize;
+                Put(vram, 30);
+            }
+            else if ((key == Keys_Left) && (sel >= 4))
+            {
+                sel -= 4;
+                Put(vram, 0);
+                vram -= 4*VramRowSize;
+                Put(vram, 30);
+            }
+            else if ((key & Keys_Buttons) != 0)
             {
                 PrintS(Vram + 22*VramRowSize + 1*VramStep, "Press STOP key to return to this menu.");
-                loadBinFile(sel);
+                LoadFile(sel, filebank[sel]);
+            }
+            if ((key & Keys_Dir) != 0)
+            {
+                do {
+                    key = ScanKeys();
+                } while ((key & Keys_Dir) != 0);
             }
         } while (true);
     }

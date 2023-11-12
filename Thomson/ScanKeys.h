@@ -7,5 +7,6 @@ constexpr byte Keys_DirY = Keys_Up | Keys_Down;
 constexpr byte Keys_Dir = Keys_DirX | Keys_DirY;
 constexpr byte Keys_Button0 = 0x10;
 constexpr byte Keys_Button1 = 0x20;
+constexpr byte Keys_Buttons = Keys_Button0 | Keys_Button1;
 
 extern byte ScanKeys();
