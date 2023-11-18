@@ -37,6 +37,15 @@ Init_: public  Init_
     lda #$0
     sta LGAMOD
 
+    jsr BlackScreen_
+
+rts
+
+
+BlackScreen_ : public BlackScreen_
+
+    pshs a,x,y
+
     ; commutation du bit de couleur (C0 a 0)
     lda PRC
     anda #$fe
@@ -46,8 +55,25 @@ Init_: public  Init_
     ldx #$4000
     ldy #$C0C0 ; noir sur noir
     do
-        sty ,x+
+        sty ,x
+        leax 2,x
         cmpx #$5F3F
-    while ne | wend
+    while lt | wend
+
+    ; commutation du bit de forme (C0 a 1)
+    lda PRC
+    ora #$01
+    sta PRC
+
+    ; on efface l'ecran (de $4000 à $5F3F)
+    ldx #$4000
+    ldy #$0000
+    do
+        sty ,x
+        leax 2,x
+        cmpx #$5F3F
+    while lt | wend
+
+    puls a,x,y
 
 rts

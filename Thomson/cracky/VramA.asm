@@ -8,6 +8,7 @@ ext VVramFront_, RowFlags_
 ext ClearRowFlags_
 ext PatternRam_
 ext ColorRam_
+ext BlackScreen_
 
 dseg
 Backup:
@@ -33,28 +34,7 @@ cseg
 ClearScreen_: public ClearScreen_
     pshs a,b,x,y
 
-        ; commutation du bit de couleur (C0 a 0)
-        lda PRC
-        anda #$fe
-        sta PRC
-
-        ldx #Vram
-        ldy #$C0C0 ; noir sur noir
-        do
-            sty ,x+
-            cmpx #Vram+VramRowSize*VramHeight
-        while ne | wend
-
-        ; commutation du bit de forme (C0 a 1)
-        lda PRC
-        ora #$01
-        sta PRC
-
-        ldx #Vram
-        do
-            clr ,x+
-            cmpx #Vram+VramRowSize*VramHeight
-        while ne | wend
+        jsr BlackScreen_
 
         ldx #Backup
         do
