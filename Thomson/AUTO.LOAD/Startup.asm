@@ -7,8 +7,7 @@ include '../ThomsonTO.inc'
 ext InitMemBank_, ClearScreen_, Main_
 
 dseg
-nbbanks_: 
-    defb 0 public nbbanks_
+ext nbbanks_
 
 zseg
 Direct: public Direct
@@ -21,7 +20,7 @@ cseg
     tfr a,dp
 
     ; do not interrupt
-    orcc #80
+    orcc #$50
 
     ; identification du modèle
     ;    00 = T9000,TO7  => bord écran par PRC + modifier la palette en 8c
@@ -72,18 +71,33 @@ cseg
     ldx #$4000
     ldy #$C0C0 ; noir sur noir
     do
-        sty ,x+
+        sty ,x
+        leax 2,x
         cmpx #$5F3F
-    while ne | wend
+    while lt | wend
 
+    ; commutation du bit de forme (C0 a 1)
+    lda PRC
+    ora #$01
+    sta PRC
+
+    ; on efface l'ecran (de $4000 à $5F3F)
+    ldx #$4000
+    ldy #$0000
+    do
+        sty ,x
+        leax 2,x
+        cmpx #$5F3F
+    while lt | wend
+
+    ; initialisation des banques mémoire
+    lda #0
+    sta nbbanks_
     ldb MODELE
     cmpb #$03
     if ge               ; si TO8/TO8D/TO9+
-        tst NBANK
-        if eq
-            clrb
-            jsr EXTRA   ; reset à froid extramon
-        endif
+        clrb
+        jsr EXTRA       ; reset à froid extramon
         lda NBANK
         sta nbbanks_    ; nombre de banques mémoire disponibles
 
@@ -92,8 +106,8 @@ cseg
         sta $6081
         sta LGA7
     endif
-
     jsr InitMemBank_
+
     jsr ClearScreen_
 jmp Main_
 

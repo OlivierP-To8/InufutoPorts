@@ -80,7 +80,7 @@ void loadBinFile(byte nb)
 
         while (block != freeBlock)
         {
-            byte track, sector, b, nbSectors, nbBytes, skipBuf;
+            byte track, sector, b, nbSectors, nbBytes;
 
             track = (block >> 1);
             sector = 1;
@@ -103,41 +103,46 @@ void loadBinFile(byte nb)
             b = 0;
             while (b<nbSectors)
             {
-                nbBytes = sectorBytes;
-                skipBuf = 0;
-                if ((block == freeBlock) && (b+1 == nbSectors))
-                {
-                    nbBytes = filenbls[nb] - 5;
-                }
-
                 PrintByteNumber2(vram + 26, sector);
-                ReadSector(track, sector, Buffer);
-                if (start)
+
+                nbBytes = sectorBytes;
+                if ((block == freeBlock) && (b+1 == nbSectors))
+                {   // last sector
+                    nbBytes = filenbls[nb] - 5; // remove end of binary
+
+                    ReadSector(track, sector, Buffer);
+                    CopyToAddress(address, Buffer, nbBytes);
+                }
+                else if (start)
                 {
-                    if (Buffer[0] == 0x00) // start of binary
-                    {
-                        word filesize, fileaddr;
-                        byte nbSteps;
+                    word filesize, fileaddr;
+                    byte nbSteps;
 
-                        filesize = Buffer[1];
-                        filesize = (filesize << 8) + Buffer[2];
-                        fileaddr = Buffer[3];
-                        fileaddr = (fileaddr << 8) + Buffer[4];
+                    ReadSector(track, sector, Buffer);
 
-                        // progress bar centered in screen, size of one step every 2 sectors
-                        nbSteps = (Buffer[1] >> 1);
-                        vrprg += ((36 - nbSteps) >> 1);
-                        PrintS(vrprg++, "[");
-                        PrintS(vrprg + nbSteps + 2, "]");
+                    filesize = Buffer[1];
+                    filesize = (filesize << 8) + Buffer[2];
+                    fileaddr = Buffer[3];
+                    fileaddr = (fileaddr << 8) + Buffer[4];
 
-                        PrintHex(vram + 30, fileaddr);
-                        PrintHex(vram + 35, fileaddr+filesize);
+                    start = false;
+                    address = fileaddr;
+                    nbBytes = sectorBytes - 5; // remove start of binary
 
-                        start = false;
-                        address = fileaddr;
-                        nbBytes -= 5;
-                        skipBuf = 5;
-                    }
+                    CopyToAddress(address, Buffer+5, nbBytes);
+
+                    PrintHex(vram + 30, fileaddr);
+                    PrintHex(vram + 35, fileaddr+filesize);
+
+                    // progress bar centered in screen, size of one step every 2 sectors
+                    nbSteps = (Buffer[1] >> 1);
+                    vrprg += ((36 - nbSteps) >> 1);
+                    PrintS(vrprg++, "[");
+                    PrintS(vrprg + nbSteps + 2, "]");
+                }
+                else
+                {
+                    ReadSectorToAddress(track, sector, address);
                 }
 
                 // progress bar increments every 2 sectors
@@ -146,7 +151,6 @@ void loadBinFile(byte nb)
                     PrintS(vrprg++, "=>");
                 }
 
-                CopyToAddress(address, Buffer+skipBuf, nbBytes);
                 address += nbBytes;
                 sector++;
                 b++;

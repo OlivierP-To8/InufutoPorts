@@ -7,7 +7,7 @@
 
 extern byte[maxFiles*nameSize] filename;
 byte[maxFiles] filebank;  // mem bank where the game is loaded
-extern byte nbbanks;
+byte nbbanks;
 constexpr byte startLine = 6;
 
 void InitMemBank()

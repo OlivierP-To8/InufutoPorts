@@ -64,9 +64,9 @@ ScanKeys_: public ScanKeys_
                 ; press STOP key to exit game, only if loaded from floppy (not K7, M7 or CHG)
                 cmpb #$02
                 if eq
-                    ldx #$957E    ; start of string to test
+                    ldx #$9599    ; start of string to test
                     do
-                        cmpx #$95B5
+                        cmpx #$95D0
                     while ne
                         addb ,X+  ; compute checksum
                     wend

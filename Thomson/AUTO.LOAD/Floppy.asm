@@ -44,6 +44,42 @@ ReadSector_: public ReadSector_
 rts
 
 
+; byte ReadSectorToAddress(byte track, byte sector, word address);
+dseg
+ReadSectorToAddress_@Param2: public ReadSectorToAddress_@Param2
+    defw 0
+cseg
+ReadSectorToAddress_: public ReadSectorToAddress_
+    pshs b
+
+        ; track in A
+        sta DKTRK
+
+        ; sector in B
+        stb DKSEC
+
+        ; buffer address
+        ldd ReadSectorToAddress_@Param2
+        std DKBUF
+
+        ; read sector command
+        lda #$02
+        sta DKOPC
+
+        ; call ROM
+        jsr DKCO
+                if cs
+            ; error
+            lda DKSTA
+            jsr printError_
+        else
+            lda #0
+        endif
+
+    puls b
+rts
+
+
 ; void LoadFile(byte nb, byte bank);
 LoadFile_: public LoadFile_
 
