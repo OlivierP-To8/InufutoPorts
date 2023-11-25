@@ -9,3 +9,7 @@ I added 3 linker targets to Inufuto's tools (in tools/asm8-1.5.0/Linker/Thomson*
 * ROM cartridge (.m7)
 
 I ported the 14 games, with color changes because the graphic mode compatible with the whole Thomson range only supports 2 colors for 8 pixels.
+
+To play the games, the easiest way is to use the InufuTO.fd image on the emulator of your choice: [DCMOTO](http://dcmoto.free.fr/emulateur/index.html), [RetroArch](https://www.retroarch.com/) with [Theodore](https://docs.libretro.com/library/theodore/) core, [MAME](https://www.mamedev.org/), [Teo](https://sourceforge.net/projects/teoemulator/).
+
+See HARDWARE.md to play the games on real hardware.
