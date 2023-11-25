@@ -127,6 +127,9 @@ CONFIG  equ $6074   ;Flags de présence périphériques.
                     ;b1 présence ram disque
                     ;b0 interface jeu et musique connectée
 
+BUFCLV  equ $6079   ;Adresse du buffer clavier (sur 2 octets)
+SIZCLV  equ $607B   ;Taille du buffer clavier
+
 PTGENE  equ $60CF   ;Générateur de caractères G0, suite de caractères affichables, correspondants au standard ASCII
 
 NBANK   equ $618C   ;Nombre de banques mémoire accessibles

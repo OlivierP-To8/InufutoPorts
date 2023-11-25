@@ -22,23 +22,28 @@ ClearScreen_: public ClearScreen_
         anda #$fe
         sta PRC
 
-        ldx #Vram
+        ; on efface l'ecran (de $4000 à $5F3F)
+        ldx #$4000
         ldy #$F8F8 ; blanc sur noir
         do
-            sty ,x+
-            cmpx #Vram+VramRowSize*VramHeight
-        while ne | wend
+            sty ,x
+            leax 2,x
+            cmpx #$5F3F
+        while lt | wend
 
         ; commutation du bit de forme (C0 a 1)
         lda PRC
         ora #$01
         sta PRC
 
-        ldx #Vram
+        ; on efface l'ecran (de $4000 à $5F3F)
+        ldx #$4000
+        ldy #$0000
         do
-            clr ,x+
-            cmpx #Vram+VramRowSize*VramHeight
-        while ne | wend
+            sty ,x
+            leax 2,x
+            cmpx #$5F3F
+        while lt | wend
 
     puls a,b,x,y
 rts

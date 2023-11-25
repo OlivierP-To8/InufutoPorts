@@ -17,7 +17,7 @@ cseg=9500
 %.obj: %.asm
 	../../tools/Asm09 $*.asm
 
-Main.asm: Main.c ../ScanKeys.h Vram.h File.h
+Main.asm: Main.c ScanKeys.h Vram.h File.h
 Vram.asm: Vram.c Vram.h
 File.asm: File.c File.h
 CopyMemory.obj: CopyMemory.asm 
@@ -27,7 +27,7 @@ Startup.obj: Startup.asm
 VramA.obj: VramA.asm Vram.inc
 
 objects = Startup.obj Main.obj Vram.obj VramA.obj \
-	Print.obj ../ScanKeys.obj CopyMemory.obj  File.obj Floppy.obj \
+	Print.obj ScanKeys.obj CopyMemory.obj File.obj Floppy.obj \
 	../../tools/cate09.lib
 
 $(name).fd: $(objects) makefile

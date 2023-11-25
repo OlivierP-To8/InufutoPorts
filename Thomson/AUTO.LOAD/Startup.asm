@@ -62,33 +62,18 @@ cseg
     anda #$fb
     sta STATUS
 
-    ; commutation du bit de couleur (C0 a 0)
-    lda PRC
-    anda #$fe
-    sta PRC
+    jsr ClearScreen_
 
-    ; on efface l'ecran (de $4000 à $5F3F)
-    ldx #$4000
-    ldy #$C0C0 ; noir sur noir
+    ; clear keyboard buffer
+    lda #0
+    ldb SIZCLV
+    ldx BUFCLV
     do
-        sty ,x
-        leax 2,x
-        cmpx #$5F3F
-    while lt | wend
-
-    ; commutation du bit de forme (C0 a 1)
-    lda PRC
-    ora #$01
-    sta PRC
-
-    ; on efface l'ecran (de $4000 à $5F3F)
-    ldx #$4000
-    ldy #$0000
-    do
-        sty ,x
-        leax 2,x
-        cmpx #$5F3F
-    while lt | wend
+        tstb
+    while ne
+        sta ,x+
+        decb
+    wend
 
     ; initialisation des banques mémoire
     lda #0
@@ -108,6 +93,5 @@ cseg
     endif
     jsr InitMemBank_
 
-    jsr ClearScreen_
 jmp Main_
 

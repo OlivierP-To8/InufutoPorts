@@ -9,5 +9,4 @@ constexpr byte Keys_Button0 = 0x10;
 constexpr byte Keys_Button1 = 0x20;
 constexpr byte Keys_Buttons = Keys_Button0 | Keys_Button1;
 
-extern void InitScanKeys();
 extern byte ScanKeys();

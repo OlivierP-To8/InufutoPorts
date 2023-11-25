@@ -10,6 +10,8 @@ Keys_Button1 equ $20
 zseg
 trigger:
     defb 0
+GeyKey:
+    defw 0
 
 cseg
 table:
@@ -20,6 +22,52 @@ table:
     defb $20, Keys_Button0 ; space
     defb $0d, Keys_Button1 ; enter
     defb 0
+
+GetKeyROM:
+    clrb
+    jsr KTST               ; fast test if key pressed
+    if cs                  ; if a key is pressed (carry set)
+        jsr GETC           ; code of pressed key in B
+    endif
+rts
+
+GetKeyTO9:
+    ldb PRA                ; $01 if key pressed, $00 otherwise
+    lsrb                   ; carry set if was #1
+    if cs                  ; if a key is pressed
+        ldb SRDR           ; last key code
+    endif
+rts
+
+InitScanKeys_: public InitScanKeys_
+    pshs b,x
+
+        ; clear keyboard buffer
+        lda #0
+        ldb SIZCLV
+        ldx BUFCLV
+        do
+            tstb
+        while ne
+            sta ,x+
+            decb
+        wend
+
+        ldb MODELE         ; check the Thomson model
+        cmpb #$02
+        if eq              ; if TO9
+            ldx #GetKeyTO9
+        else
+            ldb #3         ; size of keyboard buffer
+            stb SIZCLV
+
+            ldx #GetKeyROM
+        endif
+        stx GeyKey
+
+    puls b,x
+rts
+
 ScanKeys_: public ScanKeys_
     pshs b,x
 
@@ -37,17 +85,9 @@ ScanKeys_: public ScanKeys_
         adda trigger
         if eq                     ; if no direction or trigger
             ; keyboard test
-            jsr KTST              ; fast test if key pressed
-            if cs                 ; if a key is pressed (carry set)
-                ldb MODELE        ; check the Thomson model
-                cmpb #$02
-                if eq             ; if TO9
-                    ldb SRDR
-                else
-                    clrb
-                    jsr GETC      ; code of pressed key in B
-                endif
-
+            jsr [GeyKey]
+            tstb
+            if ne                 ; if a key is pressed
                 ; convert scankey to internal value
                 ldx #table
                 do
@@ -64,11 +104,11 @@ ScanKeys_: public ScanKeys_
                 ; press STOP key to exit game, only if loaded from floppy (not K7, M7 or CHG)
                 cmpb #$02
                 if eq
-                    ldx #$9599    ; start of string to test
+                    ldx #$959E    ; start of string to test
                     do
-                        cmpx #$95D0
+                        cmpx #$95D5
                     while ne
-                        addb ,X+  ; compute checksum
+                        addb ,x+  ; compute checksum
                     wend
                     cmpb #$09
                     if eq         ; if loaded from custom BIN loader

@@ -6,11 +6,11 @@ all: $(name).m7 $(name).k7 $(name).fd
 #	CSEG, DSEG and ZSEG must not overlap
 #	CSEG must end before 9FFF or start at A000
 zseg=8000
-dseg=8020
+dseg=8022
 cseg=A000
 #	DROM must end before 7FFF for TO7 without RAM expansion
 zrom=7300
-drom=7320
+drom=7322
 crom=0022
 
 %.obj: %.c

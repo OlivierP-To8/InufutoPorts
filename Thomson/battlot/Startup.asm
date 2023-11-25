@@ -22,7 +22,7 @@ cseg
         clr TimerCount
 
         ; intervalle du timer pour une seconde
-        ldd #1840
+        ldd #1900
         std TMSB
         lda #$46
         sta TCR

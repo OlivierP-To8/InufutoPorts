@@ -1,5 +1,7 @@
 include 'ThomsonTO.inc'
 
+ext InitScanKeys_
+
 cseg
 Init_: public  Init_
     ; identification du modèle
@@ -38,6 +40,7 @@ Init_: public  Init_
     sta LGAMOD
 
     jsr BlackScreen_
+    jsr InitScanKeys_
 
 rts
 

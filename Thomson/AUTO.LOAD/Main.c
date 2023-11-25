@@ -25,6 +25,12 @@ void InitMemBank()
     }
 }
 
+void RunGame(byte sel)
+{
+    PrintS(Vram + 22*VramRowSize + 1*VramStep, "Press STOP key to return to this menu.");
+    LoadFile(sel, filebank[sel]);
+}
+
 void Main()
 {
     byte nbFiles;
@@ -38,63 +44,76 @@ void Main()
     {
         word vram;
         ptr<byte> p;
-        byte sel, key;
+        byte sel, key, maxkey;
 
-        vram = Vram + startLine*VramRowSize + 17*VramStep;
+        vram = Vram + startLine*VramRowSize + 15*VramStep;
         sel = 0;
         p = filename;
         while (sel < nbFiles)
         {
-            PrintS(vram, p);
+            PrintC(vram, nbFiles-sel+64);
+            PrintS(vram+2, p);
             vram += VramRowSize;
             p += nameSize;
             sel++;
         }
 
+        maxkey = 65+nbFiles;
         sel = 0;
         vram = Vram + startLine*VramRowSize + 16*VramStep;
         Put(vram, 30);
         do
         {
             key = ScanKeys();
-            if ((key == Keys_Down) && (sel < nbFiles-1))
+            if ((key & 0x40) != 0)
             {
-                sel++;
-                Put(vram, 0);
-                vram += VramRowSize;
-                Put(vram, 30);
+                if ((key >= 65) && (key < maxkey))
+                {
+                    Put(vram, 0);
+                    sel = nbFiles-(key-64);
+                    RunGame(sel);
+                }
             }
-            else if ((key == Keys_Up) && (sel > 0))
+            else
             {
-                sel--;
-                Put(vram, 0);
-                vram -= VramRowSize;
-                Put(vram, 30);
-            }
-            else if ((key == Keys_Right) && (sel < nbFiles-4))
-            {
-                sel += 4;
-                Put(vram, 0);
-                vram += 4*VramRowSize;
-                Put(vram, 30);
-            }
-            else if ((key == Keys_Left) && (sel >= 4))
-            {
-                sel -= 4;
-                Put(vram, 0);
-                vram -= 4*VramRowSize;
-                Put(vram, 30);
-            }
-            else if ((key & Keys_Buttons) != 0)
-            {
-                PrintS(Vram + 22*VramRowSize + 1*VramStep, "Press STOP key to return to this menu.");
-                LoadFile(sel, filebank[sel]);
-            }
-            if ((key & Keys_Dir) != 0)
-            {
-                do {
-                    key = ScanKeys();
-                } while ((key & Keys_Dir) != 0);
+                if ((key == Keys_Down) && (sel < nbFiles-1))
+                {
+                    sel++;
+                    Put(vram, 0);
+                    vram += VramRowSize;
+                    Put(vram, 30);
+                }
+                else if ((key == Keys_Up) && (sel > 0))
+                {
+                    sel--;
+                    Put(vram, 0);
+                    vram -= VramRowSize;
+                    Put(vram, 30);
+                }
+                else if ((key == Keys_Right) && (sel < nbFiles-4))
+                {
+                    sel += 4;
+                    Put(vram, 0);
+                    vram += 4*VramRowSize;
+                    Put(vram, 30);
+                }
+                else if ((key == Keys_Left) && (sel >= 4))
+                {
+                    sel -= 4;
+                    Put(vram, 0);
+                    vram -= 4*VramRowSize;
+                    Put(vram, 30);
+                }
+                else if ((key & Keys_Buttons) != 0)
+                {
+                    RunGame(sel);
+                }
+                if ((key & Keys_Dir) != 0)
+                {
+                    do {
+                        key = ScanKeys();
+                    } while ((key & Keys_Dir) != 0);
+                }
             }
         } while (true);
     }
