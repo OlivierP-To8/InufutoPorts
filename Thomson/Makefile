@@ -75,7 +75,7 @@ InufuTO.fd: fdfs $(SUBDIRS) BOOT.BIN LOAD.BIN
 #	./fdfs -addDOS InufuTO.fd BASIC.DOS AUTO.BAT $(BINNAMES)
 
 # Custom BIN loader from floppy, without using DOS.
-	./fdfs -addBL InufuTO.fd BOOT.BIN LOAD.BIN $(BINNAMES)
+	./fdfs -addBL InufuTO.fd BOOT.BIN LOAD.BIN AUTO.BAT $(BINNAMES)
 
 InufuTO_chg.fd: fdfs $(SUBDIRS)
 # Floppy of MEMO7 (ROM cartridge) binaries, to use on TO8 from the "4 Appel de programme" boot menu.
