@@ -34,6 +34,14 @@ Init_: public  Init_
         endif
     endif
 
+    clr $6031 ; nettoyage du registre moniteur TEMPO, nécessaire sur TO9. Merci à Sam pour l'explication :
+    ; La rom utilise le MSByte de TEMPO comme tentative de chargement du bootsecteur.
+    ; Elle l'initialise à 3, et tente de lire le secteur de boot. Si ça échoue elle le DEC, et quand ça arrive à 0, elle boot le basic.
+    ; Donc le basic récupère un MSByte à 0, alors qu'un truc sur bootsecteur ne passe pas par les DEC récupère le MSByte à 3.
+    ; Or comme par la suite quand on joue de la musique, on ne met à jour que l'octet poids faible de TEMPO.
+    ; On reste donc avec un TEMPO>=768 au lieu d'un truc autour de 5 (tempo par défaut du basic).
+    ; On joue donc 153 fois trop lentement si on n'initialise pas ce MSByte à 0 dans son propre code...
+
     ; passage au mode TO7 320x200x16c avec conflit de proximite (2 couleurs pour 8 pixels)
     ; la mémoire écran se trouve entre $4000 et $5F3F
     lda #$0
