@@ -4,10 +4,11 @@
 ## TO9/TO8/TO8D/TO9+
 - Ecrire l'image InufuTO.fd sur disquette DD avec l'outil adapté à votre système :
     - Windows : [Omniflop](http://www.shlock.co.uk/Utils/OmniFlop/OmniFlop.htm),
-    - DOS : [DCFDUTIL](http://dcmoto.free.fr/emulateur/prog/dcfdutil33.zip),
-    - Amiga : [ToDisk](http://aminet.net/package/disk/misc/ToDisk).
+    - DOS : [DCFDUTIL](http://dcmoto.free.fr/emulateur/dos/dcfdutil33.zip),
+    - Amiga : [ToDisk](https://aminet.net/package/disk/misc/ToDisk2.6).
 
     Pour réduire les temps de chargement des jeux de moitié, il faut utiliser un facteur d'entrelacement de 2 plutôt que celui de 7 par défaut. Pour changer le facteur d'entrelacement de la disquette sur TO8/TO8D/TO9+, entrer les instructions suivantes en BASIC 512 :
+    - activer la vérification : **VERIFY ON**
     - formater la face 1 si ce n'est pas déjà fait : **DSKINI 1**
     - copier la face 0 sur la face 1 : **BACKUP 0 TO 1**
     - reformater la face 0 avec un facteur d'entrelacement de 2 : **DSKINI 0,2**
@@ -19,11 +20,12 @@
 
 
 ## TO9
-- Utiliser une nappe droite 5"25 - 3"5 de lecteur disquette. Brancher sur le côté 3"5 un [HxC](https://hxc2001.com/floppy_drive_emulator/) ou [HxC Gotek](https://hxc2001.com/docs/gotek-floppy-emulator-hxc-firmware/) configuré en Shugart et contenant l'image InufuTO.hfe. Brancher l'autre côté 5"25 sur le [connecteur 5](https://www.old-computers.com/museum/photos/Thomson_To9_Rear_1.jpg) à l'arrière du TO9. Il faut prévoir une alimentation 5V externe pour le lecteur HxC.
+- Utiliser une nappe droite 5"25 - 3"5 de lecteur disquette. Brancher sur le côté 3"5 un [HxC](https://hxc2001.com/floppy_drive_emulator/) ou [HxC Gotek](https://hxc2001.com/docs/gotek-floppy-emulator-hxc-firmware/) configuré en Shugart et contenant l'image InufuTO.hfe. Brancher l'autre côté 5"25 sur le [connecteur 5](https://web.archive.org/web/20210805185020if_/https://www.old-computers.com/museum/photos/Thomson_To9_Rear_1.jpg) à l'arrière du TO9. Il faut prévoir une alimentation 5V externe pour le lecteur HxC.
 
     Une fois branché, choisir le BASIC 128 et entrer **DEVICE"2:"** suivi de **LOADM"LOAD.BIN",,R**
 
     Pour copier le contenu du HxC sur une disquette dans le lecteur interne, entrer les instructions suivantes en BASIC 128 :
+    - activer la vérification : **VERIFY ON**
     - formater la face 0 avec un facteur d'entrelacement de 2 : **DSKINI 0,2**
     - copier la face 2 sur la face 0 : **BACKUP 2 TO 0**
 
@@ -36,6 +38,7 @@
     Une fois branché, choisir le BASIC 512 et entrer **DEVICE"2:"** suivi de **LOADM"LOAD.BIN",,R**
 
     Pour copier le contenu du HxC sur une disquette dans le lecteur interne, entrer les instructions suivantes en BASIC 512 :
+    - activer la vérification : **VERIFY ON**
     - formater la face 0 avec un facteur d'entrelacement de 2 : **DSKINI 0,2**
     - copier la face 2 sur la face 0 : **BACKUP 2 TO 0**
 
